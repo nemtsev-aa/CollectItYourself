@@ -28,6 +28,14 @@ public class Management : MonoBehaviour {
 
     private bool _isOverUI;
 
+    public SwitchBoxData SwitchBoxData;
+    public SwitchBoxManager SwitchBoxManager;
+
+    [ContextMenu("Test")]
+    public void Test() {
+        SwitchBoxManager.CreateSwichBox(SwitchBoxData);
+    }
+
     void Update() {
         _isOverUI = EventSystem.current.IsPointerOverGameObject();
 

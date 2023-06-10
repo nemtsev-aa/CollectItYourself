@@ -6,7 +6,8 @@ public enum ContactType {
     Neutral,
     GroundConductor,
     Closed,
-    Open
+    Open,
+    LineOut
 }
 
 public class Contact : SelectableObject

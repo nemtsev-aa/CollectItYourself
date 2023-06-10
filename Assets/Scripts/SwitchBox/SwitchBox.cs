@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchBox : MonoBehaviour
-{
+
+public class SwitchBox : MonoBehaviour {
+    public SwitchBoxData SwitchBoxData;
     public bool isOpen;
-    public string Name;
-    public int Number;
+    public List<Transform> Slots = new List<Transform>();
     public List<WagoClip> Wagos = new List<WagoClip>();
-    public List<Companent> Companents = new List<Companent>();
     public List<Wire> Lines = new List<Wire>();
 
     public void AddNewWagoClipToList(WagoClip wago) {
@@ -26,10 +24,10 @@ public class SwitchBox : MonoBehaviour
         Lines.Add(line);
     }
 
-    public void RemoveCompanent(Companent companent) {
-        if (Companents.Contains(companent)) {
-            Companents.Remove(companent);
-            Destroy(companent.gameObject);
+    public void RemoveCompanent(CompanentData companentData) {    
+        if (SwitchBoxData.Companents.Contains(companentData)) {
+            SwitchBoxData.Companents.Remove(companentData);
+            Destroy(companentData.Companent.gameObject);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WireCreator : MonoBehaviour {
-    public SwitchBox SwitchBox;
+    public SwitchBoxManager SwitchBoxManager;
 
     public Wire WirePrefab;
     public Contact StartContact;
@@ -48,8 +48,8 @@ public class WireCreator : MonoBehaviour {
     public void CreateWire() {
         
         Wire newWire = Instantiate(WirePrefab); // Создан новый проводник
-        newWire.SwitchBox = SwitchBox;
-        newWire.transform.parent = SwitchBox.transform;
+        newWire.SwitchBox = SwitchBoxManager.ActiveSwichBox;
+        newWire.transform.parent = SwitchBoxManager.transform;
         newWire.StartContact = StartContact;
         newWire.EndContact = EndContact;
         newWire.LineRenderer.material = StartContact.Material;
@@ -73,7 +73,7 @@ public class WireCreator : MonoBehaviour {
         EndContact.SetMaterial();
         EndContact.ConnectionWire = newWire;
 
-        SwitchBox.AddNewLineFromList(newWire);
+        SwitchBoxManager.ActiveSwichBox.AddNewLineFromList(newWire);
 
         StartContact = null;
         EndContact = null;

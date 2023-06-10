@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43879f8996fed66418ecbe77941cbe28, type: 3}
+  m_Name: Training_Part4
+  m_EditorClassIdentifier: 
+  PartNumber: 2
+  TaskType: 0
+  Companents:
+  - SlotNumber: 0
+    Name: SA6
+    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+      type: 3}
+  - SlotNumber: 1
+    Name: SA5
+    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+      type: 3}
+  - SlotNumber: 2
+    Name: Output
+    Companent: {fileID: 7526200252408752026, guid: 41f2d27799882dd4dbf0afa9dcabb60a,
+      type: 3}
+  - SlotNumber: 3
+    Name: EL3
+    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
+      type: 3}
+  - SlotNumber: 4
+    Name: EL4
+    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
+      type: 3}
+  - SlotNumber: 5
+    Name: Input
+    Companent: {fileID: 2486841509407197961, guid: 03bde88bf071c95458b518b75f76b7fd,
+      type: 3}
+  - SlotNumber: 6
+    Name: SA8
+    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+      type: 3}
+  - SlotNumber: 7
+    Name: SA7
+    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+      type: 3}

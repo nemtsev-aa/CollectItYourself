@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WagoCreator : MonoBehaviour
 {
-    public SwitchBox SwitchBox;
+    public SwitchBoxManager SwitchBoxManager;
 
     [SerializeField] private WagoClip _wagoUp;
     [SerializeField] private WagoClip _wagoDown;
@@ -30,13 +30,13 @@ public class WagoCreator : MonoBehaviour
     public void CreateWago(WagoType wagoType) {
         WagoClip newClip = (wagoType == WagoType.WagoU) ? _wagoUp : _wagoDown; // Определяем тип зажима
         WagoClip wago = Instantiate(newClip, _wagoClipCreatePosition, Quaternion.identity); // Создаём новый зажим
-        wago.SwitchBox = SwitchBox;
-        wago.Name = (SwitchBox.Wagos.Count + 1).ToString(); // Присваиваем новому зажиму имя
+        wago.SwitchBox = SwitchBoxManager.ActiveSwichBox;
+        wago.Name = (SwitchBoxManager.ActiveSwichBox.Wagos.Count + 1).ToString(); // Присваиваем новому зажиму имя
         wago.transform.position = _wagoClipCreatePosition;
-        wago.transform.parent = SwitchBox.transform; // Прикрепляем новый зажим к РК
+        wago.transform.parent = SwitchBoxManager.transform; // Прикрепляем новый зажим к РК
         wago.ShowName();
 
-        SwitchBox.AddNewWagoClipToList(wago); // Добавляем новый зажим в список активной РК
+        SwitchBoxManager.ActiveSwichBox.AddNewWagoClipToList(wago); // Добавляем новый зажим в список активной РК
 
         WagoPosition.gameObject.SetActive(false); // Скрываем меню выбора зажимов
         _pointer.gameObject.SetActive(true); // Отображаем указатель
