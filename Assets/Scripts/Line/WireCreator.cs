@@ -28,6 +28,7 @@ public class WireCreator : MonoBehaviour {
         else if (Input.GetMouseButtonUp(0) && EndContact != null) {          
             //Debug.Log("End: " + EndContact.transform.position);
             lineRender.SetPosition(1, EndContact.transform.position);
+
             CreateWire();
         }
         else if (Input.GetMouseButton(0) && StartContact != null) {
@@ -49,7 +50,7 @@ public class WireCreator : MonoBehaviour {
         
         Wire newWire = Instantiate(WirePrefab); // Создан новый проводник
         newWire.SwitchBox = SwitchBoxManager.ActiveSwichBox;
-        newWire.transform.parent = SwitchBoxManager.transform;
+        newWire.transform.parent = SwitchBoxManager.ActiveSwichBox.WiresTransform.transform;
         newWire.StartContact = StartContact;
         newWire.EndContact = EndContact;
         newWire.LineRenderer.material = StartContact.Material;
@@ -68,10 +69,12 @@ public class WireCreator : MonoBehaviour {
                 break;
         }
 
+        StartContact.ConnectionWire = newWire;
         EndContact.ConnectedContact = StartContact;
         EndContact.Material = StartContact.Material;
         EndContact.SetMaterial();
         EndContact.ConnectionWire = newWire;
+        EndContact.AddNewConnectToList(); 
 
         SwitchBoxManager.ActiveSwichBox.AddNewLineFromList(newWire);
 

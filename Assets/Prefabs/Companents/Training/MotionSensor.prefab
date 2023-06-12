@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 3075138960652123662}
   - component: {fileID: 3075138960652123657}
   - component: {fileID: 3075138960652123656}
+  - component: {fileID: 7722031714481751172}
   m_Layer: 5
   m_Name: Delete
   m_TagString: Untagged
@@ -205,31 +206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3075138960652123663}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Management, Assembly-CSharp
-        m_MethodName: Unselect
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3075138961321192293}
-          m_ObjectArgumentAssemblyTypeName: SelectableObject, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SwitchBox, Assembly-CSharp
-        m_MethodName: RemoveCompanent
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3075138961321192293}
-          m_ObjectArgumentAssemblyTypeName: Companent, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!223 &3075138960652123657
 Canvas:
   m_ObjectHideFlags: 0
@@ -268,6 +245,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7722031714481751172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3075138960652123658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b813de6a9e91b5e46b47fe1a7ae109ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Companent: {fileID: 3075138961321192293}
 --- !u!1 &3075138960804242855
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,6 +817,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3075138961630018760}
   CurrentContactType: 5
   Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  ConnectionWire: {fileID: 0}
 --- !u!114 &3075138961253127675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -905,6 +896,7 @@ MonoBehaviour:
   SwitchBox: {fileID: 0}
   Type: 5
   Name: BK
+  SlotNumber: 0
   Contacts:
   - {fileID: 3075138961626255473}
   - {fileID: 3075138961951799318}
@@ -1237,6 +1229,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3075138962592777017}
   CurrentContactType: 0
   Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  ConnectionWire: {fileID: 0}
 --- !u!114 &3075138961626255475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,6 +1390,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3075138962608256947}
   CurrentContactType: 1
   Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  ConnectionWire: {fileID: 0}
 --- !u!114 &3075138961951799312
 MonoBehaviour:
   m_ObjectHideFlags: 0

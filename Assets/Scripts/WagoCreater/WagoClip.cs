@@ -9,8 +9,7 @@ public enum WagoType {
     WagoU
 }
 
-public class WagoClip : Clips
-{
+public class WagoClip : Clips {
     [Header("Parameters")]
     public SwitchBox SwitchBox;
     /// <summary>
@@ -21,6 +20,10 @@ public class WagoClip : Clips
     /// Список контактов, принадлежащих зажиму
     /// </summary>
     public List<WagoContact> WagoContacts = new List<WagoContact>();
+    /// <summary>
+    /// Подключения
+    /// </summary>
+    public List<ConnectionData> Connections = new List<ConnectionData>();
 
     [Header("View")]
     public WagoType WagoType;
@@ -37,7 +40,6 @@ public class WagoClip : Clips
         _animator.SetTrigger("Show");
         _animator.ResetTrigger("Hide");
     }
-
     public override void Unselect() {
         //Debug.Log("Unselect Companent");
         _animator.ResetTrigger("Show");
@@ -47,7 +49,6 @@ public class WagoClip : Clips
         base.OnMouseDrag();
         UpdateLocationWires();
     }
-
     public void UpdateLocationWires() {
         for (int i = 0; i < WagoContacts.Count; i++) {
             WagoContact iWagoContact = WagoContacts[i];
@@ -55,6 +56,13 @@ public class WagoClip : Clips
                 iWagoContact.ConnectionWire.EndContact.transform.position = iWagoContact.transform.position;
                 iWagoContact.ConnectionWire.LineRenderer.SetPosition(1, iWagoContact.transform.position);
             }
+        }
+    }
+
+    [ContextMenu("ShowParentCompanent")]
+    public void ShowParentCompanent() {
+        foreach (var iConnection in Connections) {
+            Debug.Log(iConnection.Companent.GetComponent<Companent>().Name + "_" + iConnection.Contact.CurrentContactType);
         }
     }
 }

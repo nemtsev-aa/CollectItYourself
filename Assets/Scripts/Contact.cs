@@ -17,6 +17,10 @@ public class Contact : SelectableObject
     /// </summary>
     public ContactType CurrentContactType;
     public Material Material;
+    /// <summary>
+    /// Подключающий провод
+    /// </summary>
+    public Wire ConnectionWire;
 
     public override void OnHover() {
         transform.localScale = Vector3.one * 1.5f;

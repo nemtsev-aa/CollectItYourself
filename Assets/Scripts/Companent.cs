@@ -16,6 +16,7 @@ public class Companent : SelectableObject {
     public SwitchBox SwitchBox;
     public CompanentType Type;
     public string Name;
+    public int SlotNumber;
     public List<Contact> Contacts = new List<Contact>();
 
     [Header("View")]
@@ -70,9 +71,24 @@ public class Companent : SelectableObject {
         Ray camRay = _myMainCamera.ScreenPointToRay(Input.mousePosition);
         _dragPlane.Raycast(camRay, out float planeDistance);
         transform.position = camRay.GetPoint(planeDistance) + offset;
+        UpdateLocationWires();
     }
 
     public virtual void OnMouseUp() {
         //Debug.Log("Перемещение завершено");
+    }
+
+    public void UpdateLocationWires() {
+        for (int i = 0; i < Contacts.Count; i++) {
+            Contact iContact = Contacts[i];
+            if (iContact.ConnectionWire != null) {
+                iContact.ConnectionWire.StartContact.transform.position = iContact.transform.position;
+                iContact.ConnectionWire.LineRenderer.SetPosition(0, iContact.transform.position);
+            }
+        }
+    }
+
+    public void RemoveCompanent() {
+        SwitchBox.RemoveCompanent(this);
     }
 }

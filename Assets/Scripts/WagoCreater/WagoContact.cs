@@ -16,10 +16,6 @@ public class WagoContact : Contact
     /// Подключенный контакт
     /// </summary>
     public Contact ConnectedContact;
-    /// <summary>
-    /// Подключающий провод
-    /// </summary>
-    public Wire ConnectionWire;
 
     private Material defaultMaterial;
 
@@ -38,5 +34,13 @@ public class WagoContact : Contact
 
     public void ResetMaterial() {
         this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = defaultMaterial;
+    }
+
+    public void AddNewConnectToList() {
+        ConnectionData newConnect;
+        newConnect.Contact = ConnectedContact;
+        newConnect.Companent = ConnectedContact.transform.parent.GetComponent<SelectableCollider>().SelectableObject.GetParentCompanent();
+        
+        ParentWagoClip.Connections.Add(newConnect);
     }
 }

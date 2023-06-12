@@ -29,15 +29,19 @@ public class SwitchBoxManager : MonoBehaviour
         newSwitchBox.SwitchBoxData = switchBoxData;
         newSwitchBox.transform.parent = transform;
         AddSwichBoxFromList(newSwitchBox);
+        ActiveSwichBox = newSwitchBox;
 
         for (int i = 0; i < switchBoxData.Companents.Count; i++) {
             CompanentData data = switchBoxData.Companents[i]; // Данные компанента
             Companent newCompanent = Instantiate(data.Companent); // Новый компанент
+            newCompanent.SlotNumber = data.SlotNumber;
             newCompanent.Name = data.Name;
             newCompanent.ShowName();
             newCompanent.SwitchBox = newSwitchBox;
             newCompanent.transform.parent = newSwitchBox.Slots[data.SlotNumber].transform;
             newCompanent.transform.position = _switchBoxPrefab.Slots[data.SlotNumber].position;
+
+            newSwitchBox.Companents.Add(newCompanent);
         }
     }
 

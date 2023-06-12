@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TaskType {
-    Training,
-    Exam
+[System.Serializable]
+public struct ConnectionData {
+    public Companent Companent;
+    public Contact Contact;
 }
 
 [System.Serializable]

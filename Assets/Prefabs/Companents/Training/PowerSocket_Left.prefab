@@ -147,6 +147,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106677750845}
   CurrentContactType: 0
   Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  ConnectionWire: {fileID: 0}
 --- !u!114 &3583119105118806785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +549,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119105451441947}
   CurrentContactType: 2
   Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  ConnectionWire: {fileID: 0}
 --- !u!114 &3583119105528351440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +577,7 @@ GameObject:
   - component: {fileID: 3583119105613932783}
   - component: {fileID: 3583119105613932781}
   - component: {fileID: 3583119105613932782}
+  - component: {fileID: 278667943264598842}
   m_Layer: 5
   m_Name: Delete
   m_TagString: Untagged
@@ -683,31 +686,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3583119105613932777}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Management, Assembly-CSharp
-        m_MethodName: Unselect
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3583119106728645194}
-          m_ObjectArgumentAssemblyTypeName: SelectableObject, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SwitchBox, Assembly-CSharp
-        m_MethodName: RemoveCompanent
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3583119106728645194}
-          m_ObjectArgumentAssemblyTypeName: Companent, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!223 &3583119105613932781
 Canvas:
   m_ObjectHideFlags: 0
@@ -746,6 +725,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &278667943264598842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3583119105613932772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b813de6a9e91b5e46b47fe1a7ae109ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Companent: {fileID: 3583119106728645194}
 --- !u!1 &3583119105659732969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1157,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106709757791}
   CurrentContactType: 1
   Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  ConnectionWire: {fileID: 0}
 --- !u!114 &3583119105846968595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1845,6 +1838,7 @@ MonoBehaviour:
   SwitchBox: {fileID: 0}
   Type: 2
   Name: XS2
+  SlotNumber: 0
   Contacts:
   - {fileID: 3583119105118806784}
   - {fileID: 3583119105846968594}

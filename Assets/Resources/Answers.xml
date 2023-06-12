@@ -1,0 +1,303 @@
+<Answers>
+  <Answers_Part>
+    <Answers_Variant name="1_1">
+      <Wagos name="WAGO_1" value="IN_L,OU_L,XS1_L,XS2_L,XS3_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,XS1_N,XS2_N,XS3_N" />
+      <Wagos name="WAGO_3" value="IN_PE,OU_PE,XS1_PE,XS2_PE,XS3_PE" />
+    </Answers_Variant>
+    <Answers_Variant name="2_1">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA1_Z,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_R" />
+      <Wagos name="WAGO_6" value="SA2_R,EL2_L" />
+    </Answers_Variant>
+    <Answers_Variant name="2_2">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA1_Z,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL2_L,SA1_R" />
+      <Wagos name="WAGO_6" value="SA2_R,EL1_L" />
+    </Answers_Variant>
+    <Answers_Variant name="2_3">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA2_Z,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL1_L,SA2_R" />
+      <Wagos name="WAGO_6" value="SA1_R,EL2_L" />
+    </Answers_Variant>
+    <Answers_Variant name="2_4">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA2_Z,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL1_L,SA2_R" />
+      <Wagos name="WAGO_6" value="SA1_Z,EL2_L" />
+    </Answers_Variant>
+    <Answers_Variant name="2_5">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA1_R,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_Z" />
+      <Wagos name="WAGO_6" value="SA2_R,EL2_L" />
+    </Answers_Variant>
+    <Answers_Variant name="2_6">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA1_R,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL2_L,SA1_Z" />
+      <Wagos name="WAGO_6" value="SA2_R,EL1_L" />
+    </Answers_Variant>
+    <Answers_Variant name="2_7">
+      <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+      <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+      <Wagos name="WAGO_4" value="SA1_R,BK_L" />
+      <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_Z" />
+      <Wagos name="WAGO_6" value="SA2_Z,EL2_L" />
+    </Answers_Variant>
+    <Answers_Variant name="3_1">
+      <Wagos name="WAGO_1" value="IN_L,SA3_L,SA4_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL3_N,EL4_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+      <Wagos name="WAGO_4" value="SA3_R,EL3_L" />
+      <Wagos name="WAGO_5" value="SA4_R,EL4_L" />
+    </Answers_Variant>
+    <Answers_Variant name="3_2">
+      <Wagos name="WAGO_1" value="IN_L,SA3_L,SA4_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL3_N,EL4_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+      <Wagos name="WAGO_4" value="SA4_R,EL3_L" />
+      <Wagos name="WAGO_5" value="SA3_R,EL4_L" />
+    </Answers_Variant>
+    <Answers_Variant name="3_3">
+      <Wagos name="WAGO_1" value="IN_L,SA3_L,SA4_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL3_N,EL4_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+      <Wagos name="WAGO_4" value="SA3_Z,EL3_L" />
+      <Wagos name="WAGO_5" value="SA4_Z,EL4_L" />
+    </Answers_Variant>
+    <Answers_Variant name="3_4">
+      <Wagos name="WAGO_1" value="IN_L,SA3_L,SA4_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL3_N,EL4_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+      <Wagos name="WAGO_4" value="SA4_Z,EL3_L" />
+      <Wagos name="WAGO_5" value="SA3_Z,EL4_L" />
+    </Answers_Variant>
+    <Answers_Variant name="4_1">
+      <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+      <Wagos name="WAGO_3" value="SA5_Z,SA7_Z" />
+      <Wagos name="WAGO_4" value="SA7_L,EL5_L" />
+      <Wagos name="WAGO_5" value="SA6_R,SA8_R" />
+      <Wagos name="WAGO_6" value="SA6_Z,SA8_Z" />
+      <Wagos name="WAGO_7" value="SA8_L,EL6_L" />
+      <Wagos name="WAGO_8" value="SA5_R,SA7_R" />
+      <Wagos name="WAGO_9" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+    </Answers_Variant>
+    <Answers_Variant name="4_2">
+      <Wagos name="WAGO_1" value="IN_L,SA5_L,SA7_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+      <Wagos name="WAGO_3" value="SA5_Z,SA6_Z" />
+      <Wagos name="WAGO_4" value="SA6_L,EL5_L" />
+      <Wagos name="WAGO_5" value="SA5_R,SA6_R" />
+      <Wagos name="WAGO_6" value="SA7_Z,SA8_Z" />
+      <Wagos name="WAGO_7" value="SA8_L,EL6_L" />
+      <Wagos name="WAGO_8" value="SA7_R,SA8_R" />
+      <Wagos name="WAGO_9" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+    </Answers_Variant>
+    <Answers_Variant name="4_3">
+      <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+      <Wagos name="WAGO_3" value="SA6_Z,SA7_Z" />
+      <Wagos name="WAGO_4" value="SA7_L,EL6_L" />
+      <Wagos name="WAGO_5" value="SA5_R,SA8_R" />
+      <Wagos name="WAGO_6" value="SA5_Z,SA8_Z" />
+      <Wagos name="WAGO_7" value="SA8_L,EL5_L" />
+      <Wagos name="WAGO_8" value="SA6_R,SA7_R" />
+      <Wagos name="WAGO_9" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+    </Answers_Variant>
+    <Answers_Variant name="4_4">
+      <Wagos name="WAGO_1" value="IN_L,OU_L,SA5_L,SA7_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+      <Wagos name="WAGO_3" value="SA5_Z,SA6_Z" />
+      <Wagos name="WAGO_4" value="SA7_R,SA8_R" />
+      <Wagos name="WAGO_5" value="SA7_Z,SA8_Z" />
+      <Wagos name="WAGO_6" value="SA8_L,EL5_L" />
+      <Wagos name="WAGO_7" value="SA6_L,EL6_L" />
+      <Wagos name="WAGO_8" value="SA5_R,SA6_R" />
+      <Wagos name="WAGO_9" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+    </Answers_Variant>
+    <Answers_Variant name="4_5">
+      <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+      <Wagos name="WAGO_3" value="SA5_Z,SA7_Z" />
+      <Wagos name="WAGO_4" value="SA7_L,EL5_L" />
+      <Wagos name="WAGO_5" value="SA5_R,SA7_R" />
+      <Wagos name="WAGO_6" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+      <Wagos name="WAGO_7" value="SA6_R,EL6_L" />
+    </Answers_Variant>
+    <Answers_Variant name="4_6">
+      <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+      <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+      <Wagos name="WAGO_3" value="SA5_Z,SA7_Z" />
+      <Wagos name="WAGO_4" value="SA7_L,EL5_L" />
+      <Wagos name="WAGO_5" value="SA5_R,SA7_R" />
+      <Wagos name="WAGO_6" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+      <Wagos name="WAGO_7" value="SA6_Z,EL6_L" />
+    </Answers_Variant>
+    <Answers_Variant name="4_7">
+      <Wagos name="WAGO_1" value="IN_L,OU_L,SA6_L" />
+      <Wagos name="WAGO_2" value="IN_N,EL6_N,EL5_N,OU_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+      <Wagos name="WAGO_4" value="SA6_R,SA8_R" />
+      <Wagos name="WAGO_5" value="SA6_Z,SA8_Z" />
+      <Wagos name="WAGO_6" value="SA8_L,EL5_L,EL6_L" />
+    </Answers_Variant>
+    <Answers_Variant name="4_8">
+      <Wagos name="WAGO_1" value="IN_L,OU_L,SA5_L" />
+      <Wagos name="WAGO_2" value="IN_N,EL6_N,EL5_N,OU_N" />
+      <Wagos name="WAGO_3" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+      <Wagos name="WAGO_4" value="SA5_R,SA7_R" />
+      <Wagos name="WAGO_5" value="SA5_Z,SA7_Z" />
+      <Wagos name="WAGO_6" value="SA7_L,EL5_L,EL6_L" />
+    </Answers_Variant>
+  </Answers_Part>
+  <Answers_Full>
+    <Answers_Variant name="01">
+      <RK name="01_1">
+        <Wagos name="WAGO_1" value="IN_L,OU_L,XS1_L,XS2_L,XS3_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,XS1_N,XS2_N,XS3_N" />
+        <Wagos name="WAGO_3" value="IN_PE,OU_PE,XS1_PE,XS2_PE,XS3_PE" />
+      </RK>
+      <RK name="01_2">
+        <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+        <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+        <Wagos name="WAGO_4" value="SA1_Z,BK_L" />
+        <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_R" />
+        <Wagos name="WAGO_6" value="SA2_R,EL2_L" />
+      </RK>
+      <RK name="01_3">
+        <Wagos name="WAGO_1" value="IN_L,SA3_L,SA4_L,OU_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,EL3_N,EL4_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+        <Wagos name="WAGO_4" value="SA3_R,EL3_L" />
+        <Wagos name="WAGO_5" value="SA4_R,EL4_L" />
+      </RK>
+      <RK name="01_4">
+        <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+        <Wagos name="WAGO_3" value="SA5_Z,SA7_Z" />
+        <Wagos name="WAGO_4" value="SA7_L,EL5_L" />
+        <Wagos name="WAGO_5" value="SA5_R,SA7_R" />
+        <Wagos name="WAGO_6" value="IN_PE,EL5_PE,EL6_PE,OU_PE" />
+        <Wagos name="WAGO_7" value="SA6_R,EL6_L" />
+      </RK>
+    </Answers_Variant>
+    <Answers_Variant name="02">
+      <RK name="02_1">
+        <Wagos name="WAGO_1" value="IN_L,OU_L,XS1_L,XS2_L,XS3_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,XS1_N,XS2_N,XS3_N" />
+        <Wagos name="WAGO_3" value="IN_PE,OU_PE,XS1_PE,XS2_PE,XS3_PE" />
+      </RK>
+      <RK name="02_2">
+        <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+        <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+        <Wagos name="WAGO_4" value="SA1_Z,BK_L" />
+        <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_R" />
+        <Wagos name="WAGO_6" value="SA2_R,EL2_L" />
+      </RK>
+      <RK name="02_3">
+        <Wagos name="WAGO_1" value="IN_L,SA3_L,SA4_L,OU_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,EL3_N,EL4_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+        <Wagos name="WAGO_4" value="SA3_R,EL3_L" />
+        <Wagos name="WAGO_5" value="SA4_R,EL4_L" />
+      </RK>
+      <RK name="02_4">
+        <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+        <Wagos name="WAGO_3" value="SA5_Z,SA7_Z" />
+        <Wagos name="WAGO_4" value="SA7_L,EL5_L" />
+        <Wagos name="WAGO_5" value="SA6_R,SA8_R" />
+        <Wagos name="WAGO_6" value="SA6_Z,SA8_Z" />
+        <Wagos name="WAGO_7" value="SA8_L,EL6_L" />
+        <Wagos name="WAGO_8" value="SA5_R,SA7_R" />
+        <Wagos name="WAGO_9" value="IN_PE,EL6_PE,EL5_PE,OU_PE" />
+      </RK>
+    </Answers_Variant>
+    <Answers_Variant name="03">
+      <RK name="03_1">
+        <Wagos name="WAGO_1" value="IN_L,OU_L,XS1_L,XS2_L,XS3_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,XS1_N,XS2_N,XS3_N" />
+        <Wagos name="WAGO_3" value="IN_PE,OU_PE,XS1_PE,XS2_PE,XS3_PE" />
+      </RK>
+      <RK name="03_2">
+        <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+        <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+        <Wagos name="WAGO_4" value="SA1_Z,BK_L" />
+        <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_R" />
+        <Wagos name="WAGO_6" value="SA2_R,EL2_L" />
+      </RK>
+      <RK name="03_3">
+        <Wagos name="WAGO_1" value="IN_L,OU_L,SA3_L" />
+        <Wagos name="WAGO_2" value="IN_N,EL3_N,EL4_N,OU_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+        <Wagos name="WAGO_4" value="SA3_R,SA4_R" />
+        <Wagos name="WAGO_5" value="SA3_Z,SA4_Z" />
+        <Wagos name="WAGO_6" value="SA4_L,EL3_L,EL4_L" />
+      </RK>
+      <RK name="03_4">
+        <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+        <Wagos name="WAGO_3" value="SA5_Z,SA7_Z" />
+        <Wagos name="WAGO_4" value="SA7_L,EL5_L" />
+        <Wagos name="WAGO_5" value="SA5_R,SA7_R" />
+        <Wagos name="WAGO_6" value="SA6_Z,SA8_Z" />
+        <Wagos name="WAGO_7" value="SA8_L,EL6_L" />
+        <Wagos name="WAGO_8" value="SA6_R,SA8_R" />
+        <Wagos name="WAGO_9" value="IN_PE,EL5_PE,EL6_PE,OU_PE" />
+      </RK>
+    </Answers_Variant>
+    <Answers_Variant name="04">
+      <RK name="04_1">
+        <Wagos name="WAGO_1" value="IN_L,OU_L,XS1_L,XS2_L,XS3_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,XS1_N,XS2_N,XS3_N" />
+        <Wagos name="WAGO_3" value="IN_PE,OU_PE,XS1_PE,XS2_PE,XS3_PE" />
+      </RK>
+      <RK name="04_2">
+        <Wagos name="WAGO_1" value="IN_L,SA1_L,SA2_L" />
+        <Wagos name="WAGO_2" value="EL2_N,EL1_N,BK_N,IN_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL1_PE,EL2_PE" />
+        <Wagos name="WAGO_4" value="SA1_R,BK_L" />
+        <Wagos name="WAGO_5" value="BK_A,EL1_L,SA1_Z" />
+        <Wagos name="WAGO_6" value="SA2_Z,EL2_L" />
+      </RK>
+      <RK name="04_3">
+        <Wagos name="WAGO_1" value="IN_L,OU_L,SA3_L" />
+        <Wagos name="WAGO_2" value="IN_N,EL3_N,EL4_N,OU_N" />
+        <Wagos name="WAGO_3" value="IN_PE,EL3_PE,EL4_PE,OU_PE" />
+        <Wagos name="WAGO_4" value="SA3_R,SA4_R" />
+        <Wagos name="WAGO_5" value="SA3_Z,SA4_Z" />
+        <Wagos name="WAGO_6" value="SA4_L,EL3_L,EL4_L" />
+      </RK>
+      <RK name="04_4">
+        <Wagos name="WAGO_1" value="IN_L,SA5_L,SA6_L,OU_L" />
+        <Wagos name="WAGO_2" value="IN_N,OU_N,EL5_N,EL6_N" />
+        <Wagos name="WAGO_3" value="SA6_Z,SA7_Z" />
+        <Wagos name="WAGO_4" value="SA7_L,EL6_L" />
+        <Wagos name="WAGO_5" value="SA6_R,SA7_R" />
+        <Wagos name="WAGO_6" value="IN_PE,EL5_PE,EL6_PE,OU_PE" />
+        <Wagos name="WAGO_7" value="SA5_R,EL5_L" />
+      </RK>
+    </Answers_Variant>
+  </Answers_Full>
+</Answers>

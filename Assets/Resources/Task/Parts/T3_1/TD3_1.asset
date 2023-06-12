@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
+  m_Name: TD3_1
+  m_EditorClassIdentifier: 
+  PrincipalShemas: {fileID: 21300000, guid: 2934792b8d4274b4ca93bd0f3e46ff05, type: 3}
+  SwitchBoxsData: {fileID: 11400000, guid: a592afcf91ab6b8498ad5addbb935f76, type: 2}
+  Answer: {fileID: 11400000, guid: 4394238a02cc24b4b9be8ca9f30df548, type: 2}

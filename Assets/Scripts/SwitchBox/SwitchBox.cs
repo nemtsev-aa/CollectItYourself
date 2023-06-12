@@ -6,28 +6,33 @@ public class SwitchBox : MonoBehaviour {
     public SwitchBoxData SwitchBoxData;
     public bool isOpen;
     public List<Transform> Slots = new List<Transform>();
-    public List<WagoClip> Wagos = new List<WagoClip>();
-    public List<Wire> Lines = new List<Wire>();
+
+    public Transform CompanentsTransform;
+    public List<Companent> Companents = new List<Companent>();
+    public Transform WagoClipsTransform;
+    public List<WagoClip> WagoClips = new List<WagoClip>();
+    public Transform WiresTransform;
+    public List<Wire> Wires = new List<Wire>();
 
     public void AddNewWagoClipToList(WagoClip wago) {
-        Wagos.Add(wago);
+        WagoClips.Add(wago);
     }
 
     public void RemoveWagoClipFromList(WagoClip wago) {
-        if (Wagos.Contains(wago)) {
-            Wagos.Remove(wago);
+        if (WagoClips.Contains(wago)) {
+            WagoClips.Remove(wago);
             Destroy(wago.gameObject);
         }
     }
 
     public void AddNewLineFromList(Wire line) {
-        Lines.Add(line);
+        Wires.Add(line);
     }
 
-    public void RemoveCompanent(CompanentData companentData) {    
-        if (SwitchBoxData.Companents.Contains(companentData)) {
-            SwitchBoxData.Companents.Remove(companentData);
-            Destroy(companentData.Companent.gameObject);
+    public void RemoveCompanent(Companent companent) {    
+        if (Companents.Contains(companent)) {
+            Companents.Remove(companent);
+            Destroy(companent.gameObject);
         }
     }
 }
