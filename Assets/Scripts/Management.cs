@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,22 +19,33 @@ public class Management : MonoBehaviour {
     public List<SelectableObject> ListOfSelected = new List<SelectableObject>();
     public SelectionState CurrentSelectionState;
 
-    [Header("Frame")]
-    public Image FrameImage;
-    private Vector2 _frameStart;
-    private Vector2 _frameEnd;
-
     [Header("WireCreator")]
     public WireCreator WireCreator;
-
-    private bool _isOverUI;
 
     public SwitchBoxData SwitchBoxData;
     public SwitchBoxManager SwitchBoxManager;
 
-    [ContextMenu("Test")]
-    public void Test() {
+    public TaskManager TaskManager;
+    public TMP_Dropdown TaskSelector;
+    public ActiveWindow ActiveWindow;
+
+    private bool _isOverUI;
+
+    [ContextMenu("ShowTask")]
+    public void ShowTask() {
+        string TaskName = TaskSelector.options[TaskSelector.value].text;
+        Task selectionTask = TaskManager.FindTask(TaskName);
+        ActiveWindow.ShowTask(selectionTask);
+        SwitchBoxData = selectionTask.TaskData[0].SwitchBoxsData;
         SwitchBoxManager.CreateSwichBox(SwitchBoxData);
+    }
+
+    [ContextMenu("HideTask")]
+    public void ClearTask() {
+        Task hideTask = TaskManager.CurrentTask;
+        ActiveWindow.HideTask(hideTask);
+        SwitchBoxData = null;
+        SwitchBoxManager.RemoveSwichBoxFromList(SwitchBoxManager.ActiveSwichBox);
     }
 
     void Update() {
@@ -64,66 +76,43 @@ public class Management : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (Hovered) {
-                if (Input.GetKey(KeyCode.LeftControl)) { // Добавляем объект в группу сочитанием клавиш LeftCtr+LeftMouse
-                    Select(Hovered);
-                } else if (Input.GetKey(KeyCode.LeftAlt)) { // Удаляем объект из группы сочитанием клавиш LeftAlt+LeftMouse
-                    Unselect(Hovered);
-                }
+            if (Hovered is Contact) {
+                CurrentSelectionState = SelectionState.ContactSelected;
+                WireCreator.StartContact = Hovered.GetComponent<Contact>();
             } else {
-                if (!_isOverUI) {
-                    if (ListOfSelected.Count == 1) {
-                        Unselect(ListOfSelected[0]);
-                    }
+                if (ListOfSelected.Count == 1 && !_isOverUI) {
+                    Unselect(ListOfSelected[0]);
                 }
             }
         }
 
         if (Input.GetMouseButtonUp(0)) {
-            if (Hovered) {
-                if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftAlt)) {
-                    UnselectAll();
-                    Select(Hovered);    // Выделяем одиночный объект
-                }
-            }
-        }
-
-        if (CurrentSelectionState == SelectionState.ClipsSelected) {
-            if (Input.GetMouseButtonDown(0)) {
-                if (hit.collider) {
-                    //if (hit.collider.tag == "Clips" && !_isOverUI) {
-                        //foreach (var iSelectedItem in ListOfSelected) {
-                        //     // Задаём пункт назначения для перемещения юнитов
-                        //}
-                    //}
-                }
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1)) { // Очищаем список выделенных объектов нажатием на RightMouse
-            UnselectAll();
-        }
-
-        if (Input.GetMouseButtonUp(0)) {
-            FrameImage.enabled = false; // Скрываем рамку
             if (ListOfSelected.Count == 0) {
-                CurrentSelectionState = SelectionState.Other;
+                if (Hovered is WagoContact) {
+                    CurrentSelectionState = SelectionState.ContactSelected;
+                    WireCreator.EndContact = Hovered.GetComponent<WagoContact>();
+                }
             }
             else if (ListOfSelected.Count == 1) {
                 GameObject selectedObject = ListOfSelected[0].gameObject;
                 if (selectedObject.GetComponent<Companent>()) {
                     //Debug.Log("Выделен компанент");
                     CurrentSelectionState = SelectionState.CompanentSelected;
-                } else if (selectedObject.TryGetComponent(out WagoContact wagoContact)) {
-                    Debug.Log("Выделен Wago-контакт");
+                }
+                else if (selectedObject.TryGetComponent(out WagoContact wagoContact)) {
                     CurrentSelectionState = SelectionState.ContactSelected;
-                    WireCreator.EndContact = wagoContact;
-                } else if (selectedObject.TryGetComponent(out Contact contact)) {
+                    if (wagoContact.ConnectedContact == null) {
+                        Debug.Log("Выделен Wago-контакт");
+                        WireCreator.EndContact = wagoContact;
+                    }
+                }
+                else if (selectedObject.TryGetComponent(out Contact contact)) {
                     Debug.Log("Выделен контакт");
                     CurrentSelectionState = SelectionState.ContactSelected;
                     WireCreator.StartContact = contact;
                 }
-            } else {
+            }
+            else {
                 if (ListOfSelected.Count > 1) {
                     //CurrentSelectionState = SelectionState.ClipsSelected;
                 }
@@ -131,40 +120,40 @@ public class Management : MonoBehaviour {
         }
     }
 
-    void CreatingFrame() {
+    //void CreatingFrame() {
 
-        if (Input.GetMouseButtonDown(0)) {
-            _frameStart = Input.mousePosition; // Фиксируем начальное положение мыши
-        }
+    //    if (Input.GetMouseButtonDown(0)) {
+    //        _frameStart = Input.mousePosition; // Фиксируем начальное положение мыши
+    //    }
 
-        if (Input.GetMouseButton(0)) {
+    //    if (Input.GetMouseButton(0)) {
 
-            _frameEnd = Input.mousePosition; // Обновляем конечное положение мыши всё время пока кнопка LeftMouse нажата
+    //        _frameEnd = Input.mousePosition; // Обновляем конечное положение мыши всё время пока кнопка LeftMouse нажата
 
-            Vector2 min = Vector2.Min(_frameStart, _frameEnd);
-            Vector2 max = Vector2.Max(_frameStart, _frameEnd);
-            Vector2 size = max - min; // Размер выделенной области
+    //        Vector2 min = Vector2.Min(_frameStart, _frameEnd);
+    //        Vector2 max = Vector2.Max(_frameStart, _frameEnd);
+    //        Vector2 size = max - min; // Размер выделенной области
 
-            if (size.magnitude > 10) { // Убеждаемся в намерении пользователя рисовать рамку
+    //        if (size.magnitude > 10) { // Убеждаемся в намерении пользователя рисовать рамку
 
-                FrameImage.enabled = true; // Отображаем рамку
-                FrameImage.rectTransform.anchoredPosition = min; // Положение рамки
-                FrameImage.rectTransform.sizeDelta = size;  // Размеры рамки
+    //            FrameImage.enabled = true; // Отображаем рамку
+    //            FrameImage.rectTransform.anchoredPosition = min; // Положение рамки
+    //            FrameImage.rectTransform.sizeDelta = size;  // Размеры рамки
 
-                Rect rect = new Rect(min, size); // Прямоугольная область для выделения объектов
+    //            Rect rect = new Rect(min, size); // Прямоугольная область для выделения объектов
 
-                UnselectAll(); // Снимаем выделение со всех объектов
-                Companent[] allCompanent = FindObjectsOfType<Companent>(); // Массив всех юнитов на сцене
-                for (int i = 0; i < allCompanent.Length; i++) {
-                    Vector2 screenPosition = Camera.WorldToScreenPoint(allCompanent[i].transform.position); // Проецируем позиции объектов на плоскость экрана
-                    if (rect.Contains(screenPosition)) {
-                        Select(allCompanent[i]); // Выделяем объекты, находящиеся внутри рамки
-                    }
-                }
-                CurrentSelectionState = SelectionState.Frame;
-            }
-        }
-    }
+    //            UnselectAll(); // Снимаем выделение со всех объектов
+    //            Companent[] allCompanent = FindObjectsOfType<Companent>(); // Массив всех юнитов на сцене
+    //            for (int i = 0; i < allCompanent.Length; i++) {
+    //                Vector2 screenPosition = Camera.WorldToScreenPoint(allCompanent[i].transform.position); // Проецируем позиции объектов на плоскость экрана
+    //                if (rect.Contains(screenPosition)) {
+    //                    Select(allCompanent[i]); // Выделяем объекты, находящиеся внутри рамки
+    //                }
+    //            }
+    //            CurrentSelectionState = SelectionState.Frame;
+    //        }
+    //    }
+    //}
 
     void Select(SelectableObject selectableObject) {
         if (!ListOfSelected.Contains(selectableObject)) {

@@ -11,39 +11,36 @@ public class WireCreator : MonoBehaviour {
     
     public Pointer Pointer;
     private Vector3 _mousePosition;
-    private LineRenderer lineRender;
+    private LineRenderer _lineRender;
 
     private void Start() {
-        lineRender = GetComponent<LineRenderer>();
+        _lineRender = GetComponent<LineRenderer>();
     }
-
 
     private void Update() {
         if (Input.GetMouseButtonDown(0) && StartContact != null) {
             //Debug.Log("Start");
             //Debug.Log("Start: " + StartContact.transform.position);
-            lineRender.enabled = true;
-            lineRender.SetPosition(0, StartContact.transform.position);
-        }
-        else if (Input.GetMouseButtonUp(0) && EndContact != null) {          
+            _lineRender.enabled = true;
+            _lineRender.SetPosition(0, StartContact.transform.position);
+        } else if (Input.GetMouseButtonUp(0) && EndContact == null) {
+            StartContact = null;
+            EndContact = null;
+            _lineRender.SetPosition(0, Vector3.zero);
+            _lineRender.SetPosition(1, Vector3.zero);
+            _lineRender.enabled = false;
+        } else if (Input.GetMouseButtonUp(0) && EndContact != null) {
             //Debug.Log("End: " + EndContact.transform.position);
-            lineRender.SetPosition(1, EndContact.transform.position);
-
+            _lineRender.SetPosition(1, EndContact.transform.position);
             CreateWire();
-        }
-        else if (Input.GetMouseButton(0) && StartContact != null) {
+        } else if (Input.GetMouseButton(0) && StartContact != null) {
             //Debug.Log("Move");
             _mousePosition = Pointer.Aim.position;
             _mousePosition.y = 0;
 
-            lineRender.SetPosition(0, StartContact.transform.position);
-            lineRender.SetPosition(1, _mousePosition);
+            _lineRender.SetPosition(0, StartContact.transform.position);
+            _lineRender.SetPosition(1, _mousePosition);
         }
-        //else if (Input.GetMouseButtonUp(0) && EndContact == null) {
-        //    Debug.Log("Выделение снято");
-        //    StartContact = null;
-        //    EndContact = null;
-        //}
     }
 
     public void CreateWire() {
@@ -80,7 +77,7 @@ public class WireCreator : MonoBehaviour {
 
         StartContact = null;
         EndContact = null;
-        lineRender.enabled = false;
+        _lineRender.enabled = false;
     }
 
     private void CreateStraightWire(Wire newWire) {

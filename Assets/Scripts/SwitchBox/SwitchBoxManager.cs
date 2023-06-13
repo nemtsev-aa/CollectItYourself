@@ -28,7 +28,7 @@ public class SwitchBoxManager : MonoBehaviour
         newSwitchBox.gameObject.name = switchBoxData.name;
         newSwitchBox.SwitchBoxData = switchBoxData;
         newSwitchBox.transform.parent = transform;
-        AddSwichBoxFromList(newSwitchBox);
+        AddSwichBoxToList(newSwitchBox);
         ActiveSwichBox = newSwitchBox;
 
         for (int i = 0; i < switchBoxData.Companents.Count; i++) {
@@ -45,7 +45,14 @@ public class SwitchBoxManager : MonoBehaviour
         }
     }
 
-    public void AddSwichBoxFromList(SwitchBox switchBox) {
+    public void AddSwichBoxToList(SwitchBox switchBox) {
         SwitchBoxes.Add(switchBox);
+    }
+
+    public void RemoveSwichBoxFromList(SwitchBox switchBox) {
+        if (SwitchBoxes.Contains(switchBox)) {
+            SwitchBoxes.Remove(switchBox);
+            Destroy(switchBox.gameObject);
+        }
     }
 }

@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
+    public Task CurrentTask;
     [SerializeField] private List<Task> Tasks = new List<Task>();
 
-    public Task ShowTask(string taskName) {
-        Task newTask = new Task();
-
+    public Task FindTask(string taskName) {
+        
         foreach (var iTask in Tasks) {
             if (iTask.Name == taskName) {
-                return newTask;
+                CurrentTask = iTask;
+                return iTask;
             }
         }
+        CurrentTask = null;
         return null;
     }
 }

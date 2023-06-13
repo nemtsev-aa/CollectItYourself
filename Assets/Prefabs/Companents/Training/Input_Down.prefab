@@ -1304,7 +1304,6 @@ GameObject:
   - component: {fileID: 2486841509407197956}
   - component: {fileID: 2486841509407197961}
   - component: {fileID: 2486841509407197959}
-  - component: {fileID: -6927671023476337244}
   m_Layer: 0
   m_Name: Input_Down
   m_TagString: Untagged
@@ -1385,19 +1384,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &-6927671023476337244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2486841509407197960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b813de6a9e91b5e46b47fe1a7ae109ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Companent: {fileID: 2486841509407197961}
 --- !u!1 &2486841509441866189
 GameObject:
   m_ObjectHideFlags: 0
