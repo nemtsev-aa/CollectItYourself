@@ -24,11 +24,7 @@ public class WireCreator : MonoBehaviour {
             _lineRender.enabled = true;
             _lineRender.SetPosition(0, StartContact.transform.position);
         } else if (Input.GetMouseButtonUp(0) && EndContact == null) {
-            StartContact = null;
-            EndContact = null;
-            _lineRender.SetPosition(0, Vector3.zero);
-            _lineRender.SetPosition(1, Vector3.zero);
-            _lineRender.enabled = false;
+            ClearWire();
         } else if (Input.GetMouseButtonUp(0) && EndContact != null) {
             //Debug.Log("End: " + EndContact.transform.position);
             _lineRender.SetPosition(1, EndContact.transform.position);
@@ -100,5 +96,15 @@ public class WireCreator : MonoBehaviour {
             newWire.LineRenderer.SetPosition(i, points[i]);
             //Debug.Log("iPoint: " + points[i]);
         }
+    }
+
+    public void ClearWire() {
+        if (StartContact == null) return;
+
+        StartContact = null;
+        EndContact = null;
+        _lineRender.SetPosition(0, Vector3.zero);
+        _lineRender.SetPosition(1, Vector3.zero);
+        _lineRender.enabled = false;
     }
 }

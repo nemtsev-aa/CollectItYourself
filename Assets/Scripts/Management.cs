@@ -10,7 +10,8 @@ public enum SelectionState {
     Frame,
     Other,
     CompanentSelected,
-    ContactSelected
+    ContactSelected,
+    WagoContactSelected
 }
 
 public class Management : MonoBehaviour {
@@ -64,55 +65,55 @@ public class Management : MonoBehaviour {
                         Hovered = hitSelectable;
                         Hovered.OnHover();
                     }
-                } else {
+                }
+                else {
                     Hovered = hitSelectable;
                     Hovered.OnHover();
                 }
-            } else {
+            }
+            else {
                 UnhowerCurrent();
             }
-        } else {
+        }
+        else {
             UnhowerCurrent();
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (Hovered is Contact) {
-                CurrentSelectionState = SelectionState.ContactSelected;
-                WireCreator.StartContact = Hovered.GetComponent<Contact>();
-            } else {
-                if (ListOfSelected.Count == 1 && !_isOverUI) {
-                    Unselect(ListOfSelected[0]);
+            if (Hovered) {
+                UnselectAll();
+                if (Hovered is Companent) {
+                    Select(Hovered);
+                } else if (Hovered is Contact) {
+                    Select(Hovered);
+                    WireCreator.StartContact = Hovered.GetComponent<Contact>();
+                } else if (Hovered is WagoContact) {
+                    Select(Hovered);
+                } else if (Hovered is WagoClip) {
+                    Select(Hovered);
                 }
+            } else {
+                UnselectAll();
             }
         }
 
         if (Input.GetMouseButtonUp(0)) {
-            if (ListOfSelected.Count == 0) {
-                if (Hovered is WagoContact) {
-                    CurrentSelectionState = SelectionState.ContactSelected;
-                    WireCreator.EndContact = Hovered.GetComponent<WagoContact>();
-                }
+            if (ListOfSelected.Count == 0) return;
+
+            SelectableObject selectedObject = ListOfSelected[0]; // Выделенный контакт
+            if (selectedObject is Contact && Hovered is WagoContact) {
+                WireCreator.EndContact = Hovered.GetComponent<WagoContact>();
+            } else if (selectedObject is Contact && !Hovered) {
+                WireCreator.CreateWire();
             }
-            else if (ListOfSelected.Count == 1) {
-                GameObject selectedObject = ListOfSelected[0].gameObject;
-                if (selectedObject.GetComponent<Companent>()) {
-                    //Debug.Log("Выделен компанент");
-                    CurrentSelectionState = SelectionState.CompanentSelected;
-                }
-                else if (selectedObject.TryGetComponent(out WagoContact wagoContact)) {
-                    CurrentSelectionState = SelectionState.ContactSelected;
-                    if (wagoContact.ConnectedContact == null) {
-                        Debug.Log("Выделен Wago-контакт");
-                        WireCreator.EndContact = wagoContact;
-                    }
-                }
-                else if (selectedObject.TryGetComponent(out Contact contact)) {
-                    Debug.Log("Выделен контакт");
+            if (ListOfSelected.Count == 1) {
+                
+                if (selectedObject.TryGetComponent(out Contact contact)) {
+                    //Debug.Log("Выделен контакт");
                     CurrentSelectionState = SelectionState.ContactSelected;
                     WireCreator.StartContact = contact;
                 }
-            }
-            else {
+            } else {
                 if (ListOfSelected.Count > 1) {
                     //CurrentSelectionState = SelectionState.ClipsSelected;
                 }
@@ -170,6 +171,8 @@ public class Management : MonoBehaviour {
     }
 
     void UnselectAll() {
+        if (ListOfSelected.Count == 0) return;
+
         foreach (var iSelected in ListOfSelected) {
             iSelected.Unselect();
         }
