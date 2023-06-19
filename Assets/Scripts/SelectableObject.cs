@@ -6,17 +6,19 @@ using UnityEngine;
 public class SelectableObject : MonoBehaviour
 {
     public GameObject SelectIndicator;
+    private Vector3 _defaultScale;
 
     public virtual void Start() {
         SelectIndicator.SetActive(false);
+        _defaultScale = transform.localScale;
     }
 
     public virtual void OnHover() {
-        transform.localScale = Vector3.one * 1.05f;
+        transform.localScale = _defaultScale * 1.05f;
     }
 
     public virtual void OnUnhover() {
-        transform.localScale = Vector3.one;
+        transform.localScale = _defaultScale;
     }
 
     public virtual void Select() {

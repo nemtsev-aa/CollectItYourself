@@ -91,6 +91,12 @@ public class Management : MonoBehaviour {
                     Select(Hovered);
                 } else if (Hovered is WagoClip) {
                     Select(Hovered);
+                } else if (Hovered is PrincipalSchemeCompanent) {
+                    if (Hovered.GetComponent<PrincipalSchemeCompanent>().IsSelected) {
+                        Unselect(Hovered);
+                    } else {
+                        Select(Hovered);
+                    }  
                 }
             } else {
                 UnselectAll();
