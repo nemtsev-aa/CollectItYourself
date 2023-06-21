@@ -7,7 +7,7 @@ public class LearningProgressManager : MonoBehaviour
 {
     [SerializeField] private LearningProgressView _learningProgressView;
     [field: SerializeField] public int CurrentExpValue { get; private set; }
-    public List<ChapterData> ChapterDatas = new List<ChapterData>();
+    public List<ChapterPanelData> ChapterDatas = new List<ChapterPanelData>();
     
     [Space(10)]
     [SerializeField] private ChapterPanel _chapterPanelPrfab;
@@ -36,7 +36,7 @@ public class LearningProgressManager : MonoBehaviour
         }  
     }
 
-    private void ChapterComplite(ChapterData chapterData) {
+    private void ChapterComplite(ChapterPanelData chapterData) {
         CurrentExpValue += chapterData.ExpAmountToComplete;
         int _currentProgress = (CurrentExpValue / _fullExpAmount) * 100;
         ProgressValueChanget?.Invoke(_currentProgress);

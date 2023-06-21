@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ChapterPanel : MonoBehaviour {
 
-    public ChapterData ChapterData;
+    public ChapterPanelData ChapterData;
     [SerializeField] private TextMeshProUGUI _chepterTitle;
     [SerializeField] private Image _chepterIcon;
     [SerializeField] private Image _progressValueImage;
@@ -15,7 +15,7 @@ public class ChapterPanel : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _chepterDescription;
     [SerializeField] private TextMeshProUGUI _expAmount;
     
-    public event Action<ChapterData> OnChapterComplite;
+    public event Action<ChapterPanelData> OnChapterComplite;
     
     private int _currentExpAmount;
     private LearningProgressManager _learningProgressManager;

@@ -1,3 +1,5 @@
+using EPOOutline;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +15,8 @@ public enum CompanentType {
 }
 
 public class Companent : SelectableObject {
+    public bool IsSelected;
+
     public SwitchBox SwitchBox;
     public CompanentType Type;
     public string Name;
@@ -23,6 +27,14 @@ public class Companent : SelectableObject {
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private Animator _animator;
 
+    public event Action<bool> OnSelect;
+    public event Action<bool> OnUnselect;
+
+    [SerializeField] private Outlinable _outlinable;
+    [ColorUsage(true)]
+    [SerializeField] private Color _selectColor;
+
+    private Color _hoverColor;
     private Plane _dragPlane;
     private Vector3 offset;
     private Camera _myMainCamera;
@@ -31,6 +43,25 @@ public class Companent : SelectableObject {
 
     private void Awake() {
         _myMainCamera = Camera.main;
+    }
+
+    public override void Start() {
+        _hoverColor = _outlinable.FrontParameters.Color;
+    }
+
+    public override void OnHover() {
+        if (!IsSelected) {
+            SelectIndicator.SetActive(true);
+            _outlinable.enabled = true;
+            _outlinable.FrontParameters.Color = _hoverColor;
+        }
+    }
+
+    public override void OnUnhover() {
+        if (!IsSelected) {
+            _outlinable.enabled = false;
+            SelectIndicator.SetActive(false);
+        }
     }
 
     public void MovingActivate(bool status) {
@@ -44,16 +75,27 @@ public class Companent : SelectableObject {
     }
 
     public override void Select() {
-        base.Select();
         _animator.enabled = true;
         _animator.SetTrigger("Show");
         _animator.ResetTrigger("Hide");
+
+        IsSelected = true;
+        SelectIndicator.SetActive(IsSelected);
+
+        _outlinable.OutlineParameters.Color = _selectColor;
+        OnSelect?.Invoke(IsSelected);
     }
 
     public override void Unselect() {
         //Debug.Log("Unselect Companent");
         _animator.ResetTrigger("Show");
         _animator.SetTrigger("Hide");
+
+        IsSelected = false;
+        _outlinable.enabled = false;
+        _outlinable.OutlineParameters.Color = _hoverColor;
+        SelectIndicator.SetActive(IsSelected);
+        OnUnselect?.Invoke(IsSelected);
     }
 
     public void OnMouseDown() {
