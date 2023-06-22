@@ -18,6 +18,7 @@ public class LearningProgressManager : MonoBehaviour
 
     private int _fullExpAmount;
 
+    [ContextMenu("Initialization")]
     public void Initialization() {
         if (ChapterDatas.Count == 0 || _chapterPanelPrfab == null) {
             Debug.Log("Данные для инициализации модуля (обучение) не указаны!");
