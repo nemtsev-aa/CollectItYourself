@@ -51,7 +51,7 @@ public class Companent : SelectableObject {
 
     public override void OnHover() {
         if (!IsSelected) {
-            SelectIndicator.SetActive(true);
+            //SelectIndicator.SetActive(true);
             _outlinable.enabled = true;
             _outlinable.FrontParameters.Color = _hoverColor;
         }
@@ -60,7 +60,7 @@ public class Companent : SelectableObject {
     public override void OnUnhover() {
         if (!IsSelected) {
             _outlinable.enabled = false;
-            SelectIndicator.SetActive(false);
+            //SelectIndicator.SetActive(false);
         }
     }
 

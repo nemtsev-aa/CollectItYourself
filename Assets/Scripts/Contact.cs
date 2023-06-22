@@ -23,6 +23,6 @@ public class Contact : SelectableObject
     public Wire ConnectionWire;
 
     public override void OnHover() {
-        transform.localScale = Vector3.one * 1.5f;
+        //transform.localScale = Vector3.one * 1.5f;
     }
 }
