@@ -33,5 +33,5 @@ MonoBehaviour:
       type: 3}
   - SlotNumber: 4
     Name: Output
-    Companent: {fileID: 2486841509407197961, guid: 52c427193204b96429fb7d6a8d9bdc3c,
+    Companent: {fileID: 7526200252408752026, guid: 41f2d27799882dd4dbf0afa9dcabb60a,
       type: 3}

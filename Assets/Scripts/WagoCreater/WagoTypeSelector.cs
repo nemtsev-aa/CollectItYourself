@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class WagoTypeSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
     [SerializeField] private WagoCreator _wagoCreator;
-    [SerializeField] private WagoType _wagoType;
+    [SerializeField] private WagoClipData _wagoClipData;
     [SerializeField] private Image _wagoView;
 
     //private Button _button;
@@ -22,7 +22,7 @@ public class WagoTypeSelector : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        _wagoCreator.CreateWago(_wagoType);
+        _wagoCreator.CreateWago(_wagoClipData);
     }
 
     public void OnPointerExit(PointerEventData eventData) {

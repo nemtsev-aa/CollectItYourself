@@ -18,7 +18,5 @@ public class Pointer : MonoBehaviour
         plane.Raycast(ray, out float distance); // Измеряем расстояние от камеры до плоскости с помощью созданного луча
         Vector3 point = ray.GetPoint(distance); // Точка пересечения луча и плоскости
         Aim.position = point; // Перемещаем прицел в току пересечения луча и плоскости     
-        Vector3 toAim = Aim.position - transform.position; // Разворачиваем пистолет в направлении прицела
-        transform.rotation = Quaternion.LookRotation(toAim);
     }
 }

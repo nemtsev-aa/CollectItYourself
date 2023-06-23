@@ -17,15 +17,20 @@ public class WagoContact : Contact
     /// </summary>
     public Contact ConnectedContact;
 
-    private Material defaultMaterial;
+    private Material _defaultMaterial;
+    private Vector3 _defaultLocalScale;
 
     public override void Start() {
-        defaultMaterial = this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+        _defaultMaterial = this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+        _defaultLocalScale = transform.localScale;
     }
 
     public override void OnHover() {
-        base.OnHover();
-        transform.localScale = Vector3.one * 1.5f;
+        transform.localScale = _defaultLocalScale * 1.5f;
+    }
+
+    public override void OnUnhover() {
+        transform.localScale = _defaultLocalScale;
     }
 
     public void SetMaterial() {
@@ -33,7 +38,7 @@ public class WagoContact : Contact
     }
 
     public void ResetMaterial() {
-        this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = defaultMaterial;
+        this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = _defaultMaterial;
     }
 
     public void AddNewConnectToList() {
