@@ -47,6 +47,7 @@ public class WagoClip : Clips {
     private Color _hoverColor;
     public override void Start() {
         _hoverColor = _outlinable.FrontParameters.Color;
+        SelectIndicator.SetActive(false);
     }
 
     public override void OnHover() {

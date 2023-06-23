@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMove : MonoBehaviour {
     public Camera RaycastCamera;
@@ -14,11 +15,14 @@ public class CameraMove : MonoBehaviour {
     private Vector3 _cameraStartPosition;
     private Plane _plane;
 
+    private bool _isOverUI;
     private void Start() {
         _plane = new Plane(Vector3.up, Vector3.zero);
     }
 
     private void Update() {
+        _isOverUI = EventSystem.current.IsPointerOverGameObject();
+
         Ray ray = RaycastCamera.ScreenPointToRay(Input.mousePosition);
 
         float distance;
@@ -35,8 +39,10 @@ public class CameraMove : MonoBehaviour {
             transform.position = _cameraStartPosition - offset;
         }
 
-        transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
-        RaycastCamera.transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
+        if (!_isOverUI) {
+            transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
+            RaycastCamera.transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
+        }
     }
 
     void LateUpdate() {

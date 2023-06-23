@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private Image _mainImage;
+    [SerializeField] private Image _mainRenderer;
+    //[SerializeField] private SpriteRenderer _mainRenderer;
 
     private Sprite _mainSprite;
     private Transform _defaultParentTransform;
@@ -20,7 +21,7 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
         set {
             if (value != null) {
                 _mainSprite = value;
-                gameObject.GetComponent<Image>().sprite = value;
+                _mainRenderer.sprite = value;
             }
         }
     }
@@ -70,7 +71,8 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
     }
 
     public void OnDrag(PointerEventData eventData) {
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+        //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+        transform.position = _wagoCreator.Pointer.Aim.transform.position;
     }
 
     public void OnEndDrag(PointerEventData eventData) {
