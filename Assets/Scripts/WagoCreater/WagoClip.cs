@@ -108,7 +108,7 @@ public class WagoClip : Clips {
     [ContextMenu("ShowParentCompanent")]
     public void ShowParentCompanent() {
         foreach (var iConnection in Connections) {
-            Debug.Log(iConnection.Companent.GetComponent<Companent>().Name + "_" + iConnection.Contact.CurrentContactType);
+            Debug.Log(iConnection.CompanentName + "_" + iConnection.ContactType);
         }
     }
 }

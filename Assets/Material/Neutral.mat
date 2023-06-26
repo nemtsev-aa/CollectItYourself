@@ -10,8 +10,9 @@ Material:
   m_Name: Neutral
   m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -108,9 +109,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.29803923, g: 0.16078432, b: 0.45882356, a: 1}
-    - _Color: {r: 0.2980392, g: 0.16078427, b: 0.45882356, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.28235295, g: 0.17254902, b: 0.42352945, a: 1}
+    - _Color: {r: 0.28235292, g: 0.17254898, b: 0.42352942, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0.1509434, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1732732329897196615

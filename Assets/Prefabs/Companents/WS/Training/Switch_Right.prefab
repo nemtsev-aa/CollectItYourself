@@ -1285,9 +1285,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 563348153419973497}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 563348154632711138}
 --- !u!114 &563348153609102546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,9 +1441,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 563348153457318096}
-  CurrentContactType: 4
+  ContactType: 4
   Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 563348154355245218}
 --- !u!114 &563348153817445177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1921,9 +1923,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 563348152870181028}
-  CurrentContactType: 3
+  ContactType: 3
   Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 563348153438631743}
 --- !u!114 &563348154241025832
 MonoBehaviour:
   m_ObjectHideFlags: 0

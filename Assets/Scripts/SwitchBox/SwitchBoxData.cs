@@ -4,8 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 public struct ConnectionData {
-    public Companent Companent;
-    public Contact Contact;
+    public CompanentType CompanentType;
+    public string CompanentName;
+    public ContactType ContactType;
 }
 
 [System.Serializable]
@@ -21,6 +22,6 @@ public class SwitchBoxData : ScriptableObject
     //public string Name;
     public int PartNumber;
     public TaskType TaskType;
-
+    public Answer Answer;
     public List<CompanentData> Companents = new List<CompanentData>();
 }

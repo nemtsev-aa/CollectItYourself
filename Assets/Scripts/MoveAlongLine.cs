@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAlongLine : MonoBehaviour
-{
+public class MoveAlongLine : MonoBehaviour {
     public LineRenderer Line;
     public float Speed = 1f;
     public bool MovingForward = true;
 
     private int currentIndex = 0;
-   
+
 
     private void Update() {
         if (MovingForward) {
@@ -19,11 +18,11 @@ public class MoveAlongLine : MonoBehaviour
                     currentIndex++;
                 }
                 else {
-                    MovingForward = false;
-                    currentIndex--;
+                    transform.position = Line.GetPosition(0);
                 }
             }
-        } else {
+        }
+        else {
             transform.position = Vector3.MoveTowards(transform.position, Line.GetPosition(currentIndex), Time.deltaTime * Speed);
             if (transform.position == Line.GetPosition(currentIndex)) {
                 if (currentIndex > 0) {
@@ -36,4 +35,5 @@ public class MoveAlongLine : MonoBehaviour
             }
         }
     }
+    
 }

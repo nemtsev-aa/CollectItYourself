@@ -149,8 +149,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6261878, y: 0.119631395, z: 0.65441847}
-  m_Center: {x: 1.747592, y: 0.05636148, z: 3.1564682}
+  m_Size: {x: 0.57336783, y: 0.119631395, z: 0.6199217}
+  m_Center: {x: 1.6947721, y: 0.05636148, z: -2.0290313}
 --- !u!114 &7526200252408752026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,9 +476,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 7526200253938290683}
-  CurrentContactType: 2
+  ContactType: 2
   Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 7526200254082216402}
 --- !u!114 &7526200252500340373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,9 +1284,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 7526200252499024236}
-  CurrentContactType: 1
+  ContactType: 1
   Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 7526200253448200666}
 --- !u!114 &7526200253326931722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1457,9 +1459,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 7526200252860847349}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 7526200254372375344}
 --- !u!114 &7526200253495043710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1529,7 +1532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7526200253884095995
 RectTransform:
   m_ObjectHideFlags: 0

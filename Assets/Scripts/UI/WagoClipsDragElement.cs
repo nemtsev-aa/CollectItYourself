@@ -71,8 +71,8 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
     }
 
     public void OnDrag(PointerEventData eventData) {
-        //transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
-        transform.position = _wagoCreator.Pointer.Aim.transform.position;
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 100));
+        //transform.position = _wagoCreator.Pointer.Aim.transform.position;
     }
 
     public void OnEndDrag(PointerEventData eventData) {

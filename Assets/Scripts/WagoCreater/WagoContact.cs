@@ -42,10 +42,13 @@ public class WagoContact : Contact
     }
 
     public void AddNewConnectToList() {
-        ConnectionData newConnect;
-        newConnect.Contact = ConnectedContact;
-        newConnect.Companent = ConnectedContact.transform.parent.GetComponent<SelectableCollider>().SelectableObject.GetParentCompanent();
+        Companent companent = ConnectedContact.transform.parent.GetComponent<SelectableCollider>().SelectableObject.GetParentCompanent();
         
+        ConnectionData newConnect = new();
+        newConnect.ContactType = ConnectedContact.ContactType;
+        newConnect.CompanentType = companent.Type;
+        newConnect.CompanentName = companent.Name;
+
         ParentWagoClip.Connections.Add(newConnect);
     }
 }

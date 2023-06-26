@@ -44,7 +44,7 @@ public class XMLManager : MonoBehaviour {
                     string[] Contacts = WagoValue.Split(','); // Массив контактов
                     
                     foreach (var iContact in Contacts) {
-                        ContactData contactData = new ContactData();
+                        ConnectionData contactData = new ConnectionData();
                         contactData.CompanentName = iContact.Substring(0, 3);
                         Debug.Log("CompanentName " + contactData.CompanentName);
 

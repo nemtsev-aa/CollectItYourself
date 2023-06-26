@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PartNumber: 1
   TaskType: 0
+  Answer: {fileID: 11400000, guid: b69365a7e172bcd49a2481981645562f, type: 2}
   Companents:
   - SlotNumber: 0
     Name: XS1
