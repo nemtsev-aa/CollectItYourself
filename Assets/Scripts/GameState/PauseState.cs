@@ -8,10 +8,11 @@ public class PauseState : GameState
     [Tooltip("Окно паузы")]
     [SerializeField] private PauseWindow _pauseWindow;
 
+    private GameStateManager _gameStateManager;
     public override void Init(GameStateManager gameStateManager)
     {
-        base.Init(gameStateManager);
-        _resumeButton.onClick.AddListener(gameStateManager.SetAction);
+        _gameStateManager = gameStateManager;
+        _resumeButton.onClick.AddListener(_gameStateManager.SetAction); 
     }
 
     public override void Enter()

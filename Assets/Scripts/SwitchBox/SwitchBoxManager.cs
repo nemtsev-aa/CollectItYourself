@@ -9,10 +9,14 @@ public class SwitchBoxManager : MonoBehaviour
     [SerializeField] private SwitchBox _switchBoxPrefab2;
 
     public List<SwitchBox> SwitchBoxes = new List<SwitchBox>();
-    public SwitchBox ActiveSwichBox;
-
-    public SwitchingResult Result;    
+    public SwitchBox ActiveSwichBox;    
     public event Action<int> ActiveSwitchBoxChanged;
+
+    private Management _management;
+
+    private void Awake() {
+
+    }
 
     public void SetActiveSwichBox(SwitchBox switchBox) {
         ActiveSwichBox = switchBox;
@@ -53,19 +57,19 @@ public class SwitchBoxManager : MonoBehaviour
 
             newSwitchBox.Companents.Add(newCompanent);
 
-            newSwitchBox.OnWin += NewSwitchBox_OnWin;
-            newSwitchBox.OnLose += NewSwitchBox_OnLose;
+            newSwitchBox.OnWin += SwitchBox_OnWin;
+            newSwitchBox.OnLose += SwitchBox_OnLose;
         }
 
         return newSwitchBox;
     }
 
-    private void NewSwitchBox_OnLose(int arg1, string arg2) {
-        throw new NotImplementedException();
+    private void SwitchBox_OnLose(SwitchingResult switchingResult) {
+        GameStateManager.Instance.SetLose();
     }
 
-    private void NewSwitchBox_OnWin(string obj) {
-        throw new NotImplementedException();
+    private void SwitchBox_OnWin(SwitchingResult switchingResult) {
+        GameStateManager.Instance.SetWin();
     }
 
     public void AddSwichBoxToList(SwitchBox switchBox) {
@@ -81,7 +85,6 @@ public class SwitchBoxManager : MonoBehaviour
 
     public void CheckSwichBox(int number) {
         SwitchBoxes[number-1].—hecking—onnections();
-
     }
 
     public void CheckSwichBoxes() {

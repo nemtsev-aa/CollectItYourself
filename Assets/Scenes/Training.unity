@@ -593,8 +593,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: -337.68085}
-  m_SizeDelta: {x: 197.663, y: 107.681}
+  m_AnchoredPosition: {x: -97, y: -435}
+  m_SizeDelta: {x: 360, y: 60}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &134842092
 MonoBehaviour:
@@ -665,14 +665,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.89019614, b: 0.95294124, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1024,8 +1024,6 @@ MonoBehaviour:
   WireCreator: {fileID: 1773540135}
   SwitchBoxData: {fileID: 0}
   SwitchBoxManager: {fileID: 1450469028}
-  TaskManager: {fileID: 1626948569}
-  TaskSelector: {fileID: 1442757717}
   ActionState: {fileID: 4784465998729197249}
 --- !u!4 &187238503
 Transform:
@@ -5246,7 +5244,7 @@ GameObject:
   - component: {fileID: 1506788459}
   - component: {fileID: 1506788458}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CheckSwitching (Text)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5292,17 +5290,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Check Switching
+  m_text: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3d3d6f40e61c30147b1bb3f2b92bc37a, type: 2}
+  m_sharedMaterial: {fileID: -8809794338145149309, guid: 3d3d6f40e61c30147b1bb3f2b92bc37a,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5319,8 +5318,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8069,6 +8068,7 @@ MonoBehaviour:
   _pauseState: {fileID: 4784466000299246653}
   _winState: {fileID: 4784465999272211926}
   _loseState: {fileID: 4784466000213356904}
+  Management: {fileID: 187238502}
 --- !u!1 &4784465999272211924
 GameObject:
   m_ObjectHideFlags: 0
@@ -8217,8 +8217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf228b0632abe145ada76a197dc32c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tabToStartButton: {fileID: 6611579769045305360}
   _startMenuObject: {fileID: 6611579770213150830}
+  _tabToStartButton: {fileID: 6611579769045305360}
+  TaskManager: {fileID: 1626948569}
+  TaskSelector: {fileID: 1442757717}
 --- !u!4 &4784466000451227742
 Transform:
   m_ObjectHideFlags: 0
@@ -8600,7 +8602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6611579768392717042
 MonoBehaviour:
   m_ObjectHideFlags: 0

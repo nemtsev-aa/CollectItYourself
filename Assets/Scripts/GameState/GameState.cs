@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
-    protected GameStateManager _gameStateManager;
     private bool _wasSet; // Отметка первой активации состояния
 
     public virtual void Init(GameStateManager gameStateManager)
     {
-        _gameStateManager = gameStateManager;
+    
     }
 
     public virtual void EnterFirstTime()

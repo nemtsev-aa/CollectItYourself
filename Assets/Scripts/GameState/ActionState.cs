@@ -19,16 +19,10 @@ public class ActionState : GameState
         base.EnterFirstTime();
     }
 
-    public override void Init(GameStateManager gameStateManager)
-    {
-        base.Init(gameStateManager);
-    }
-
     public override void Enter()
     {
         base.Enter();
         _activeWindow.Show();
-        Management.ShowTask();
     }
 
     public override void Exit()

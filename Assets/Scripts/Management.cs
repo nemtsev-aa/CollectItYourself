@@ -26,17 +26,14 @@ public class Management : MonoBehaviour {
     public SwitchBoxData SwitchBoxData;
     public SwitchBoxManager SwitchBoxManager;
 
-    public TaskManager TaskManager;
-    public TMP_Dropdown TaskSelector;
+
     public ActionState ActionState;
 
     private bool _isOverUI;
 
     [ContextMenu("ShowTask")]
-    public void ShowTask() {
+    public void ShowTask(Task selectionTask) {
         Debug.Log("Management_ShowTask");
-        string TaskName = TaskSelector.options[TaskSelector.value].text;
-        Task selectionTask = TaskManager.FindTask(TaskName);
         SwitchBoxData = selectionTask.TaskData[0].SwitchBoxsData;
         SwitchBox newBox = SwitchBoxManager.CreateSwichBox(SwitchBoxData);
 
@@ -44,8 +41,7 @@ public class Management : MonoBehaviour {
     }
 
     [ContextMenu("HideTask")]
-    public void ClearTask() {
-        Task hideTask = TaskManager.CurrentTask;
+    public void ClearTask(Task hideTask) {
         SwitchBoxData = null;
         SwitchBoxManager.RemoveSwichBoxFromList(SwitchBoxManager.ActiveSwichBox);
     }

@@ -21,8 +21,8 @@ public class SwitchBox : MonoBehaviour {
     public Transform WiresTransform;
     public List<Wire> Wires = new List<Wire>();
 
-    public event Action<string> OnWin;
-    public event Action<int, string> OnLose;
+    public event Action<SwitchingResult> OnWin;
+    public event Action<SwitchingResult> OnLose;
 
     public void AddNewWagoClipToList(WagoClip wago) {
         WagoClips.Add(wago);
@@ -105,11 +105,11 @@ public class SwitchBox : MonoBehaviour {
             ShowErrorConnections();
             errorsProcentage = (allErrorsCount / allContactsCount) * 100;
             Debug.Log("Ошибок в сборке: " + allErrorsCount + "/" + allContactsCount);
-            OnLose?.Invoke(allErrorsCount, this.SwitchBoxData.PartNumber.ToString());
+            OnLose?.Invoke(Result);
         }
         else {
             Debug.Log("Верная сборка!");
-            OnWin?.Invoke(this.SwitchBoxData.PartNumber.ToString());
+            OnWin?.Invoke(Result);
         }
 
         if (Result.SwitchingTimeValue != 0) {

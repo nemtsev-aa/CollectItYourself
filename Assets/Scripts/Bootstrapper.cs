@@ -6,8 +6,7 @@ public class Bootstrapper : MonoBehaviour
 {
     [SerializeField] private GameStateManager _gameStateManager;
 
-    private void Awake()
-    {
+    private void Awake() {
         _gameStateManager.Init();
     }
 }
