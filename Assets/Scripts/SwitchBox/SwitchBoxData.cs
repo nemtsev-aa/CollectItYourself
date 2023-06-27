@@ -21,7 +21,7 @@ public class SwitchBoxData : ScriptableObject
 {
     //public string Name;
     public int PartNumber;
-    public TaskType TaskType;
+    public Task Task;
     public Answer Answer;
     public List<CompanentData> Companents = new List<CompanentData>();
 }

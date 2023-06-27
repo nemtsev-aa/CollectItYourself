@@ -1,20 +1,28 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class SwitchBox : MonoBehaviour {
-    public SwitchBoxData SwitchBoxData;
-    public bool isOpen;
-    public List<Transform> Slots = new List<Transform>();
+    [Header("Switching Parametrs")]
+    public Dictionary<string, ConnectionData> ErrorConnects = new();
+    [field: SerializeField] public bool isOpen { get; private set; }
+    [field: SerializeField] public SwitchingResult Result = new SwitchingResult();
 
-    public Transform CompanentsTransform;
+    [Header("Data")]
+    public SwitchBoxData SwitchBoxData;
+    public List<Transform> Slots = new List<Transform>();
+    [SerializeField] private Transform CompanentsTransform;
     public List<Companent> Companents = new List<Companent>();
+    [Header("Clips")]
     public Transform WagoClipsTransform;
     public List<WagoClip> WagoClips = new List<WagoClip>();
+    [Header("Wires")]
     public Transform WiresTransform;
     public List<Wire> Wires = new List<Wire>();
 
-    private List<ConnectionData> _errorConnects = new List<ConnectionData>();
+    public event Action<string> OnWin;
+    public event Action<int, string> OnLose;
 
     public void AddNewWagoClipToList(WagoClip wago) {
         WagoClips.Add(wago);
@@ -37,6 +45,29 @@ public class SwitchBox : MonoBehaviour {
             Destroy(companent.gameObject);
         }
     }
+
+    public void ShowErrorConnections() {
+        if (ErrorConnects.Count == 0) return;
+
+        foreach (KeyValuePair<string, ConnectionData> iConnection in ErrorConnects) {
+            Contact errorContact = FindContactInCompanents(iConnection.Value);
+
+            if (errorContact) {
+                errorContact.StartBlink();
+                errorContact.Select();
+            }
+        }
+    }
+
+    public void SetTimeValue() {
+
+    }
+
+    public void GetTimeValue() {
+
+    }
+
+    #region СheckingСonnections
     [ContextMenu("СheckingСonnections")]
     public int СheckingСonnections() {
         if (WagoClips.Count == 0) {
@@ -46,37 +77,55 @@ public class SwitchBox : MonoBehaviour {
 
         float errorsProcentage = 0; // Процент ошибок в сборке
         int allContactsCount = 0; // Общее количество контактов в коробке
-        int allErrorsCount = 0; // Количество контактов подключенных с ошибкой
+        int allErrorsCount; // Количество контактов подключенных с ошибкой
 
         // Проверяем каждый зажим
         foreach (WagoClip iWagoClip in WagoClips) {
             List<ConnectionData> connectionsResult = iWagoClip.Connections; // Данные о подключенных компанентах и их контактах
-            if (iWagoClip.Connections.Count > 0 ) {
+            if (iWagoClip.Connections.Count > 0) {
                 List<ConnectionData> connectionsAnswer = FindConnectionInAnswer(iWagoClip.Connections[0]); // Осуществляем поиск Wago-зажима в ответе по первому подключенному контакту 
                 if (connectionsAnswer != null) {
                     allContactsCount += connectionsAnswer.Count; // Количество контактов в проверяемом Wago-зажимe
                     List<ConnectionData> errorConnectsList = CompareLists(connectionsResult, connectionsAnswer); // Список ошибочных подключений
-
-                    if (errorConnectsList.Count > 0) {
-                        int errorCount = errorConnectsList.Count; // Количество ошибок в проверяемом Wago-зажимe
-                        _errorConnects.AddRange(errorConnectsList); // Общий список ошибочных подключений
+                    int errorCount = errorConnectsList.Count; // Количество ошибок в проверяемом Wago-зажимe
+                    if (ErrorConnects.Count >= 0) { // Словарь с найденными ошибками не пуст
+                        foreach (ConnectionData iError in errorConnectsList) {
+                            string newError = iError.CompanentName.ToString() + "_" + iError.ContactType.ToString();
+                            if (!ErrorConnects.ContainsKey(newError)) {
+                                ErrorConnects.Add(newError, iError); // Пополняем словарь ошибочных подключений новой записью
+                            }
+                        }
                     }
                 }
             }
         }
 
-        allErrorsCount = _errorConnects.Count; // Общее количество ошибок
+        allErrorsCount = ErrorConnects.Count; // Общее количество ошибок
         if (allErrorsCount > 0) {
             ShowErrorConnections();
             errorsProcentage = (allErrorsCount / allContactsCount) * 100;
             Debug.Log("Ошибок в сборке: " + allErrorsCount + "/" + allContactsCount);
-        } else {
-            Debug.Log("Верная сборка!");
+            OnLose?.Invoke(allErrorsCount, this.SwitchBoxData.PartNumber.ToString());
         }
-        
+        else {
+            Debug.Log("Верная сборка!");
+            OnWin?.Invoke(this.SwitchBoxData.PartNumber.ToString());
+        }
+
+        if (Result.SwitchingTimeValue != 0) {
+            Result.TaskName = SwitchBoxData.Task.Name;
+            Result.SwitchBoxNumber = SwitchBoxData.PartNumber;
+            Result.ErrorCount = ErrorConnects.Count;
+
+            if (ErrorConnects.Count > 0) {
+                if (!CreateErrorsList()) {
+                    Debug.Log("Ошибка переноса списка ошибок из словаря!" + this.name);
+                }
+            }
+        }
         return (int)errorsProcentage;
     }
-
+    
     private List<ConnectionData> FindConnectionInAnswer(ConnectionData connectionData) {
         Answer answer = SwitchBoxData.Answer; // Данные верного подключения
         List<AnswerData> answerDatas = answer.AnswerDataList; // Список Wago-зажимов
@@ -110,24 +159,11 @@ public class SwitchBox : MonoBehaviour {
         return errorConnectionList;
     }
 
-    public void ShowErrorConnections() {
-        if (_errorConnects.Count == 0) return;
-        
-        foreach (ConnectionData iConnection in _errorConnects) {
-            Contact errorContact = FindContactInConpanents(iConnection);
-
-            if (errorContact) {
-                errorContact.StartBlink();
-                errorContact.Select();
-            }
-        }  
-    }
-
-    private Contact FindContactInConpanents(ConnectionData connection) {
+    private Contact FindContactInCompanents(ConnectionData connection) {
         foreach (Companent iCompanent in Companents) {
             if (iCompanent.Name == connection.CompanentName && iCompanent.Type == connection.CompanentType) {
                 //Debug.Log(connection.CompanentName);
-                
+
                 foreach (Contact iContact in iCompanent.Contacts) {
                     //Debug.Log(connection.ContactType);
                     if (iContact.ContactType == connection.ContactType) {
@@ -139,4 +175,24 @@ public class SwitchBox : MonoBehaviour {
         }
         return null;
     }
+
+    private bool CreateErrorsList() {
+        foreach (KeyValuePair<string, ConnectionData> iConnection in ErrorConnects) {
+            if (!Result.ErrorList.Contains(iConnection.Value)) {
+                Result.ErrorList.Add(iConnection.Value);
+            }
+        }
+
+        //if (ErrorConnects.Count != Result.ErrorList.Count) {
+        //    return false;
+        //} else {
+        //    return true;
+        //}
+
+        return ErrorConnects.Count != Result.ErrorList.Count ? true : false;
+    }
+
+    #endregion
+
+
 }

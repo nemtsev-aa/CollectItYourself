@@ -39,4 +39,12 @@ public class Stopwatch : MonoBehaviour
 
         return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
     }
+
+    private void SetTimeValue(float timeValue) {
+        _timeValue = timeValue;
+    }
+
+    private float GetTimeValue() {
+        return _timeValue;
+    }
 }

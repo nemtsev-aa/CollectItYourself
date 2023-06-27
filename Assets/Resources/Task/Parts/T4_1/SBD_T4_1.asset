@@ -10,32 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43879f8996fed66418ecbe77941cbe28, type: 3}
-  m_Name: Training_Part2
+  m_Name: SBD_T4_1
   m_EditorClassIdentifier: 
-  PartNumber: 2
-  TaskType: 0
+  PartNumber: 1
+  Task: {fileID: 11400000, guid: c1703ebbb07dca24d8e87f60b7f0e4d6, type: 2}
+  Answer: {fileID: 11400000, guid: 73de1e7b309e89540ae61416d967f8aa, type: 2}
   Companents:
   - SlotNumber: 0
-    Name: SA1
+    Name: SA6
     Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
       type: 3}
   - SlotNumber: 1
-    Name: BK
-    Companent: {fileID: 3075138961321192293, guid: 9563250a41aa999469294fb99117f5aa,
+    Name: SA5
+    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
       type: 3}
   - SlotNumber: 2
-    Name: EL1
-    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
+    Name: Output
+    Companent: {fileID: 7526200252408752026, guid: 41f2d27799882dd4dbf0afa9dcabb60a,
       type: 3}
   - SlotNumber: 3
-    Name: EL2
+    Name: EL3
     Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
       type: 3}
   - SlotNumber: 4
+    Name: EL4
+    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
+      type: 3}
+  - SlotNumber: 5
     Name: Input
     Companent: {fileID: 2486841509407197961, guid: 03bde88bf071c95458b518b75f76b7fd,
       type: 3}
-  - SlotNumber: 5
-    Name: SA2
+  - SlotNumber: 6
+    Name: SA8
+    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+      type: 3}
+  - SlotNumber: 7
+    Name: SA7
     Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
       type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SBD_T1_1
   m_EditorClassIdentifier: 
   PartNumber: 1
-  TaskType: 0
+  Task: {fileID: 11400000, guid: 03db22952bcf58f4eb27e81e94c8cdca, type: 2}
   Answer: {fileID: 11400000, guid: b69365a7e172bcd49a2481981645562f, type: 2}
   Companents:
   - SlotNumber: 0

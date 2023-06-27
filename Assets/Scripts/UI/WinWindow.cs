@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinWindow : MonoBehaviour
 {
+    [Tooltip("Надпись - время сборки")]
+    [SerializeField] private TextMeshProUGUI _timeCountText;
     [Tooltip("Кнопка для продолжения")]
     [SerializeField] private Button _continueButton;
 
@@ -19,6 +22,10 @@ public class WinWindow : MonoBehaviour
 
     public void Hide()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameStateManager.Instance.SetMenu();
+    }
+
+    public void ShowResult(int errorCount, string timeValue) {
+        _timeCountText.text = timeValue;
     }
 }

@@ -28,23 +28,24 @@ public class Management : MonoBehaviour {
 
     public TaskManager TaskManager;
     public TMP_Dropdown TaskSelector;
-    public ActiveWindow ActiveWindow;
+    public ActionState ActionState;
 
     private bool _isOverUI;
 
     [ContextMenu("ShowTask")]
     public void ShowTask() {
+        Debug.Log("Management_ShowTask");
         string TaskName = TaskSelector.options[TaskSelector.value].text;
         Task selectionTask = TaskManager.FindTask(TaskName);
-        ActiveWindow.ShowTask(selectionTask);
         SwitchBoxData = selectionTask.TaskData[0].SwitchBoxsData;
-        SwitchBoxManager.CreateSwichBox(SwitchBoxData);
+        SwitchBox newBox = SwitchBoxManager.CreateSwichBox(SwitchBoxData);
+
+        ActionState.ShowSwitchBox(newBox);
     }
 
     [ContextMenu("HideTask")]
     public void ClearTask() {
         Task hideTask = TaskManager.CurrentTask;
-        ActiveWindow.HideTask(hideTask);
         SwitchBoxData = null;
         SwitchBoxManager.RemoveSwichBoxFromList(SwitchBoxManager.ActiveSwichBox);
     }

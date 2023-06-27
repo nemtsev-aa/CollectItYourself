@@ -25,6 +25,7 @@ public class GameState : MonoBehaviour
             _wasSet = true;
         }
     }
+
     public virtual void Exit()
     {
 
