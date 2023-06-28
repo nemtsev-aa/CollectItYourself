@@ -13,7 +13,7 @@ public class Clips : Connections
     }
 
     public virtual void OnMouseDown() {
-        //Debug.Log("Перемещение запущено");
+        Debug.Log("Перемещение запущено");
         _dragPlane = new Plane(_myMainCamera.transform.forward, transform.position);
         Ray camRay = _myMainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -29,7 +29,7 @@ public class Clips : Connections
     }
 
     public virtual void OnMouseUp() {
-        //Debug.Log("Перемещение завершено");
+        Debug.Log("Перемещение завершено");
     }
 
 }

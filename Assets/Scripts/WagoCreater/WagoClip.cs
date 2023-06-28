@@ -19,17 +19,8 @@ public class WagoClip : Clips {
     public bool IsSelected;
     [Header("Parameters")]
     public SwitchBox SwitchBox;
-    /// <summary>
-    /// Имя зажима
-    /// </summary>
     public string Name;
-    /// <summary>
-    /// Список контактов, принадлежащих зажиму
-    /// </summary>
     public List<WagoContact> WagoContacts = new List<WagoContact>();
-    /// <summary>
-    /// Подключения
-    /// </summary>
     public List<ConnectionData> Connections = new List<ConnectionData>();
 
     [Header("View")]
@@ -44,10 +35,15 @@ public class WagoClip : Clips {
     [ColorUsage(true)]
     [SerializeField] private Color _selectColor;
 
+    [Header("Functions")]
+    [SerializeField] private Button _deleteButton;
+    [SerializeField] private Button _moveButton;
+
     private Color _hoverColor;
     public override void Start() {
         _hoverColor = _outlinable.FrontParameters.Color;
         SelectIndicator.SetActive(false);
+        _deleteButton.onClick.AddListener(DeleteClip);
     }
 
     public override void OnHover() {
@@ -68,6 +64,7 @@ public class WagoClip : Clips {
     public void ShowName() {
         _nameText.text = "WAGO " + Name;
     }
+
     public override void Select() {
         base.Select();
         _animator.enabled = true;
@@ -80,6 +77,7 @@ public class WagoClip : Clips {
         _outlinable.OutlineParameters.Color = _selectColor;
         OnSelect?.Invoke(IsSelected);
     }
+
     public override void Unselect() {
         //Debug.Log("Unselect Companent");
         _animator.ResetTrigger("Show");
@@ -91,10 +89,12 @@ public class WagoClip : Clips {
         SelectIndicator.SetActive(IsSelected);
         OnUnselect?.Invoke(IsSelected);
     }
+
     public override void OnMouseDrag() {
         base.OnMouseDrag();
         UpdateLocationWires();
     }
+
     public void UpdateLocationWires() {
         for (int i = 0; i < WagoContacts.Count; i++) {
             WagoContact iWagoContact = WagoContacts[i];
@@ -110,5 +110,11 @@ public class WagoClip : Clips {
         foreach (var iConnection in Connections) {
             Debug.Log(iConnection.CompanentName + "_" + iConnection.ContactType);
         }
+    }
+
+    public void DeleteClip() {
+        Debug.Log("DeleteClip");
+        SwitchBox.RemoveWagoClipFromList(this);
+        Destroy(gameObject);
     }
 }

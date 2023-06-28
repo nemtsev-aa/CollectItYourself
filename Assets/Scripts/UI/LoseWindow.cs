@@ -7,23 +7,23 @@ using UnityEngine.UI;
 
 public class LoseWindow : MonoBehaviour
 {
-    [Tooltip("Надпись - количество ошибок")]
-    [SerializeField] private TextMeshProUGUI _errorsCountText;
-    [Tooltip("Надпись - время сборки")]
-    [SerializeField] private TextMeshProUGUI _timeCountText;
+    [Tooltip("Визуализатор результатов")]
+    [SerializeField] private ResultsView _resultsView;
 
     [Tooltip("Кнопка для выхода")]
     [SerializeField] private Button _exitButton;
     [Tooltip("Кнопка для возврата")]
     [SerializeField] private Button _returnButton;
-    
+
     private void Awake() {
         _exitButton.onClick.AddListener(Exit);
-        _returnButton.onClick.AddListener(Exit);
+        _returnButton.onClick.AddListener(Return);
+        _resultsView.Initialize();
     }
 
     public void Show() {
         gameObject.SetActive(true);
+        ShowResult();
     }
 
     public void Exit() {
@@ -34,8 +34,7 @@ public class LoseWindow : MonoBehaviour
         GameStateManager.Instance.SetAction();
     }
 
-    public void ShowResult(int errorCount, string timeValue) {
-        _errorsCountText.text = "Ошибок: " + errorCount.ToString();
-        _timeCountText.text = timeValue;
+    public void ShowResult() {
+        _resultsView.UploadResultsToPanel();
     }
 }

@@ -26,7 +26,6 @@ public class WireCreator : MonoBehaviour {
         } else if (Input.GetMouseButtonUp(0) && EndContact == null) {
             ClearWire();
         } else if (Input.GetMouseButtonUp(0) && EndContact != null) {
-            //Debug.Log("End: " + EndContact.transform.position);
             _lineRender.SetPosition(1, EndContact.transform.position);
             CreateWire();
         } else if (Input.GetMouseButton(0) && StartContact != null) {
@@ -77,8 +76,10 @@ public class WireCreator : MonoBehaviour {
     }
 
     private void CreateStraightWire(Wire newWire) {
-        Vector3[] points = new Vector3[] { StartContact.transform.position, EndContact.transform.position };
-        AddPointFromLineRenderer(newWire, points);
+        if (StartContact != null && EndContact != null) {
+            Vector3[] points = new Vector3[] { StartContact.transform.position, EndContact.transform.position };
+            AddPointFromLineRenderer(newWire, points);
+        }
     }
 
     private void CreatePolyWire() {

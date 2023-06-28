@@ -145,9 +145,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 3943225637323788453}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 6622256119454564365}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -812,9 +813,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 3943225636498188278}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 6622256119454564365}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -893,9 +895,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 3943225636968889015}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 6622256119454564365}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -974,9 +977,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 3943225637752649305}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 6622256119454564365}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1191,9 +1195,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 3943225636948188476}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 6622256119454564365}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1842,6 +1847,8 @@ MonoBehaviour:
   _animator: {fileID: 4616201299974597496}
   _outlinable: {fileID: 3276395256561797187}
   _selectColor: {r: 0, g: 1, b: 0.039215688, a: 1}
+  _deleteButton: {fileID: 4546958285902232517}
+  _moveButton: {fileID: 4546958285809794371}
 --- !u!95 &4616201299974597496
 Animator:
   serializedVersion: 5

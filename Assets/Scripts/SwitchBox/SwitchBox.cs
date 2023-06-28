@@ -7,7 +7,7 @@ public class SwitchBox : MonoBehaviour {
     [Header("Switching Parametrs")]
     public Dictionary<string, ConnectionData> ErrorConnects = new();
     [field: SerializeField] public bool isOpen { get; private set; }
-    [field: SerializeField] public SwitchingResult Result = new SwitchingResult();
+    [field: SerializeField] public SingleSwitchingResult Result = new SingleSwitchingResult();
 
     [Header("Data")]
     public SwitchBoxData SwitchBoxData;
@@ -21,8 +21,11 @@ public class SwitchBox : MonoBehaviour {
     public Transform WiresTransform;
     public List<Wire> Wires = new List<Wire>();
 
-    public event Action<SwitchingResult> OnWin;
-    public event Action<SwitchingResult> OnLose;
+    private Stopwatch _stopwatch;
+
+    public void Initialized(Stopwatch stopwatch) {
+        _stopwatch = stopwatch;
+    }
 
     public void AddNewWagoClipToList(WagoClip wago) {
         WagoClips.Add(wago);
@@ -37,6 +40,12 @@ public class SwitchBox : MonoBehaviour {
 
     public void AddNewLineFromList(Wire line) {
         Wires.Add(line);
+    }
+
+    public void RemoveLineToList(Wire line) {
+        Wires.Remove(line);
+        line.StartContact.ConnectionWire = null;
+        Destroy(line.gameObject);
     }
 
     public void RemoveCompanent(Companent companent) {
@@ -60,11 +69,11 @@ public class SwitchBox : MonoBehaviour {
     }
 
     public void SetTimeValue() {
-
+        _stopwatch.SetTimeValue(Result.SwitchingTimeValue);
     }
 
     public void GetTimeValue() {
-
+        Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
     }
 
     #region СheckingСonnections
@@ -74,6 +83,8 @@ public class SwitchBox : MonoBehaviour {
             Debug.Log("Схема не собрана!");
             return 100;
         }
+
+        _stopwatch.SetStatus(false);
 
         float errorsProcentage = 0; // Процент ошибок в сборке
         int allContactsCount = 0; // Общее количество контактов в коробке
@@ -101,31 +112,36 @@ public class SwitchBox : MonoBehaviour {
         }
 
         allErrorsCount = ErrorConnects.Count; // Общее количество ошибок
+
+        Result.TaskName = SwitchBoxData.Task.Name;
+        Result.SwitchBoxNumer = SwitchBoxData.PartNumber;
+        Result.ErrorCountText = allErrorsCount + "/" + allContactsCount;
+
+        if (ErrorConnects.Count > 0) {
+            if (!CreateErrorsList()) {
+                Debug.Log("Ошибка переноса списка ошибок из словаря!" + this.name);
+            }
+        }
+
+        Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
+        Result.SwitchingTimeText = _stopwatch.GetTimeText();
+
+        gameObject.SetActive(false);
+
         if (allErrorsCount > 0) {
             ShowErrorConnections();
             errorsProcentage = (allErrorsCount / allContactsCount) * 100;
             Debug.Log("Ошибок в сборке: " + allErrorsCount + "/" + allContactsCount);
-            OnLose?.Invoke(Result);
+            EventBus.Instance.IncorrectChecked?.Invoke(Result);
         }
         else {
             Debug.Log("Верная сборка!");
-            OnWin?.Invoke(Result);
+            EventBus.Instance.CorrectChecked?.Invoke(Result);
         }
-
-        if (Result.SwitchingTimeValue != 0) {
-            Result.TaskName = SwitchBoxData.Task.Name;
-            Result.SwitchBoxNumber = SwitchBoxData.PartNumber;
-            Result.ErrorCount = ErrorConnects.Count;
-
-            if (ErrorConnects.Count > 0) {
-                if (!CreateErrorsList()) {
-                    Debug.Log("Ошибка переноса списка ошибок из словаря!" + this.name);
-                }
-            }
-        }
+       
         return (int)errorsProcentage;
     }
-    
+
     private List<ConnectionData> FindConnectionInAnswer(ConnectionData connectionData) {
         Answer answer = SwitchBoxData.Answer; // Данные верного подключения
         List<AnswerData> answerDatas = answer.AnswerDataList; // Список Wago-зажимов
@@ -182,13 +198,6 @@ public class SwitchBox : MonoBehaviour {
                 Result.ErrorList.Add(iConnection.Value);
             }
         }
-
-        //if (ErrorConnects.Count != Result.ErrorList.Count) {
-        //    return false;
-        //} else {
-        //    return true;
-        //}
-
         return ErrorConnects.Count != Result.ErrorList.Count ? true : false;
     }
 

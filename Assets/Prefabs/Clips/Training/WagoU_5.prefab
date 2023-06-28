@@ -501,6 +501,8 @@ MonoBehaviour:
   _animator: {fileID: 3575799353226793794}
   _outlinable: {fileID: 271327463152944963}
   _selectColor: {r: 0, g: 1, b: 0.039215688, a: 0}
+  _deleteButton: {fileID: 5662654720276104569}
+  _moveButton: {fileID: 5662654720182944767}
 --- !u!95 &3575799353226793794
 Animator:
   serializedVersion: 5
@@ -749,9 +751,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542658546460831}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1362,9 +1365,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542658170987782}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1443,9 +1447,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542659528953443}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1524,9 +1529,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542658895266445}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1605,9 +1611,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542658291408844}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}

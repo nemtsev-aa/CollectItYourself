@@ -42,13 +42,31 @@ public class WagoContact : Contact
     }
 
     public void AddNewConnectToList() {
-        Companent companent = ConnectedContact.transform.parent.GetComponent<SelectableCollider>().SelectableObject.GetParentCompanent();
-        
-        ConnectionData newConnect = new();
-        newConnect.ContactType = ConnectedContact.ContactType;
-        newConnect.CompanentType = companent.Type;
-        newConnect.CompanentName = companent.Name;
+        ConnectionData newConnect = GetConnectedCompanent();
+        if (!ParentWagoClip.Connections.Contains(newConnect)) {
+            ParentWagoClip.Connections.Add(newConnect);
+        }
+    }
 
-        ParentWagoClip.Connections.Add(newConnect);
+    public void RemoveConnectFromList() {
+        ConnectionData removeConnect = GetConnectedCompanent();
+        if (ParentWagoClip.Connections.Contains(removeConnect)) {
+            ParentWagoClip.Connections.Remove(removeConnect);
+            ConnectedContact = null;
+        } else {
+            Debug.Log("Контакт: " + ConnectedContact.ContactType + "не подключен!");
+        }
+    }
+
+    private ConnectionData GetConnectedCompanent() {
+        if (ConnectedContact == null) return new();
+
+        Companent companent = ConnectedContact.transform.parent.GetComponent<SelectableCollider>().SelectableObject.GetParentCompanent();
+        ConnectionData connect = new();
+        connect.ContactType = ConnectedContact.ContactType;
+        connect.CompanentType = companent.Type;
+        connect.CompanentName = companent.Name;
+
+        return connect;
     }
 }

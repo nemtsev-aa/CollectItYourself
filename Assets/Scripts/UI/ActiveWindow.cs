@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ActiveWindow : MonoBehaviour
 {
-
     public void Show()
     {     
         Debug.Log("ActiveWindow_Show");   

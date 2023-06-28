@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 5959044395683410861}
   - component: {fileID: 3056038511572826167}
   - component: {fileID: 3575799353226793794}
+  - component: {fileID: 2696054340137010061}
   m_Layer: 0
   m_Name: WagoD_2
   m_TagString: Untagged
@@ -305,8 +306,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.40649414, y: 0.40776864, z: 0.13577265}
-  m_Center: {x: 0.36108398, y: 1.5702572, z: -0.14575651}
+  m_Size: {x: 0.7970581, y: 1.5146044, z: 0.10794064}
+  m_Center: {x: -0.0011901855, y: 0.27624404, z: -0.044682108}
 --- !u!114 &3056038511572826167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +333,8 @@ MonoBehaviour:
   _animator: {fileID: 3575799353226793794}
   _outlinable: {fileID: 271327463152944963}
   _selectColor: {r: 0, g: 1, b: 0.039215688, a: 0}
+  _deleteButton: {fileID: 5662654720182944767}
+  _moveButton: {fileID: 5662654720276104569}
 --- !u!95 &3575799353226793794
 Animator:
   serializedVersion: 5
@@ -352,6 +355,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &2696054340137010061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575799353226793795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d1cf965577bed4481064b0e35e4d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectableObject: {fileID: 3056038511572826167}
 --- !u!1 &5131542658299650170
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,9 +430,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542658546460831}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -525,8 +542,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5131542658780574816}
-  - component: {fileID: 5131542658780574846}
-  - component: {fileID: 5131542658780574847}
   m_Layer: 0
   m_Name: Contacts
   m_TagString: Untagged
@@ -556,32 +571,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.175, y: -0.6}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!65 &5131542658780574846
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5131542658780574823}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.1013794, y: 0.0581665, z: 1.1561718}
-  m_Center: {x: 0.013885498, y: 0.040771477, z: -0.71174705}
---- !u!114 &5131542658780574847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5131542658780574823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69d1cf965577bed4481064b0e35e4d63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SelectableObject: {fileID: 3056038511572826167}
 --- !u!1 &5131542659341933197
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,9 +930,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 5131542659528953443}
-  CurrentContactType: 0
+  ContactType: 0
   Material: {fileID: 0}
   ConnectionWire: {fileID: 0}
+  _renderer: {fileID: 0}
   ParentWagoClip: {fileID: 3056038511572826167}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -1128,31 +1118,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5662654720182944766}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Management, Assembly-CSharp
-        m_MethodName: Unselect
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: SelectableObject, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SwitchBox, Assembly-CSharp
-        m_MethodName: RemoveCompanent
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: Companent, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!223 &5662654720182944736
 Canvas:
   m_ObjectHideFlags: 0
@@ -1311,7 +1277,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5662654720276104568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3056038511572826167}
+        m_TargetAssemblyTypeName: WagoClip, Assembly-CSharp
+        m_MethodName: DeleteClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3575799353226793795}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5662654720964209245
 GameObject:
   m_ObjectHideFlags: 0

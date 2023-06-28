@@ -25,8 +25,6 @@ public class Management : MonoBehaviour {
 
     public SwitchBoxData SwitchBoxData;
     public SwitchBoxManager SwitchBoxManager;
-
-
     public ActionState ActionState;
 
     private bool _isOverUI;
@@ -81,44 +79,54 @@ public class Management : MonoBehaviour {
                 UnselectAll();
                 if (Hovered is Companent) {
                     Select(Hovered);
-                } else if (Hovered is Contact) {
+                }
+                else if (Hovered is WagoContact) {
+                    WagoContact iContact = Hovered.GetComponent<WagoContact>();
+                    if (iContact.ConnectionWire == null) {
+                        Select(Hovered);
+                    }
+                    else {
+                        SwitchBoxManager.ActiveSwichBox.RemoveLineToList(iContact.ConnectionWire);
+                        iContact.RemoveConnectFromList();
+                        iContact.ResetMaterial();
+                    }
+                }
+                else if (Hovered is Contact) {
+                    if (Hovered.GetComponent<Contact>().ConnectionWire == null) {
+                        WireCreator.StartContact = Hovered.GetComponent<Contact>();
+                        Select(Hovered);
+                    }
+                    else {
+                        Debug.Log("Контакт занят!");
+                    }
+                }
+                else if (Hovered is WagoClip) {
                     Select(Hovered);
-                    WireCreator.StartContact = Hovered.GetComponent<Contact>();
-                } else if (Hovered is WagoContact) {
-                    Select(Hovered);
-                } else if (Hovered is WagoClip) {
-                    Select(Hovered);
-                } else if (Hovered is PrincipalSchemeCompanent) {
+                }
+                else if (Hovered is PrincipalSchemeCompanent) {
                     if (Hovered.GetComponent<PrincipalSchemeCompanent>().IsSelected) {
                         Unselect(Hovered);
-                    } else {
+                    }
+                    else {
                         Select(Hovered);
-                    }  
+                    }
                 }
-            } else {
+            }
+            else {
                 UnselectAll();
             }
         }
 
         if (Input.GetMouseButtonUp(0)) {
             if (ListOfSelected.Count == 0) return;
-
-            SelectableObject selectedObject = ListOfSelected[0]; // Выделенный контакт
-            if (selectedObject is Contact && Hovered is WagoContact) {
-                WireCreator.EndContact = Hovered.GetComponent<WagoContact>();
-            } else if (selectedObject is Contact && !Hovered) {
-                WireCreator.CreateWire();
-            }
-            if (ListOfSelected.Count == 1) {
-                
-                if (selectedObject.TryGetComponent(out Contact contact)) {
-                    //Debug.Log("Выделен контакт");
-                    CurrentSelectionState = SelectionState.ContactSelected;
-                    WireCreator.StartContact = contact;
-                }
-            } else {
-                if (ListOfSelected.Count > 1) {
-                    //CurrentSelectionState = SelectionState.ClipsSelected;
+            if (Hovered) {
+                SelectableObject selectedObject = ListOfSelected[0]; // Выделенный контакт
+                if (selectedObject is Contact) {
+                    if (Hovered is WagoContact && WireCreator.StartContact != null) {
+                        WireCreator.EndContact = Hovered.GetComponent<WagoContact>();
+                    } else {
+                        Select(Hovered);
+                    }
                 }
             }
         }

@@ -7,7 +7,8 @@ public class ActionState : GameState
     [Tooltip("Окно")]
     [SerializeField] private ActiveWindow _activeWindow;
 
-    [SerializeField] private Management Management;
+    [SerializeField] private Management _management;
+    [SerializeField] private Stopwatch _stopwatch;
     [SerializeField] private PrincipalSchemaView _principalSchemaView;
     [SerializeField] private SwitchBoxsSelectorView _switchBoxsSelectorView;
 
@@ -23,6 +24,7 @@ public class ActionState : GameState
     {
         base.Enter();
         _activeWindow.Show();
+        _stopwatch.SetStatus(true);
     }
 
     public override void Exit()
@@ -36,7 +38,7 @@ public class ActionState : GameState
     }
 
     public void SetActiveSwitchBoxNumber(int number) {
-        SwitchBox box = Management.SwitchBoxManager.GetSwitchBoxByNumber(number);
+        SwitchBox box = _management.SwitchBoxManager.GetSwitchBoxByNumber(number);
         _principalSchemaView.Show(box);
     }
 

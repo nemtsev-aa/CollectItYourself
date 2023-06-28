@@ -1,31 +1,29 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinWindow : MonoBehaviour
 {
-    [Tooltip("Надпись - время сборки")]
-    [SerializeField] private TextMeshProUGUI _timeCountText;
+    [Tooltip("Визуализатор результатов")]
+    [SerializeField] private ResultsView _resultsView;
     [Tooltip("Кнопка для продолжения")]
     [SerializeField] private Button _continueButton;
 
-    private void Awake()
-    {
+    private void Awake() {
         _continueButton.onClick.AddListener(Hide);
+        _resultsView.Initialize();
     }
 
-    public void Show()
-    {
+    public void Show() {
+        ShowResult();
         gameObject.SetActive(true);
     }
 
-    public void Hide()
-    {
+    public void Hide() {
         GameStateManager.Instance.SetMenu();
     }
 
-    public void ShowResult(int errorCount, string timeValue) {
-        _timeCountText.text = timeValue;
+    public void ShowResult() {
+        _resultsView.UploadResultsToPanel();
     }
 }
