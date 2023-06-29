@@ -37,7 +37,7 @@ public class Stopwatch : MonoBehaviour
         int seconds = Mathf.FloorToInt(_timeValue % 60f);
         int milliseconds = Mathf.FloorToInt((_timeValue * 1000f) % 1000f);
 
-        return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        return string.Format("{0:00}:{1:00}:{2:0}", minutes, seconds, milliseconds);
     }
 
     public void SetTimeValue(float timeValue) {

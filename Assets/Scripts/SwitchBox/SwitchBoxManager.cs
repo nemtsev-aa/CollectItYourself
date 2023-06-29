@@ -58,7 +58,7 @@ public class SwitchBoxManager : MonoBehaviour
 
             newSwitchBox.Companents.Add(newCompanent);
 
-            newSwitchBox.Initialized(Stopwatch);
+            newSwitchBox.Initialized(Stopwatch, this);
         }
 
         return newSwitchBox;

@@ -18,8 +18,13 @@ public class EventBus
         }
     }
 
+    // Изменилось значение прогресса
+    public event Action<int> ProgressValueChanget;
+
     // Проверка распределительной каробки
+    public Action<SingleSwitchingResult> SingleCorrectChecked;
+    public Action<SingleSwitchingResult> SingleIncorrectChecked;
+
     public Action<SwitchingResult> CorrectChecked;
     public Action<SwitchingResult> IncorrectChecked;
-
 } 

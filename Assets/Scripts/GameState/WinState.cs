@@ -8,6 +8,7 @@ public class WinState : GameState
     
     private void Awake() {
        EventBus.Instance.CorrectChecked += ShowCorrectResult;
+        _winWindow.ResultsView.Initialize();
     }
 
     private void ShowCorrectResult(SwitchingResult switchingResult) {

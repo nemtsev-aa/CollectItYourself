@@ -10,7 +10,7 @@ public class LearningProgressView : MonoBehaviour
     
     public void Initialization(LearningProgressManager learningProgressManager) {
         _learningProgressManager = learningProgressManager;
-        _learningProgressManager.ProgressValueChanget += ShowProgress;
+        EventBus.Instance.ProgressValueChanget += ShowProgress;
     }
 
     public void ShowProgress(int value) {
@@ -19,6 +19,6 @@ public class LearningProgressView : MonoBehaviour
     }
 
     private void OnDisable() {
-        _learningProgressManager.ProgressValueChanget -= ShowProgress;
+        EventBus.Instance.ProgressValueChanget += ShowProgress;
     }
 }

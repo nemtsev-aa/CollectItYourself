@@ -8,7 +8,7 @@ public class GameState : MonoBehaviour
 
     public virtual void Init(GameStateManager gameStateManager)
     {
-    
+        
     }
 
     public virtual void EnterFirstTime()

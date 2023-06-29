@@ -23,6 +23,7 @@ public class ResultPanel : MonoBehaviour
     public void Initialization(SwitchingResult result) {
         _generalResult = result;
     }
+
     public void Initialization(SingleSwitchingResult result) {
         _singleResult = result;
     }
@@ -37,7 +38,7 @@ public class ResultPanel : MonoBehaviour
     }
     public void ShowSingleResult() {
         if (_singleResult != null) {
-            _nameText.text = _singleResult.SwitchBoxNumber.ToString();
+            _nameText.text = _singleResult.SwitchBoxNumer.ToString();
             _timeText.text = _singleResult.SwitchingTimeText;
             _errorsText.text = _singleResult.ErrorCountText;
         }

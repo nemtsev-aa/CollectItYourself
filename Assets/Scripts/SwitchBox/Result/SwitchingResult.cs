@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class SwitchingResult {
+[System.Serializable]
+[CreateAssetMenu(fileName = nameof(SwitchingResult), menuName = nameof(SwitchingResult))]
+public class SwitchingResult : ScriptableObject {
     public string TaskName;
     public int SwitchBoxNumber;
-    public List<SingleSwitchingResult> SingleSwichingResults = new List<SingleSwitchingResult>();
+    public List<SingleSwitchingResult> SingleSwichingResults;
 
     private string ErrorsCountText;
     private string SwitchingTimesText;
     private float SwitchingTimesValue;
-    private List<ConnectionData> ErrorsList = new List<ConnectionData>();
+    private List<ConnectionData> ErrorsList;
 
     public string GetErrorsCountText() {
         if (SingleSwichingResults.Count > 0) {
@@ -38,7 +39,7 @@ public class SwitchingResult {
         if (SingleSwichingResults.Count > 0) {
             float timesValue = 0f;
             foreach (SingleSwitchingResult iResult in SingleSwichingResults) {
-                timesValue += iResult.SwitchingTimesValue;
+                timesValue += iResult.SwitchingTimeValue;
             }
             return timesValue;
         }
@@ -49,7 +50,7 @@ public class SwitchingResult {
         if (SingleSwichingResults.Count > 0) {
             float timesValue = 0f;
             foreach (SingleSwitchingResult iResult in SingleSwichingResults) {
-                timesValue += iResult.SwitchingTimesValue;
+                timesValue += iResult.SwitchingTimeValue;
             }
             SwitchingTimesText = GetFormattedTime(timesValue);
             return SwitchingTimesText;

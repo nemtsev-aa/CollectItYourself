@@ -35,6 +35,7 @@ public class LoseWindow : MonoBehaviour
     }
 
     public void ShowResult() {
-        _resultsView.UploadResultsToPanel();
+        _resultsView.UploadResultToGeneralPanel();
+        _resultsView.UploadResultsToSinglePanel();
     }
 }

@@ -31,10 +31,8 @@ public class Management : MonoBehaviour {
 
     [ContextMenu("ShowTask")]
     public void ShowTask(Task selectionTask) {
-        Debug.Log("Management_ShowTask");
         SwitchBoxData = selectionTask.TaskData[0].SwitchBoxsData;
         SwitchBox newBox = SwitchBoxManager.CreateSwichBox(SwitchBoxData);
-
         ActionState.ShowSwitchBox(newBox);
     }
 

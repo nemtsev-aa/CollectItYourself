@@ -7,7 +7,7 @@ public class SwitchBox : MonoBehaviour {
     [Header("Switching Parametrs")]
     public Dictionary<string, ConnectionData> ErrorConnects = new();
     [field: SerializeField] public bool isOpen { get; private set; }
-    [field: SerializeField] public SingleSwitchingResult Result = new SingleSwitchingResult();
+    [field: SerializeField] public SingleSwitchingResult Result;
 
     [Header("Data")]
     public SwitchBoxData SwitchBoxData;
@@ -22,9 +22,16 @@ public class SwitchBox : MonoBehaviour {
     public List<Wire> Wires = new List<Wire>();
 
     private Stopwatch _stopwatch;
+    private SwitchBoxManager _switchBoxManager;
 
-    public void Initialized(Stopwatch stopwatch) {
+    public event Action<SingleSwitchingResult> SingleIncorrectChecked;
+
+    public void Initialized(Stopwatch stopwatch, SwitchBoxManager switchBoxManager) {
         _stopwatch = stopwatch;
+        Result = ScriptableObject.CreateInstance<SingleSwitchingResult>();
+        List<ConnectionData> errorList = new();
+        Result.ErrorList = errorList;
+        _switchBoxManager = switchBoxManager;
     }
 
     public void AddNewWagoClipToList(WagoClip wago) {
@@ -132,11 +139,13 @@ public class SwitchBox : MonoBehaviour {
             ShowErrorConnections();
             errorsProcentage = (allErrorsCount / allContactsCount) * 100;
             Debug.Log("Ошибок в сборке: " + allErrorsCount + "/" + allContactsCount);
-            EventBus.Instance.IncorrectChecked?.Invoke(Result);
+            EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
+            GameStateManager.Instance.SetLose();
         }
         else {
             Debug.Log("Верная сборка!");
-            EventBus.Instance.CorrectChecked?.Invoke(Result);
+            EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
+            GameStateManager.Instance.SetWin();
         }
        
         return (int)errorsProcentage;

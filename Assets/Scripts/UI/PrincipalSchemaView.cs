@@ -14,7 +14,6 @@ public class PrincipalSchemaView : MonoBehaviour
     [SerializeField] private TimeView _timeView;
 
     public void Show(SwitchBox switchBox) {
-        Debug.Log("PrincipalSchemaView_Show");
         _name.text = switchBox.SwitchBoxData.Task.Name;
         _image.sprite = switchBox.SwitchBoxData.Task.TaskData[switchBox.SwitchBoxData.PartNumber-1].PrincipalShemas;
     }

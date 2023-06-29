@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class WinWindow : MonoBehaviour
 {
     [Tooltip("Визуализатор результатов")]
-    [SerializeField] private ResultsView _resultsView;
+    public ResultsView ResultsView;
     [Tooltip("Кнопка для продолжения")]
     [SerializeField] private Button _continueButton;
 
     private void Awake() {
         _continueButton.onClick.AddListener(Hide);
-        _resultsView.Initialize();
+        ResultsView.Initialize();
     }
 
     public void Show() {
@@ -24,6 +24,7 @@ public class WinWindow : MonoBehaviour
     }
 
     public void ShowResult() {
-        _resultsView.UploadResultsToPanel();
+        ResultsView.UploadResultToGeneralPanel();
+        ResultsView.UploadResultsToSinglePanel();
     }
 }
