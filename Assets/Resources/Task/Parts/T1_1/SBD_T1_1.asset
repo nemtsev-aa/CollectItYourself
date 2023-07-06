@@ -18,11 +18,11 @@ MonoBehaviour:
   Companents:
   - SlotNumber: 0
     Name: XS1
-    Companent: {fileID: 5466723089844564346, guid: c1c7b6d4b760c814e9351a66b4783f39,
+    Companent: {fileID: 3583119106728645194, guid: 228bcc3567ea82741a23f0654b7a5790,
       type: 3}
   - SlotNumber: 1
     Name: Input
-    Companent: {fileID: 7526200252408752026, guid: 1a1e162a23066c64d93c81262bb5458e,
+    Companent: {fileID: 2486841509407197961, guid: 5fef48a53beb7894183dbd6e4ad90b2e,
       type: 3}
   - SlotNumber: 2
     Name: XS2
@@ -34,5 +34,5 @@ MonoBehaviour:
       type: 3}
   - SlotNumber: 4
     Name: Output
-    Companent: {fileID: 7526200252408752026, guid: 41f2d27799882dd4dbf0afa9dcabb60a,
+    Companent: {fileID: 2486841509407197961, guid: c2e36e76ada27954abeecc942769079d,
       type: 3}

@@ -15,6 +15,6 @@ public class PrincipalSchemaView : MonoBehaviour
 
     public void Show(SwitchBox switchBox) {
         _name.text = switchBox.SwitchBoxData.Task.Name;
-        _image.sprite = switchBox.SwitchBoxData.Task.TaskData[switchBox.SwitchBoxData.PartNumber-1].PrincipalShemas;
+        _image.sprite = switchBox.SwitchBoxData.Task.TaskData[switchBox.SwitchBoxData.PartNumber-1].PrincipalShema;
     }
 }

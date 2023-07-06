@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d500ffc0a620dd9449ee267b943a7510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <isOpen>k__BackingField: 0
+  Result: {fileID: 0}
   SwitchBoxData: {fileID: 0}
-  isOpen: 0
   Slots:
   - {fileID: 7072314216575164774}
   - {fileID: 8625028240298837301}
@@ -61,7 +62,7 @@ MonoBehaviour:
   CompanentsTransform: {fileID: 4582303900086150977}
   Companents: []
   WagoClipsTransform: {fileID: 6766596372525937517}
-  Wagos: []
+  WagoClips: []
   WiresTransform: {fileID: 1218353377247538458}
   Wires: []
 --- !u!1 &727188510046243128
@@ -87,7 +88,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727188510046243128}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,7 +103,7 @@ Transform:
   - {fileID: 3080780204061591813}
   m_Father: {fileID: 7975719756925934560}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &2079459533652549804
 GameObject:
   m_ObjectHideFlags: 0

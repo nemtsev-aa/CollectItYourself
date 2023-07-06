@@ -66,6 +66,7 @@ public class MovementPath : MonoBehaviour {
         }
         
     }
+
     private void HideCurrentFlow() {
         LineRenderer.material = _defaultMaterial;
     }

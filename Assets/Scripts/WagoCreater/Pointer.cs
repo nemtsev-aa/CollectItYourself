@@ -11,8 +11,8 @@ public class Pointer : MonoBehaviour
 
     void LateUpdate() {
         Ray ray = _playerCamera.ScreenPointToRay(Input.mousePosition); // Луч из камеры игрока в позицию курсора мыши на экране
-        Debug.DrawRay(ray.origin, ray.direction * 60f, Color.yellow); // Визуализация луча в сцене
-        Plane plane = new Plane(-Vector3.up, Vector3.zero); // Плоскость в которой проходит игровой процесс
+        //Debug.DrawRay(ray.origin, ray.direction * 60f, Color.yellow); // Визуализация луча в сцене
+        Plane plane = new Plane(Vector3.forward, Vector3.zero); // Плоскость в которой проходит игровой процесс
 
         // Расстояние от камеры до плоскости
         plane.Raycast(ray, out float distance); // Измеряем расстояние от камеры до плоскости с помощью созданного луча

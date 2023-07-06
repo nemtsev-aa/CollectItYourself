@@ -17,26 +17,28 @@ public class CameraMove : MonoBehaviour {
 
     private bool _isOverUI;
     private void Start() {
-        _plane = new Plane(Vector3.up, Vector3.zero);
+        _plane = new Plane(Vector3.forward, Vector3.zero);
     }
 
     private void Update() {
         _isOverUI = EventSystem.current.IsPointerOverGameObject();
 
         Ray ray = RaycastCamera.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawLine(ray.origin, ray.direction * 10f, Color.blue); // Визуализация луча
 
         float distance;
         _plane.Raycast(ray, out distance);
+        
         Vector3 point = ray.GetPoint(distance);
 
         if (Input.GetMouseButtonDown(2)) {
             _startPoint = point;
-            _cameraStartPosition = transform.position;
+            _cameraStartPosition = transform.localPosition;
         }
 
         if (Input.GetMouseButton(2)) {
             Vector3 offset = point - _startPoint;
-            transform.position = _cameraStartPosition - offset;
+            transform.localPosition = _cameraStartPosition - offset;
         }
 
         if (!_isOverUI) {

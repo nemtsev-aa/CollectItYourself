@@ -17,6 +17,8 @@ public class SwitchBox : MonoBehaviour {
     [Header("Clips")]
     public Transform WagoClipsTransform;
     public List<WagoClip> WagoClips = new List<WagoClip>();
+    public WagoClip ActiveWagoClip;
+
     [Header("Wires")]
     public Transform WiresTransform;
     public List<Wire> Wires = new List<Wire>();
@@ -25,6 +27,7 @@ public class SwitchBox : MonoBehaviour {
     private SwitchBoxManager _switchBoxManager;
 
     public event Action<SingleSwitchingResult> SingleIncorrectChecked;
+    public event Action<bool> OnShowCurrent;
 
     public void Initialized(Stopwatch stopwatch, SwitchBoxManager switchBoxManager) {
         _stopwatch = stopwatch;
@@ -81,6 +84,20 @@ public class SwitchBox : MonoBehaviour {
 
     public void GetTimeValue() {
         Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
+    }
+
+    [ContextMenu("StartCurrent")]
+    public void StartCurrent() {
+        OnShowCurrent?.Invoke(true);
+    }
+
+    [ContextMenu("StopCurrent")]
+    public void StopCurrent() {
+        OnShowCurrent?.Invoke(false);
+    }
+
+    public void ShowCurrent(bool status) {
+        OnShowCurrent?.Invoke(status);
     }
 
     #region —hecking—onnections

@@ -21,7 +21,7 @@ public class WagoContact : Contact
     private Vector3 _defaultLocalScale;
 
     public override void Start() {
-        _defaultMaterial = this.gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+        _defaultMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
         _defaultLocalScale = transform.localScale;
     }
 
@@ -42,14 +42,14 @@ public class WagoContact : Contact
     }
 
     public void AddNewConnectToList() {
-        ConnectionData newConnect = GetConnectedCompanent();
+        ConnectionData newConnect = GetConnectionData();
         if (!ParentWagoClip.Connections.Contains(newConnect)) {
             ParentWagoClip.Connections.Add(newConnect);
         }
     }
 
     public void RemoveConnectFromList() {
-        ConnectionData removeConnect = GetConnectedCompanent();
+        ConnectionData removeConnect = GetConnectionData();
         if (ParentWagoClip.Connections.Contains(removeConnect)) {
             ParentWagoClip.Connections.Remove(removeConnect);
             ConnectedContact = null;
@@ -58,15 +58,23 @@ public class WagoContact : Contact
         }
     }
 
-    private ConnectionData GetConnectedCompanent() {
+    private ConnectionData GetConnectionData() {
         if (ConnectedContact == null) return new();
 
-        Companent companent = ConnectedContact.transform.parent.GetComponent<SelectableCollider>().SelectableObject.GetParentCompanent();
+        Companent companent = ConnectedContact.GetParentCompanent();
         ConnectionData connect = new();
         connect.ContactType = ConnectedContact.ContactType;
         connect.CompanentType = companent.Type;
         connect.CompanentName = companent.Name;
 
         return connect;
+    }
+
+    public bool GetConnectionStatus() {
+        if (ConnectedContact != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

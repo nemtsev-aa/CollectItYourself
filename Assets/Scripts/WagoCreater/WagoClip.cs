@@ -1,10 +1,6 @@
-using EPOOutline;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum WagoType {
     WagoD_2,
@@ -16,78 +12,56 @@ public enum WagoType {
 }
 
 public class WagoClip : Clips {
-    public bool IsSelected;
     [Header("Parameters")]
     public SwitchBox SwitchBox;
-    public string Name;
+    public WagoType WagoType;
     public List<WagoContact> WagoContacts = new List<WagoContact>();
     public List<ConnectionData> Connections = new List<ConnectionData>();
 
     [Header("View")]
-    public WagoType WagoType;
-    [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private Animator _animator;
+    public List<ObjectView> ObjectViews = new List<ObjectView>();
+    public List<ElectricFieldMovingView> ElectricFieldMovingViews = new List<ElectricFieldMovingView>();
 
-    public event Action<bool> OnSelect;
-    public event Action<bool> OnUnselect;
+    // Инициализация элемента в момент создания
+    public void Initialization() {
+        foreach (ObjectView objectView in ObjectViews) {
+            objectView.Initialization(this);
+        }
+        foreach (ElectricFieldMovingView electricView in ElectricFieldMovingViews) {
+            electricView.SetObject(this);
+        }
+    }
 
-    [SerializeField] private Outlinable _outlinable;
-    [ColorUsage(true)]
-    [SerializeField] private Color _selectColor;
-
-    [Header("Functions")]
-    [SerializeField] private Button _deleteButton;
-    [SerializeField] private Button _moveButton;
-
-    private Color _hoverColor;
     public override void Start() {
-        _hoverColor = _outlinable.FrontParameters.Color;
-        SelectIndicator.SetActive(false);
-        _deleteButton.onClick.AddListener(DeleteClip);
+        base.Start();
+        Initialization();
     }
 
     public override void OnHover() {
-        if (!IsSelected) {
-            //SelectIndicator.SetActive(true);
-            _outlinable.enabled = true;
-            _outlinable.FrontParameters.Color = _hoverColor;
-        }
+        foreach (ObjectView objectView in ObjectViews) {
+            objectView.OnHover(IsSelected);
+        } 
     }
 
     public override void OnUnhover() {
-        if (!IsSelected) {
-            _outlinable.enabled = false;
-            //SelectIndicator.SetActive(false);
+        foreach (ObjectView objectView in ObjectViews) {
+            objectView.OnUnhover(IsSelected);
         }
-    }
-
-    public void ShowName() {
-        _nameText.text = "WAGO " + Name;
     }
 
     public override void Select() {
         base.Select();
-        _animator.enabled = true;
-        _animator.SetTrigger("Show");
-        _animator.ResetTrigger("Hide");
-
-        IsSelected = true;
-        SelectIndicator.SetActive(IsSelected);
-
-        _outlinable.OutlineParameters.Color = _selectColor;
-        OnSelect?.Invoke(IsSelected);
+        foreach (ObjectView objectView in ObjectViews) {
+            objectView.Select();
+        }
+        SwitchBox.ActiveWagoClip = this;
     }
 
     public override void Unselect() {
-        //Debug.Log("Unselect Companent");
-        _animator.ResetTrigger("Show");
-        _animator.SetTrigger("Hide");
-
-        IsSelected = false;
-        _outlinable.enabled = false;
-        _outlinable.OutlineParameters.Color = _hoverColor;
-        SelectIndicator.SetActive(IsSelected);
-        OnUnselect?.Invoke(IsSelected);
+        base.Unselect();
+        foreach (ObjectView objectView in ObjectViews) {
+            objectView.Unselect();
+        }
     }
 
     public override void OnMouseDrag() {
@@ -98,10 +72,7 @@ public class WagoClip : Clips {
     public void UpdateLocationWires() {
         for (int i = 0; i < WagoContacts.Count; i++) {
             WagoContact iWagoContact = WagoContacts[i];
-            if (iWagoContact.ConnectionWire != null) {
-                iWagoContact.ConnectionWire.EndContact.transform.position = iWagoContact.transform.position;
-                iWagoContact.ConnectionWire.LineRenderer.SetPosition(1, iWagoContact.transform.position);
-            }
+            iWagoContact.ContactPositionChanged?.Invoke();
         }
     }
 

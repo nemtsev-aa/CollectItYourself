@@ -57,7 +57,6 @@ public class SwitchBoxManager : MonoBehaviour
             newCompanent.transform.position = _switchBoxPrefab.Slots[data.SlotNumber].position;
 
             newSwitchBox.Companents.Add(newCompanent);
-
             newSwitchBox.Initialized(Stopwatch, this);
         }
 
@@ -115,5 +114,9 @@ public class SwitchBoxManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void ShowCurrent(bool status) {
+        ActiveSwichBox.ShowCurrent(status);
     }
 }

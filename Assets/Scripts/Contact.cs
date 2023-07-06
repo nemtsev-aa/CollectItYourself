@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 public enum ContactType {
@@ -6,23 +7,26 @@ public enum ContactType {
     GroundConductor,
     Closed,
     Open,
-    LineOut
+    LineOut,
+    Wago
 }
 
 public class Contact : SelectableObject {
-    /// <summary>
-    /// Тип контакта
-    /// </summary>
     public ContactType ContactType;
     public Material Material;
-    /// <summary>
-    /// Подключающий провод
-    /// </summary>
+    [SerializeField] private Renderer _renderer;
     public Wire ConnectionWire;
+
+    public Action ContactPositionChanged;
+
     private Color _defaultColor;
     private float _duration = 2f;
+    private Companent _parentCompanent;
 
-    [SerializeField] private Renderer _renderer;
+    public void Initialize(Companent parentCompanent) {
+        _parentCompanent = parentCompanent;
+    }
+
     public override void OnHover() {
         //transform.localScale = Vector3.one * 1.5f;
     }
@@ -47,5 +51,14 @@ public class Contact : SelectableObject {
                 _renderer.materials[m].SetColor("_BaseColor", newColor);
             }
         }
+    }
+
+    public override void OnMouseDrag() {
+        base.OnMouseDrag();
+        ContactPositionChanged?.Invoke();
+    }
+
+    public override Companent GetParentCompanent() {
+        return _parentCompanent;
     }
 }

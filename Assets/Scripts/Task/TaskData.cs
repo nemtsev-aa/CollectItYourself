@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(TaskData), menuName = nameof(TaskData))]
 public class TaskData : ScriptableObject {
     [Tooltip("Принципиальная схема")]
-    public Sprite PrincipalShemas;
+    public Sprite PrincipalShema;
     [Tooltip("Комплектация распределительной коробки")]
     public SwitchBoxData SwitchBoxsData;
     [Tooltip("Верное подключение компанентов")]

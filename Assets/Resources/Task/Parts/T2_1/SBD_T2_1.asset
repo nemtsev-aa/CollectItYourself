@@ -18,7 +18,7 @@ MonoBehaviour:
   Companents:
   - SlotNumber: 0
     Name: SA1
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}
   - SlotNumber: 1
     Name: BK
@@ -38,5 +38,5 @@ MonoBehaviour:
       type: 3}
   - SlotNumber: 5
     Name: SA2
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}

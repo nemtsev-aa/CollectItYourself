@@ -18,15 +18,15 @@ MonoBehaviour:
   Companents:
   - SlotNumber: 0
     Name: SA6
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}
   - SlotNumber: 1
     Name: SA5
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}
   - SlotNumber: 2
     Name: Output
-    Companent: {fileID: 7526200252408752026, guid: 41f2d27799882dd4dbf0afa9dcabb60a,
+    Companent: {fileID: 2486841509407197961, guid: 64cb8c6f1628dfc45ba1be0895b0875f,
       type: 3}
   - SlotNumber: 3
     Name: EL3
@@ -42,9 +42,9 @@ MonoBehaviour:
       type: 3}
   - SlotNumber: 6
     Name: SA8
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}
   - SlotNumber: 7
     Name: SA7
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}

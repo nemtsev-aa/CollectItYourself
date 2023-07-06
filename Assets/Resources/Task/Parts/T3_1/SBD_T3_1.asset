@@ -18,11 +18,11 @@ MonoBehaviour:
   Companents:
   - SlotNumber: 0
     Name: SA3
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}
   - SlotNumber: 1
     Name: Input
-    Companent: {fileID: 7526200252408752026, guid: 1a1e162a23066c64d93c81262bb5458e,
+    Companent: {fileID: 2486841509407197961, guid: 03bde88bf071c95458b518b75f76b7fd,
       type: 3}
   - SlotNumber: 2
     Name: EL3
@@ -34,9 +34,9 @@ MonoBehaviour:
       type: 3}
   - SlotNumber: 4
     Name: Output
-    Companent: {fileID: 2486841509407197961, guid: 52c427193204b96429fb7d6a8d9bdc3c,
+    Companent: {fileID: 2486841509407197961, guid: 64cb8c6f1628dfc45ba1be0895b0875f,
       type: 3}
   - SlotNumber: 5
     Name: SA4
-    Companent: {fileID: 563348153186344703, guid: 065b98e7251b95e438eef5965327f710,
+    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}

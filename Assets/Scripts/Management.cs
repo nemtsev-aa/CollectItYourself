@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,7 +12,8 @@ public enum SelectionState {
     Other,
     CompanentSelected,
     ContactSelected,
-    WagoContactSelected
+    WagoContactSelected,
+    WireSelected
 }
 
 public class Management : MonoBehaviour {
@@ -28,6 +30,10 @@ public class Management : MonoBehaviour {
     public ActionState ActionState;
 
     private bool _isOverUI;
+
+    private void Awake() {
+        WireCreator.Initialize(this);
+    }
 
     [ContextMenu("ShowTask")]
     public void ShowTask(Task selectionTask) {
@@ -74,31 +80,42 @@ public class Management : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0)) {
             if (Hovered) {
-                UnselectAll();
+                if (Hovered.TryGetComponent(out WirePoint wirePoint)) {
+                    Select(Hovered);
+                } else {
+                    UnselectAll();
+                }
+                
                 if (Hovered is Companent) {
                     Select(Hovered);
                 }
                 else if (Hovered is WagoContact) {
-                    WagoContact iContact = Hovered.GetComponent<WagoContact>();
-                    if (iContact.ConnectionWire == null) {
-                        Select(Hovered);
-                    }
-                    else {
-                        SwitchBoxManager.ActiveSwichBox.RemoveLineToList(iContact.ConnectionWire);
-                        iContact.RemoveConnectFromList();
-                        iContact.ResetMaterial();
+                    WagoContact wagoContact = Hovered.GetComponent<WagoContact>();
+                    if (wagoContact.ConnectionWire == null) {
+                        WireCreator.EndContact = wagoContact;
+                    } else {
+                        if (WireCreator.StartContact == null) {
+                            SwitchBoxManager.ActiveSwichBox.RemoveLineToList(wagoContact.ConnectionWire);
+                            wagoContact.RemoveConnectFromList();
+                            wagoContact.ResetMaterial();
+                        } else {
+                            Debug.Log("Wago-контакт занят!");
+                        }
                     }
                 }
                 else if (Hovered is Contact) {
-                    if (Hovered.GetComponent<Contact>().ConnectionWire == null) {
-                        WireCreator.StartContact = Hovered.GetComponent<Contact>();
-                        Select(Hovered);
-                    }
-                    else {
+                    Contact contact = Hovered.GetComponent<Contact>();
+                    if (contact.ConnectionWire == null) {
+                        WireCreator.StartContact = contact;
+                        Select(contact);
+                    } else {
                         Debug.Log("Контакт занят!");
                     }
                 }
                 else if (Hovered is WagoClip) {
+                    Select(Hovered);
+                }
+                else if (Hovered is WirePoint) {
                     Select(Hovered);
                 }
                 else if (Hovered is PrincipalSchemeCompanent) {
@@ -108,6 +125,8 @@ public class Management : MonoBehaviour {
                     else {
                         Select(Hovered);
                     }
+                } else {
+                    Select(Hovered);
                 }
             }
             else {
@@ -173,6 +192,7 @@ public class Management : MonoBehaviour {
     }
 
     public void Unselect(SelectableObject selectableObject) {
+        Debug.Log("Unselect");
         if (ListOfSelected.Contains(selectableObject)) {
             ListOfSelected.Remove(selectableObject);
         }
@@ -181,7 +201,6 @@ public class Management : MonoBehaviour {
 
     void UnselectAll() {
         if (ListOfSelected.Count == 0) return;
-
         foreach (var iSelected in ListOfSelected) {
             iSelected.Unselect();
         }
