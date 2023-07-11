@@ -9,10 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a24ced2f29808c047bf699338bfba111, type: 3}
+  m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
   m_Name: T1_1
   m_EditorClassIdentifier: 
-  Name: T1_1
-  TaskType: 0
-  TaskData:
-  - {fileID: 11400000, guid: 24b0b3551b8d58040bc7c45f03eff9a1, type: 2}
+  id: 1
+  expValue: 10
+  mode: 0
+  type: 0
+  variant: 1
+  principalShema:
+  - {fileID: 21300000, guid: 04b28c92f7ba68343a81c4decbbe5e4e, type: 3}
+  switchBoxsData:
+  - {fileID: 11400000, guid: 0faedee5ebae6a149aa9cccd9ab015e4, type: 2}
+  answer:
+  - {fileID: 11400000, guid: b69365a7e172bcd49a2481981645562f, type: 2}

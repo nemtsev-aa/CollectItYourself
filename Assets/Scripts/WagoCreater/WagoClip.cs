@@ -13,7 +13,7 @@ public enum WagoType {
 
 public class WagoClip : Clips {
     [Header("Parameters")]
-    public SwitchBox SwitchBox;
+    public SwitchBox ParentSwitchBox;
     public WagoType WagoType;
     public List<WagoContact> WagoContacts = new List<WagoContact>();
     public List<ConnectionData> Connections = new List<ConnectionData>();
@@ -54,7 +54,7 @@ public class WagoClip : Clips {
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Select();
         }
-        SwitchBox.ActiveWagoClip = this;
+        ParentSwitchBox.ActiveWagoClip = this;
     }
 
     public override void Unselect() {
@@ -66,10 +66,21 @@ public class WagoClip : Clips {
 
     public override void OnMouseDrag() {
         base.OnMouseDrag();
-        UpdateLocationWires();
+        foreach (var iObjView in ObjectViews) {
+            iObjView.UpdatePoints();
+        }
+        UpdateLocationEndContact();
     }
 
-    public void UpdateLocationWires() {
+    public override void OnMouseUp() {
+        base.OnMouseUp();
+        for (int i = 0; i < WagoContacts.Count; i++) {
+            WagoContact iWagoContact = WagoContacts[i];
+            iWagoContact.ConnectionWire.GenerateMeshCollider();
+        } 
+    }
+
+    public void UpdateLocationEndContact() {
         for (int i = 0; i < WagoContacts.Count; i++) {
             WagoContact iWagoContact = WagoContacts[i];
             iWagoContact.ContactPositionChanged?.Invoke();
@@ -85,7 +96,7 @@ public class WagoClip : Clips {
 
     public void DeleteClip() {
         Debug.Log("DeleteClip");
-        SwitchBox.RemoveWagoClipFromList(this);
+        ParentSwitchBox.RemoveWagoClipFromList(this);
         Destroy(gameObject);
     }
 }

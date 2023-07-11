@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WagoCreator : MonoBehaviour
-{
-    [SerializeField] private SwitchBoxManager _switchBoxManager;
-    public Pointer Pointer;
-
+public class WagoCreator : MonoBehaviour, IService{
+    private Pointer _pointer;
+    private SwitchBoxManager _switchBoxManager;
     private bool _isOverUI;
+
+    public void Init() {
+        _switchBoxManager = ServiceLocator.Current.Get<SwitchBoxManager>();
+        _pointer = ServiceLocator.Current.Get<Pointer>();
+    }
 
     public WagoClip CreateWago(WagoClipData wagoClipData) {
         GameObject newClip = Instantiate(wagoClipData.Prefab);
         WagoClip wago = newClip.GetComponent<WagoClip>(); // Создаём новый зажим
         if (_switchBoxManager.ActiveSwichBox != null) {
-            wago.SwitchBox = _switchBoxManager.ActiveSwichBox;
+            wago.ParentSwitchBox = _switchBoxManager.ActiveSwichBox;
             wago.Name = (_switchBoxManager.ActiveSwichBox.WagoClips.Count + 1).ToString(); // Присваиваем новому зажиму имя
             wago.transform.parent = _switchBoxManager.ActiveSwichBox.WagoClipsTransform.transform; // Прикрепляем новый зажим к РК
-            wago.transform.position = Pointer.Aim.transform.position;
+            wago.transform.position = _pointer.Aim.transform.position;
             wago.ObjectViews[0].ShowName();
             _switchBoxManager.ActiveSwichBox.AddNewWagoClipToList(wago); // Добавляем новый зажим в список активной РК
         } else {
@@ -25,7 +28,7 @@ public class WagoCreator : MonoBehaviour
         }
         
         //WagoPosition.gameObject.SetActive(false); // Скрываем меню выбора зажимов
-        Pointer.gameObject.SetActive(true); // Отображаем указатель
+        _pointer.gameObject.SetActive(true); // Отображаем указатель
         _switchBoxManager.ActiveSwichBox.ActiveWagoClip = wago;
         return wago;
     }

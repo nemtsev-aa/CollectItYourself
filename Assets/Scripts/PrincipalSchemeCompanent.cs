@@ -6,10 +6,6 @@ using UnityEngine;
 
 public class PrincipalSchemeCompanent : SelectableObject {
 
-    public bool IsSelected;
-    public event Action<bool> OnSelect;
-    public event Action<bool> OnUnselect;
-
     [SerializeField] private Outlinable _outlinable;
     [ColorUsage(true)]
     [SerializeField] private Color _selectColor;
@@ -36,13 +32,11 @@ public class PrincipalSchemeCompanent : SelectableObject {
         IsSelected = true;  
         SelectIndicator.SetActive(IsSelected);
         _outlinable.FrontParameters.Color = _selectColor;
-        OnSelect?.Invoke(IsSelected);
     }
 
     public override void Unselect() {
         IsSelected = false;
         _outlinable.FrontParameters.Color = _hoverColor;
         SelectIndicator.SetActive(IsSelected);
-        OnUnselect?.Invoke(IsSelected);
     }
 }

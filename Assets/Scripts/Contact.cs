@@ -61,4 +61,9 @@ public class Contact : SelectableObject {
     public override Companent GetParentCompanent() {
         return _parentCompanent;
     }
+
+    public virtual void ResetContact() {
+        ContactPositionChanged -= ConnectionWire.SetNewPositionEndContact;
+        ConnectionWire = null;
+    }
 }

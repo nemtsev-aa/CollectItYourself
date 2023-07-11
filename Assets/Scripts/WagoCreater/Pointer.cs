@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Pointer : MonoBehaviour
-{
+public class Pointer : MonoBehaviour, IService {
     [Tooltip("Объект прицела")]
     public Transform Aim;
     [Tooltip("Камера игрока")]
     [SerializeField] private Camera _playerCamera;
+
+    public void Init() {
+        
+    }
 
     void LateUpdate() {
         Ray ray = _playerCamera.ScreenPointToRay(Input.mousePosition); // Луч из камеры игрока в позицию курсора мыши на экране

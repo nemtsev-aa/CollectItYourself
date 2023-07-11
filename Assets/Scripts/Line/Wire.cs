@@ -77,10 +77,11 @@ public class Wire : SelectableObject {
 
     public void SetNewPositionStartContact() {
         ObjectView.PathElements[0].position = StartContact.transform.position;
-        
+        ObjectView.UpdatePoints(); 
     }
 
     public void SetNewPositionEndContact() {
         ObjectView.PathElements[ObjectView.PathElements.Length-1].position = EndContact.transform.position;
+        ObjectView.UpdatePoints();
     }
 }

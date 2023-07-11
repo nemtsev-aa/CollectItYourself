@@ -2,20 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WagoContact : Contact
-{
-    /// <summary>
-    /// Wago-зажим, которому принадлежит данный контакт
-    /// </summary>
-    public WagoClip ParentWagoClip;
-    /// <summary>
-    /// Номер контакта в зажиме
-    /// </summary>
-    public int Number;
-    /// <summary>
-    /// Подключенный контакт
-    /// </summary>
-    public Contact ConnectedContact;
+public class WagoContact : Contact {
+    public WagoClip ParentWagoClip; /// Wago-зажим, которому принадлежит данный контакт
+    public int Number; /// Номер контакта в зажиме
+    public Contact ConnectedContact; // Подключенный контакт
 
     private Material _defaultMaterial;
     private Vector3 _defaultLocalScale;
@@ -76,5 +66,12 @@ public class WagoContact : Contact
         } else {
             return false;
         }
+    }
+
+    public override void ResetContact() {
+        base.ResetContact();
+        RemoveConnectFromList();
+        ConnectedContact = null;
+        ResetMaterial();
     }
 }

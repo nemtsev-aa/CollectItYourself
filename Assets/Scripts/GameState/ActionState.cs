@@ -38,8 +38,8 @@ public class ActionState : GameState
     }
 
     public void SetActiveSwitchBoxNumber(int number) {
-        SwitchBox box = _management.SwitchBoxManager.GetSwitchBoxByNumber(number);
-        _principalSchemaView.Show(box);
+        //SwitchBox box = _management.SwitchBoxManager.GetSwitchBoxByNumber(number);
+        //_principalSchemaView.Show(box);
     }
 
     private void OnDisable() {

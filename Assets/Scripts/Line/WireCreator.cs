@@ -8,7 +8,7 @@ public enum CreateType {
     OneClick
 }
 
-public class WireCreator : MonoBehaviour {
+public class WireCreator : MonoBehaviour, IService {
     public CreateType CurrentType = CreateType.OneClick;
     public SwitchBoxManager SwitchBoxManager;
     public Wire WirePrefab;
@@ -18,10 +18,9 @@ public class WireCreator : MonoBehaviour {
     private Management _management;
     private Vector3 _mousePosition;
     private LineRenderer _lineRender;
-    private Dictionary<string, WagoContact> freeWagoContacts = new Dictionary<string, WagoContact>();
 
-    public void Initialize(Management management) {
-        _management = management;
+    public void Init() {
+        _management = ServiceLocator.Current.Get<Management>();
         _lineRender = GetComponent<LineRenderer>();
     }
 
@@ -76,12 +75,13 @@ public class WireCreator : MonoBehaviour {
                     ResetWireCreator();
                 } else {
                     //Debug.Log("StartContact != null, EndContact == null");
-                    if (FindFreeWagoContactsFromActiveSwitchBox() == 0) {
+                    SwitchBox activeSB = SwitchBoxManager.ActiveSwichBox;
+                    int freeWagoClipCount = activeSB.FindFreeWagoContacts();
+                    if (freeWagoClipCount == 0) {
                         Debug.Log("Нет свободных Wago - зажимов!");
-                    }
-                    else {
-                        Debug.Log("Свободных Wago-зажимов: " + freeWagoContacts.Count);
-                        SelectFreeWagoContacts(true);
+                    } else {
+                        Debug.Log("Свободных Wago-зажимов: " + freeWagoClipCount);
+                        activeSB.SelectFreeWagoContacts(true);
                     }
                 }
             }
@@ -98,71 +98,26 @@ public class WireCreator : MonoBehaviour {
             if (StartContact != null) {
                 if (EndContact == null) {
                     //Debug.Log("StartContact != null, EndContact == null");
-                    if (FindFreeWagoContactsFromActiveSwitchBox() == 0) {
-                        Debug.Log("Нет свободных Wago-зажимов!");
+                    SwitchBox activeSB = SwitchBoxManager.ActiveSwichBox;
+                    int freeWagoClipCount = activeSB.FindFreeWagoContacts();
+                    if (freeWagoClipCount == 0) {
+                        //Debug.Log("Нет свободных Wago-зажимов!");
                     }
                     else {
-                        WagoContact freeWagoContact = GetFreeWagoContact();
+                        WagoContact freeWagoContact = activeSB.GetFreeWagoContact();
                         if (freeWagoContact != null) {
-                            Debug.Log("Свободный Wago-контакт найден");
+                            //Debug.Log("Свободный Wago-контакт найден");
                             EndContact = freeWagoContact;
                             CreateWire();
                             ResetWireCreator();
                         } else {
-                            Debug.LogError("OneClickCreation: Свободный Wago-контакт не найден");
+                            //Debug.LogError("OneClickCreation: Свободный Wago-контакт не найден");
                         }
                     }
                 }
                 else {
-                    Debug.Log("StartContact == null");
+                    //Debug.Log("StartContact == null");
                     ResetWireCreator();
-                }
-            }
-        }
-    }
-
-    [ContextMenu("FindFreeWagoContactsFromActiveSwitchBox")]
-    public int FindFreeWagoContactsFromActiveSwitchBox() {
-        //Debug.Log("Поиск свободных Wago-зажимов!");
-        SwitchBox activeSB = SwitchBoxManager.ActiveSwichBox;
-        foreach (WagoClip iWagoClip in activeSB.WagoClips) {
-            foreach (WagoContact iContact in iWagoClip.WagoContacts) {
-                if (!iContact.GetConnectionStatus()) {
-                    if (!freeWagoContacts.ContainsKey(iWagoClip.Name + "_" + iContact.Name)) {
-                        freeWagoContacts.Add(iWagoClip.Name + "_" + iContact.Name, iContact);
-                    }
-                }
-            }
-        }
-        return freeWagoContacts.Count;
-    }
-
-    public WagoContact GetFreeWagoContact() {
-        SwitchBox activeSB = SwitchBoxManager.ActiveSwichBox;
-        WagoClip activeWC = activeSB.ActiveWagoClip;
-        // Приоритет на подключение установлен для контактов активного Wago-зажима
-        foreach (WagoContact iWagoContact in activeWC.WagoContacts) {
-            if (iWagoContact.ConnectedContact == null) {
-                return iWagoContact;
-            } 
-        }
-        // Если активный Wago-зажима не имеет свободных контактов, подключаем по очереди добавления Wago-зажимов в сборку
-        return freeWagoContacts.Values.First();
-    }
-
-    public List<WagoContact> CreateFreeWagoContactsList(WagoClip wagoClip) {
-        return null;
-    }
-
-    private void SelectFreeWagoContacts(bool status) {
-        Debug.Log("SelectFreeWagoContacts: " + status);
-        if (freeWagoContacts.Count > 0) {
-            foreach (WagoContact iWagoContact in freeWagoContacts.Values) {
-                if (status) {
-                    iWagoContact.Select();
-                }
-                else {
-                    iWagoContact.Unselect();
                 }
             }
         }
@@ -192,9 +147,9 @@ public class WireCreator : MonoBehaviour {
         newWire.ObjectView.SetColor(StartContact.Material.color);
         newWire.ObjectView.LineRenderer.numCapVertices = 50;
         newWire.StartContact = StartContact;
-        //newWire.StartContact.ContactPositionChanged += newWire.SetNewPositionStartContact;
+        newWire.StartContact.ContactPositionChanged += newWire.SetNewPositionStartContact;
         newWire.EndContact = EndContact;
-        //newWire.EndContact.ContactPositionChanged += newWire.SetNewPositionEndContact;
+        newWire.EndContact.ContactPositionChanged += newWire.SetNewPositionEndContact;
 
         StartContact.ConnectionWire = newWire;
         EndContact.ConnectionWire = newWire;
@@ -203,7 +158,7 @@ public class WireCreator : MonoBehaviour {
         EndContact.SetMaterial();
         EndContact.AddNewConnectToList();
         EndContact.Unselect();
-        freeWagoContacts.Remove(EndContact.ParentWagoClip.Name + "_" + EndContact.Name);
+        SwitchBoxManager.ActiveSwichBox.RemoveWagoContactFromFreeList(EndContact);
 
         SwitchBoxManager.ActiveSwichBox.AddNewLineFromList(newWire);
         newWire.GenerateMeshCollider();
@@ -252,7 +207,7 @@ public class WireCreator : MonoBehaviour {
         if (StartContact == null) return;
 
         StartContact.Unselect();
-        SelectFreeWagoContacts(false);
+        SwitchBoxManager.ActiveSwichBox.SelectFreeWagoContacts(false);
 
         StartContact = null;
         EndContact = null;

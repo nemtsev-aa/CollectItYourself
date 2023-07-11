@@ -16,58 +16,38 @@ public enum SelectionState {
     WireSelected
 }
 
-public class Management : MonoBehaviour {
-    public Camera Camera;
-    public SelectableObject Hovered;
-    public List<SelectableObject> ListOfSelected = new List<SelectableObject>();
-    public SelectionState CurrentSelectionState;
-
-    [Header("WireCreator")]
-    public WireCreator WireCreator;
-
-    public SwitchBoxData SwitchBoxData;
-    public SwitchBoxManager SwitchBoxManager;
-    public ActionState ActionState;
-
+public class Management : MonoBehaviour, IService {
+    [SerializeField] private Camera _camera;
+    private List<SelectableObject> _listOfSelected = new List<SelectableObject>();
+    private SelectionState _currentSelectionState;
+    private WireCreator _wireCreator;
+    private SelectableObject _hovered;
     private bool _isOverUI;
 
-    private void Awake() {
-        WireCreator.Initialize(this);
-    }
-
-    [ContextMenu("ShowTask")]
-    public void ShowTask(Task selectionTask) {
-        SwitchBoxData = selectionTask.TaskData[0].SwitchBoxsData;
-        SwitchBox newBox = SwitchBoxManager.CreateSwichBox(SwitchBoxData);
-        ActionState.ShowSwitchBox(newBox);
-    }
-
-    [ContextMenu("HideTask")]
-    public void ClearTask(Task hideTask) {
-        SwitchBoxData = null;
-        SwitchBoxManager.RemoveSwichBoxFromList(SwitchBoxManager.ActiveSwichBox);
+    public void Init() {
+        _wireCreator = ServiceLocator.Current.Get<WireCreator>();
     }
 
     void Update() {
         _isOverUI = EventSystem.current.IsPointerOverGameObject();
 
-        Ray ray = Camera.ScreenPointToRay(Input.mousePosition); // Луч из камеры в точку расположения курсора мыши на экране
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition); // Луч из камеры в точку расположения курсора мыши на экране
         Debug.DrawLine(ray.origin, ray.direction * 10f, Color.red); // Визуализация луча
 
         if (Physics.Raycast(ray, out RaycastHit hit)) {
             SelectableCollider selectable = hit.collider.GetComponent<SelectableCollider>();
             if (selectable) {
                 SelectableObject hitSelectable = selectable.SelectableObject;
-                if (Hovered) {
-                    if (Hovered != hitSelectable) {
-                        Hovered.OnUnhover();
-                        Hovered = hitSelectable;
-                        Hovered.OnHover();
+                if (_hovered) {
+                    if (_hovered != hitSelectable) {
+                        _hovered.OnUnhover();
+                        _hovered = hitSelectable;
+                        _hovered.OnHover();
                     }
                 }
                 else {
-                    Hovered = hitSelectable;
-                    Hovered.OnHover();
+                    _hovered = hitSelectable;
+                    _hovered.OnHover();
                 }
             }
             else {
@@ -79,54 +59,54 @@ public class Management : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (Hovered) {
-                if (Hovered.TryGetComponent(out WirePoint wirePoint)) {
-                    Select(Hovered);
+            if (_hovered) {
+                if (_hovered.TryGetComponent(out WirePoint wirePoint)) {
+                    Select(_hovered);
                 } else {
                     UnselectAll();
                 }
                 
-                if (Hovered is Companent) {
-                    Select(Hovered);
+                if (_hovered is Companent) {
+                    Select(_hovered);
                 }
-                else if (Hovered is WagoContact) {
-                    WagoContact wagoContact = Hovered.GetComponent<WagoContact>();
+                else if (_hovered is WagoContact) {
+                    WagoContact wagoContact = _hovered.GetComponent<WagoContact>();
                     if (wagoContact.ConnectionWire == null) {
-                        WireCreator.EndContact = wagoContact;
+                        _wireCreator.EndContact = wagoContact;
                     } else {
-                        if (WireCreator.StartContact == null) {
-                            SwitchBoxManager.ActiveSwichBox.RemoveLineToList(wagoContact.ConnectionWire);
-                            wagoContact.RemoveConnectFromList();
-                            wagoContact.ResetMaterial();
+                        if (_wireCreator.StartContact == null) {
+                            Wire wire = wagoContact.ConnectionWire;
+                            ServiceLocator.Current.Get<SwitchBoxManager>().ActiveSwichBox.RemoveLineToList(wire);
+                            
                         } else {
                             Debug.Log("Wago-контакт занят!");
                         }
                     }
                 }
-                else if (Hovered is Contact) {
-                    Contact contact = Hovered.GetComponent<Contact>();
+                else if (_hovered is Contact) {
+                    Contact contact = _hovered.GetComponent<Contact>();
                     if (contact.ConnectionWire == null) {
-                        WireCreator.StartContact = contact;
+                        _wireCreator.StartContact = contact;
                         Select(contact);
                     } else {
                         Debug.Log("Контакт занят!");
                     }
                 }
-                else if (Hovered is WagoClip) {
-                    Select(Hovered);
+                else if (_hovered is WagoClip) {
+                    Select(_hovered);
                 }
-                else if (Hovered is WirePoint) {
-                    Select(Hovered);
+                else if (_hovered is WirePoint) {
+                    Select(_hovered);
                 }
-                else if (Hovered is PrincipalSchemeCompanent) {
-                    if (Hovered.GetComponent<PrincipalSchemeCompanent>().IsSelected) {
-                        Unselect(Hovered);
+                else if (_hovered is PrincipalSchemeCompanent) {
+                    if (_hovered.GetComponent<PrincipalSchemeCompanent>().IsSelected) {
+                        Unselect(_hovered);
                     }
                     else {
-                        Select(Hovered);
+                        Select(_hovered);
                     }
                 } else {
-                    Select(Hovered);
+                    Select(_hovered);
                 }
             }
             else {
@@ -135,14 +115,14 @@ public class Management : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonUp(0)) {
-            if (ListOfSelected.Count == 0) return;
-            if (Hovered) {
-                SelectableObject selectedObject = ListOfSelected[0]; // Выделенный контакт
+            if (_listOfSelected.Count == 0) return;
+            if (_hovered) {
+                SelectableObject selectedObject = _listOfSelected[0]; // Выделенный контакт
                 if (selectedObject is Contact) {
-                    if (Hovered is WagoContact && WireCreator.StartContact != null) {
-                        WireCreator.EndContact = Hovered.GetComponent<WagoContact>();
+                    if (_hovered is WagoContact && _wireCreator.StartContact != null) {
+                        _wireCreator.EndContact = _hovered.GetComponent<WagoContact>();
                     } else {
-                        Select(Hovered);
+                        Select(_hovered);
                     }
                 }
             }
@@ -185,33 +165,33 @@ public class Management : MonoBehaviour {
     //}
 
     void Select(SelectableObject selectableObject) {
-        if (!ListOfSelected.Contains(selectableObject)) {
-            ListOfSelected.Add(selectableObject);
+        if (!_listOfSelected.Contains(selectableObject)) {
+            _listOfSelected.Add(selectableObject);
             selectableObject.Select();
         }
     }
 
     public void Unselect(SelectableObject selectableObject) {
         Debug.Log("Unselect");
-        if (ListOfSelected.Contains(selectableObject)) {
-            ListOfSelected.Remove(selectableObject);
+        if (_listOfSelected.Contains(selectableObject)) {
+            _listOfSelected.Remove(selectableObject);
         }
         selectableObject.Unselect();
     }
 
     void UnselectAll() {
-        if (ListOfSelected.Count == 0) return;
-        foreach (var iSelected in ListOfSelected) {
+        if (_listOfSelected.Count == 0) return;
+        foreach (var iSelected in _listOfSelected) {
             iSelected.Unselect();
         }
-        ListOfSelected.Clear();
-        CurrentSelectionState = SelectionState.Other;
+        _listOfSelected.Clear();
+        _currentSelectionState = SelectionState.Other;
     }
 
     private void UnhowerCurrent() {
-        if (Hovered) {
-            Hovered.OnUnhover();
-            Hovered = null;
+        if (_hovered) {
+            _hovered.OnUnhover();
+            _hovered = null;
         }
     }
 }

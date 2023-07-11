@@ -3,21 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchBoxManager : MonoBehaviour
-{
+public class SwitchBoxManager : MonoBehaviour, IService {
     [SerializeField] private SwitchBox _switchBoxPrefab1;
     [SerializeField] private SwitchBox _switchBoxPrefab2;
+    [SerializeField] private CompanentConfig _companentConfig;
+    [SerializeField] private TaskData _taskData;
 
     public List<SwitchBox> SwitchBoxes = new List<SwitchBox>();
     public SwitchBox ActiveSwichBox;
-    
     public event Action<int> ActiveSwitchBoxChanged;
-    public event Action<SwitchingResult> OnWin;
-    public event Action<SwitchingResult> OnLose;
-
-    public Stopwatch Stopwatch;
-
+    private Stopwatch Stopwatch;
     private Management _management;
+
+    public void Init() {
+
+    }
 
     public void SetActiveSwichBox(SwitchBox switchBox) {
         ActiveSwichBox = switchBox;
@@ -25,11 +25,11 @@ public class SwitchBoxManager : MonoBehaviour
     }
 
     public SwitchBox CreateSwichBox(SwitchBoxData switchBoxData) {
-        foreach (var iSwichBox in SwitchBoxes) {
-            if (iSwichBox.SwitchBoxData == switchBoxData) {
-                return null;
-            }
-        }
+        //foreach (var iSwichBox in SwitchBoxes) {
+        //    if (iSwichBox.SwitchBoxData == switchBoxData) {
+        //        return null;
+        //    }
+        //}
 
         SwitchBox newSwitchBox;
         SwitchBox _switchBoxPrefab;
@@ -40,15 +40,17 @@ public class SwitchBoxManager : MonoBehaviour
         }
 
         newSwitchBox = Instantiate(_switchBoxPrefab);
-        newSwitchBox.gameObject.name = switchBoxData.name;
+        //newSwitchBox.gameObject.name = switchBoxData.name;
         newSwitchBox.SwitchBoxData = switchBoxData;
+        newSwitchBox.TaskName = _taskData.ID.ToString();
         newSwitchBox.transform.parent = transform;
         AddSwichBoxToList(newSwitchBox);
         SetActiveSwichBox(newSwitchBox);
 
         for (int i = 0; i < switchBoxData.Companents.Count; i++) {
             CompanentData data = switchBoxData.Companents[i]; // Данные компанента
-            Companent newCompanent = Instantiate(data.Companent); // Новый компанент
+            Companent prefab = _companentConfig.Get(data.CompanentType, data.TaskMode, data.VersionExecution);
+            Companent newCompanent = Instantiate(prefab); // Новый компанент
             newCompanent.SlotNumber = data.SlotNumber;
             newCompanent.Name = data.Name;
             newCompanent.ShowName();
@@ -63,14 +65,12 @@ public class SwitchBoxManager : MonoBehaviour
         return newSwitchBox;
     }
 
-    private void SwitchBox_OnLose(SwitchingResult switchingResult) {
-        OnLose?.Invoke(switchingResult);
-        GameStateManager.Instance.SetLose();
+    private void SwitchBox_OnLose(GeneralSwitchingResult switchingResult) {
+
     }
 
-    private void SwitchBox_OnWin(SwitchingResult switchingResult) {
-        OnWin?.Invoke(switchingResult);
-        GameStateManager.Instance.SetWin();
+    private void SwitchBox_OnWin(GeneralSwitchingResult switchingResult) {
+     
     }
 
     public void AddSwichBoxToList(SwitchBox switchBox) {

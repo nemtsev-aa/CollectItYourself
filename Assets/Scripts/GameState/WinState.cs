@@ -7,11 +7,11 @@ public class WinState : GameState
     [SerializeField] private WinWindow _winWindow;
     
     private void Awake() {
-       EventBus.Instance.CorrectChecked += ShowCorrectResult;
-        _winWindow.ResultsView.Initialize();
+       
+        //_winWindow.ResultsView.Initialize();
     }
 
-    private void ShowCorrectResult(SwitchingResult switchingResult) {
+    private void ShowCorrectResult(GeneralSwitchingResult switchingResult) {
         GameStateManager.Instance.SetWin();
     }
 

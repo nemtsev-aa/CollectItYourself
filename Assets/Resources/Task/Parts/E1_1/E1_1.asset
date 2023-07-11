@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: E1_1
   m_EditorClassIdentifier: 
   Name: E1_1
-  TaskType: 1
+  Task:
+    TaskMode: 1
+    TaskType: 0
+    VariantNumber: 0
   TaskData:
   - {fileID: 11400000, guid: e07997381adb0a34ebad8ef00ca796d7, type: 2}

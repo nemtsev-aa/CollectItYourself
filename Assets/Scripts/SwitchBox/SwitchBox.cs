@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +15,18 @@ public class SwitchBox : MonoBehaviour {
     public List<Transform> Slots = new List<Transform>();
     [SerializeField] private Transform CompanentsTransform;
     public List<Companent> Companents = new List<Companent>();
+    public string TaskName;
     [Header("Clips")]
     public Transform WagoClipsTransform;
     public List<WagoClip> WagoClips = new List<WagoClip>();
     public WagoClip ActiveWagoClip;
-
     [Header("Wires")]
     public Transform WiresTransform;
     public List<Wire> Wires = new List<Wire>();
 
     private Stopwatch _stopwatch;
     private SwitchBoxManager _switchBoxManager;
+    private List<WagoContact> _freeWagoContacts = new List<WagoContact>();
 
     public event Action<SingleSwitchingResult> SingleIncorrectChecked;
     public event Action<bool> OnShowCurrent;
@@ -37,6 +39,7 @@ public class SwitchBox : MonoBehaviour {
         _switchBoxManager = switchBoxManager;
     }
 
+    #region CreatingAndEditingLists
     public void AddNewWagoClipToList(WagoClip wago) {
         WagoClips.Add(wago);
     }
@@ -52,10 +55,12 @@ public class SwitchBox : MonoBehaviour {
         Wires.Add(line);
     }
 
-    public void RemoveLineToList(Wire line) {
-        Wires.Remove(line);
-        line.StartContact.ConnectionWire = null;
-        Destroy(line.gameObject);
+    public void RemoveLineToList(Wire wire) {
+        wire.StartContact.ResetContact();
+        wire.EndContact.ResetContact();
+
+        Wires.Remove(wire);
+        Destroy(wire.gameObject);
     }
 
     public void RemoveCompanent(Companent companent) {
@@ -64,7 +69,19 @@ public class SwitchBox : MonoBehaviour {
             Destroy(companent.gameObject);
         }
     }
+    #endregion
 
+    #region WorkingWithTime
+    public void SetTimeValue() {
+        _stopwatch.SetTimeValue(Result.SwitchingTimeValue);
+    }
+
+    public void GetTimeValue() {
+        Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
+    }
+    #endregion
+
+    #region VisualEffects
     public void ShowErrorConnections() {
         if (ErrorConnects.Count == 0) return;
 
@@ -76,14 +93,6 @@ public class SwitchBox : MonoBehaviour {
                 errorContact.Select();
             }
         }
-    }
-
-    public void SetTimeValue() {
-        _stopwatch.SetTimeValue(Result.SwitchingTimeValue);
-    }
-
-    public void GetTimeValue() {
-        Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
     }
 
     [ContextMenu("StartCurrent")]
@@ -99,9 +108,58 @@ public class SwitchBox : MonoBehaviour {
     public void ShowCurrent(bool status) {
         OnShowCurrent?.Invoke(status);
     }
+    #endregion
+
+    #region WorkingWithWagoContacts
+    ///  Функции для работы с контактами Wago-зажимов
+    public int FindFreeWagoContacts() {
+        //Debug.Log("Поиск свободных Wago-зажимов!");
+        foreach (WagoClip iWagoClip in WagoClips) {
+            foreach (WagoContact iContact in iWagoClip.WagoContacts) {
+                if (!iContact.GetConnectionStatus()) {
+                    if (!_freeWagoContacts.Contains(iContact)) {
+                        _freeWagoContacts.Add(iContact);
+                    }
+                }
+            }
+        }
+        return _freeWagoContacts.Count;
+    }
+
+    public WagoContact GetFreeWagoContact() {
+        // Приоритет на подключение установлен для контактов активного Wago-зажима
+        foreach (WagoContact iWagoContact in ActiveWagoClip.WagoContacts) {
+            if (iWagoContact.ConnectedContact == null) {
+                return iWagoContact;
+            }
+        }
+        // Если активный Wago-зажима не имеет свободных контактов, подключаем по очереди добавления Wago-зажимов в сборку
+        return _freeWagoContacts[0];
+    }
+
+    public void SelectFreeWagoContacts(bool status) {
+        //Debug.Log("SelectFreeWagoContacts: " + status);
+        if (_freeWagoContacts.Count > 0) {
+            foreach (WagoContact iWagoContact in _freeWagoContacts) {
+                if (status) {
+                    iWagoContact.Select();
+                }
+                else {
+                    iWagoContact.Unselect();
+                }
+            }
+        }
+    }
+
+    public void RemoveWagoContactFromFreeList(WagoContact wagoContact) {
+        if (_freeWagoContacts.Contains(wagoContact)) {
+            _freeWagoContacts.Remove(wagoContact);
+        }
+    }
+    #endregion
 
     #region СheckingСonnections
-    [ContextMenu("СheckingСonnections")]
+    // Функции для проверки сборки
     public int СheckingСonnections() {
         if (WagoClips.Count == 0) {
             Debug.Log("Схема не собрана!");
@@ -137,7 +195,7 @@ public class SwitchBox : MonoBehaviour {
 
         allErrorsCount = ErrorConnects.Count; // Общее количество ошибок
 
-        Result.TaskName = SwitchBoxData.Task.Name;
+        Result.TaskName = TaskName;
         Result.SwitchBoxNumer = SwitchBoxData.PartNumber;
         Result.ErrorCountText = allErrorsCount + "/" + allContactsCount;
 
@@ -156,12 +214,12 @@ public class SwitchBox : MonoBehaviour {
             ShowErrorConnections();
             errorsProcentage = (allErrorsCount / allContactsCount) * 100;
             Debug.Log("Ошибок в сборке: " + allErrorsCount + "/" + allContactsCount);
-            EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
+            //EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
             GameStateManager.Instance.SetLose();
         }
         else {
             Debug.Log("Верная сборка!");
-            EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
+            //EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
             GameStateManager.Instance.SetWin();
         }
        
@@ -169,15 +227,17 @@ public class SwitchBox : MonoBehaviour {
     }
 
     private List<ConnectionData> FindConnectionInAnswer(ConnectionData connectionData) {
-        Answer answer = SwitchBoxData.Answer; // Данные верного подключения
-        List<AnswerData> answerDatas = answer.AnswerDataList; // Список Wago-зажимов
 
-        foreach (AnswerData iWagoAnswer in answerDatas) {
-            List<ConnectionData> connectionDatas = iWagoAnswer.Connections; // Список данных о подключениях к Wago-зажиму
-            if (connectionDatas.Contains(connectionData)) { // Верное подключение содержит искомый компанент и контакт
-                return connectionDatas;
-            }
-        }
+        ////Answer answer = ServiceLocator.Current.Get<TaskManager>.CurrentTask.SwitchBoxData.Answer; // Данные верного подключения
+        //Answer answer;
+        //List<AnswerData> answerDatas = answer.AnswerDataList; // Список Wago-зажимов
+
+        //foreach (AnswerData iWagoAnswer in answerDatas) {
+        //    List<ConnectionData> connectionDatas = iWagoAnswer.Connections; // Список данных о подключениях к Wago-зажиму
+        //    if (connectionDatas.Contains(connectionData)) { // Верное подключение содержит искомый компанент и контакт
+        //        return connectionDatas;
+        //    }
+        //}
         return null;
     }
 
@@ -228,6 +288,4 @@ public class SwitchBox : MonoBehaviour {
     }
 
     #endregion
-
-
 }

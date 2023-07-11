@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Stopwatch : MonoBehaviour
+public class Stopwatch : MonoBehaviour, IService
 {
     [field: SerializeField] public bool Status { get; private set; }
 
@@ -11,7 +11,7 @@ public class Stopwatch : MonoBehaviour
     public event Action<string> TimeChanged;
     public event Action<bool> StatusChanged;
  
-    private void Start() {
+    public void Init() {
         _timeView.Initialization(this);
     }
 

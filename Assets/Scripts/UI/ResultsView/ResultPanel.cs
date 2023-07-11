@@ -17,10 +17,10 @@ public class ResultPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timeText;
     [SerializeField] private TextMeshProUGUI _errorsText;
 
-    private SwitchingResult _generalResult;
+    private GeneralSwitchingResult _generalResult;
     private SingleSwitchingResult _singleResult;
 
-    public void Initialization(SwitchingResult result) {
+    public void Initialization(GeneralSwitchingResult result) {
         _generalResult = result;
     }
 
@@ -30,11 +30,10 @@ public class ResultPanel : MonoBehaviour
 
     public void ShowGeneralResult() {
         if (_generalResult != null) {
-            _nameText.text = _generalResult.TaskName;
+            _nameText.text = $"Часть {_generalResult.TaskData.Type}, Вариант {_generalResult.TaskData.Variant}";
             _timeText.text = _generalResult.GetSwitchingTimesText();
             _errorsText.text = _generalResult.GetErrorsCountText();
-        }
-        
+        }   
     }
     public void ShowSingleResult() {
         if (_singleResult != null) {

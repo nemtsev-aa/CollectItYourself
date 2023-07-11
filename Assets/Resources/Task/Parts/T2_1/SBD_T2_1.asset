@@ -12,31 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43879f8996fed66418ecbe77941cbe28, type: 3}
   m_Name: SBD_T2_1
   m_EditorClassIdentifier: 
-  PartNumber: 1
-  Task: {fileID: 11400000, guid: 345b1a7ae721f2c419797f47768a43f7, type: 2}
-  Answer: {fileID: 11400000, guid: e16e82765a6174a47a563c7be6ea1bce, type: 2}
+  PartNumber: 2
   Companents:
   - SlotNumber: 0
     Name: SA1
-    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 4
+    VersionExecution: 0
   - SlotNumber: 1
     Name: BK
-    Companent: {fileID: 3075138961321192293, guid: 9563250a41aa999469294fb99117f5aa,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 5
+    VersionExecution: 3
   - SlotNumber: 2
     Name: EL1
-    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 3
+    VersionExecution: 1
   - SlotNumber: 3
     Name: EL2
-    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 3
+    VersionExecution: 1
   - SlotNumber: 4
     Name: Input
-    Companent: {fileID: 2486841509407197961, guid: 03bde88bf071c95458b518b75f76b7fd,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 0
+    VersionExecution: 2
   - SlotNumber: 5
     Name: SA2
-    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 4
+    VersionExecution: 0

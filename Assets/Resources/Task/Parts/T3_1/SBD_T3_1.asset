@@ -13,30 +13,34 @@ MonoBehaviour:
   m_Name: SBD_T3_1
   m_EditorClassIdentifier: 
   PartNumber: 1
-  Task: {fileID: 11400000, guid: 7ee118acbd64e5146842149975b98cd2, type: 2}
-  Answer: {fileID: 11400000, guid: 4394238a02cc24b4b9be8ca9f30df548, type: 2}
   Companents:
   - SlotNumber: 0
     Name: SA3
-    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 4
+    VersionExecution: 0
   - SlotNumber: 1
     Name: Input
-    Companent: {fileID: 2486841509407197961, guid: 03bde88bf071c95458b518b75f76b7fd,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 0
+    VersionExecution: 3
   - SlotNumber: 2
     Name: EL3
-    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 3
+    VersionExecution: 1
   - SlotNumber: 3
     Name: EL4
-    Companent: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 3
+    VersionExecution: 1
   - SlotNumber: 4
     Name: Output
-    Companent: {fileID: 2486841509407197961, guid: 64cb8c6f1628dfc45ba1be0895b0875f,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 1
+    VersionExecution: 2
   - SlotNumber: 5
     Name: SA4
-    Companent: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 4
+    VersionExecution: 0

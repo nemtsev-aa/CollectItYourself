@@ -13,26 +13,29 @@ MonoBehaviour:
   m_Name: SBD_T1_1
   m_EditorClassIdentifier: 
   PartNumber: 1
-  Task: {fileID: 11400000, guid: 03db22952bcf58f4eb27e81e94c8cdca, type: 2}
-  Answer: {fileID: 11400000, guid: b69365a7e172bcd49a2481981645562f, type: 2}
   Companents:
   - SlotNumber: 0
     Name: XS1
-    Companent: {fileID: 3583119106728645194, guid: 228bcc3567ea82741a23f0654b7a5790,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 2
+    VersionExecution: 0
   - SlotNumber: 1
     Name: Input
-    Companent: {fileID: 2486841509407197961, guid: 5fef48a53beb7894183dbd6e4ad90b2e,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 0
+    VersionExecution: 3
   - SlotNumber: 2
     Name: XS2
-    Companent: {fileID: 3583119106728645194, guid: 4a9f642610fd0e04d8594981e96c8eae,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 2
+    VersionExecution: 1
   - SlotNumber: 3
     Name: XS3
-    Companent: {fileID: 3583119106728645194, guid: 4a9f642610fd0e04d8594981e96c8eae,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 2
+    VersionExecution: 1
   - SlotNumber: 4
     Name: Output
-    Companent: {fileID: 2486841509407197961, guid: c2e36e76ada27954abeecc942769079d,
-      type: 3}
+    TaskMode: 0
+    CompanentType: 2
+    VersionExecution: 1

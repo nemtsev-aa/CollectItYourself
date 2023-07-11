@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
   m_Name: ED1_1
   m_EditorClassIdentifier: 
-  PrincipalShemas: {fileID: 21300000, guid: 945048df6e8a27c46828b831ac498722, type: 3}
+  PrincipalShema: {fileID: 0}
   SwitchBoxsData: {fileID: 11400000, guid: 783814f8ea3bb814eb393701074d8ff7, type: 2}
   Answer: {fileID: 11400000, guid: e16e82765a6174a47a563c7be6ea1bce, type: 2}

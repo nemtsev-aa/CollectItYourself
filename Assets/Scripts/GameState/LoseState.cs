@@ -1,3 +1,4 @@
+using CustomEventBus;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,12 @@ using UnityEngine;
 public class LoseState : GameState
 {
     [SerializeField] private LoseWindow _loseWindow;
-    
+    private EventBus _eventBus;
     private void Awake() {
-        EventBus.Instance.CorrectChecked += ShowIncorrectResult;
+        _eventBus = ServiceLocator.Current.Get<EventBus>();
     }
 
-    private void ShowIncorrectResult(SwitchingResult switchingResult) {
+    private void ShowIncorrectResult(GeneralSwitchingResult switchingResult) {
         GameStateManager.Instance.SetLose();
     }
 

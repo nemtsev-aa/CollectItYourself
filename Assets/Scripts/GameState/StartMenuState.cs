@@ -12,7 +12,7 @@ public class StartMenuState : GameState
     [SerializeField] private Button _tabToStartButton;
 
     [Tooltip("Менеджер заданий")]
-    public TaskManager TaskManager;
+    public TaskController TaskController;
     [Tooltip("Выпадающий список заданий")]
     public TMP_Dropdown TaskSelector;
 
@@ -41,9 +41,8 @@ public class StartMenuState : GameState
     }
 
     public void SelectTask() {
-        string TaskName = TaskSelector.options[TaskSelector.value].text;
-        Task selectionTask = TaskManager.FindTask(TaskName);
-        _management.ShowTask(selectionTask);
+        int TaskId = int.Parse(TaskSelector.options[TaskSelector.value].text);
+        TaskData selectionTask = TaskController.FindTask(TaskId);
         _gameStateManager.SetAction();
     }
 }

@@ -43,7 +43,7 @@ public class ElectricFieldMovingView : MonoBehaviour
 
         SwitchBox switchBox = null;
         if (Object is WagoClip) {
-            switchBox = Object.GetParentWagoClip().SwitchBox;   
+            switchBox = Object.GetParentWagoClip().ParentSwitchBox;   
         } else if (Object is Wire) {
             switchBox = Object.GetParentWire().SwitchBox;          
         } else if (Object is Companent) {
@@ -142,7 +142,7 @@ public class ElectricFieldMovingView : MonoBehaviour
     private void OnDisable() {
         SwitchBox switchBox = new SwitchBox();
         if (Object is WagoClip) {
-            switchBox = Object.GetParentWagoClip().SwitchBox;
+            switchBox = Object.GetParentWagoClip().ParentSwitchBox;
         }
         else if (Object is Wire) {
             switchBox = Object.GetParentWire().SwitchBox;
