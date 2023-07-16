@@ -42,7 +42,7 @@ public class StartMenuState : GameState
 
     public void SelectTask() {
         int TaskId = int.Parse(TaskSelector.options[TaskSelector.value].text);
-        TaskData selectionTask = TaskController.FindTask(TaskId);
+        //TaskData selectionTask = TaskController.FindTask(TaskId);
         _gameStateManager.SetAction();
     }
 }

@@ -1,50 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = nameof(GeneralSwitchingResult), menuName = nameof(GeneralSwitchingResult))]
 public class GeneralSwitchingResult : ScriptableObject {
+    public TaskData TaskData { get { return _taskData; } private set { _taskData = value; } }
+    public bool CheckResult { get { return _checkResult; } private set { _checkResult = value; } }
+    public int SwitchBoxNumber { get { return _switchBoxNumber; } private set { _switchBoxNumber = value; } }
+    public IEnumerable<SingleSwitchingResult> SingleSwichingResults { get { return _singleSwichingResults; } private set { _singleSwichingResults = value; } }
+    public string ErrorsCountText { get { return _errorsCountText; } private set { _errorsCountText = value; } }
+    public float SwitchingTimesValue { get { return _switchingTimesValue; } private set { _switchingTimesValue = value; } }
+    public List<ConnectionData> ErrorsList { get { return _errorsList; } private set { _errorsList = value; } }
+
     private TaskData _taskData;
     private bool _checkResult;
     private int _switchBoxNumber;
-    private List<SingleSwitchingResult> _singleSwichingResults;
+    private IEnumerable<SingleSwitchingResult> _singleSwichingResults;
     private string _errorsCountText;
-    private string _switchingTimesText;
     private float _switchingTimesValue;
     private List<ConnectionData> _errorsList;
 
-    public TaskData TaskData => _taskData;
-    public bool CheckResult => _checkResult;
-    public int SwitchBoxNumber => _switchBoxNumber;
-    public List<SingleSwitchingResult> SingleSwichingResults => _singleSwichingResults;
-    public string ErrorsCountText => _errorsCountText;
-    public string SwitchingTimesText => _switchingTimesText;
-    public float SwitchingTimesValue => _switchingTimesValue;
-    public List<ConnectionData> ErrorsList => _errorsList;
+    // Конструктор класса
+    public GeneralSwitchingResult(TaskData taskData, bool checkResult, int switchBoxNumber, IEnumerable<SingleSwitchingResult> singleSwichingResults,
+                                  string errorsCountText, float switchingTimesValue, List<ConnectionData> errorsList) {
+        _taskData = taskData;
+        _checkResult = checkResult;
+        _switchBoxNumber = switchBoxNumber;
+        _singleSwichingResults = singleSwichingResults;
+        _errorsCountText = errorsCountText;
+        _switchingTimesValue = switchingTimesValue;
+        _errorsList = errorsList;
+    }
 
-    public string GetErrorsCountText() {
-        if (_singleSwichingResults.Count > 0) {
-            int errorsCountValue = 0;
-            int contactsCountValue = 0;
+    // Метод создания экземпляра класса
+    public static GeneralSwitchingResult CreateInstance(TaskData taskData, bool checkResult, int switchBoxNumber, 
+                                                        IEnumerable<SingleSwitchingResult> singleSwichingResults,
+                                                        string errorsCountText, float switchingTimesValue,
+                                                        List<ConnectionData> errorsList) {
+        GeneralSwitchingResult instance = CreateInstance<GeneralSwitchingResult>();
+        instance.TaskData = taskData;
+        instance.CheckResult = checkResult;
+        instance.SwitchBoxNumber = switchBoxNumber;
+        instance.SingleSwichingResults = singleSwichingResults;
+        instance.ErrorsCountText = errorsCountText;
+        instance.SwitchingTimesValue = switchingTimesValue;
+        instance.ErrorsList = errorsList;
 
-            foreach (SingleSwitchingResult iResult in _singleSwichingResults) {
-                string[] iData = iResult.ErrorCountText.Split("/");
-                int iErrorsCount = int.Parse(iData[0]);
-                int iContactsCount = int.Parse(iData[1]);
-
-                errorsCountValue += iErrorsCount;
-                contactsCountValue += iContactsCount;
-            }
-
-            _errorsCountText = errorsCountValue + "/" + contactsCountValue;
-            return _errorsCountText;
-        }
-        return null;
+        return instance;
     }
 
     public float GetSwitchingTimesValue() {
-        if (_singleSwichingResults.Count > 0) {
+        if (_singleSwichingResults.Count() > 0) {
             float timesValue = 0f;
             foreach (SingleSwitchingResult iResult in _singleSwichingResults) {
                 timesValue += iResult.SwitchingTimeValue;
@@ -55,13 +63,14 @@ public class GeneralSwitchingResult : ScriptableObject {
     }
 
     public string GetSwitchingTimesText() {
-        if (_singleSwichingResults.Count > 0) {
+        string switchingTimesText = "";
+        if (_singleSwichingResults.Count() > 0) {
             float timesValue = 0f;
             foreach (SingleSwitchingResult iResult in _singleSwichingResults) {
                 timesValue += iResult.SwitchingTimeValue;
             }
-            _switchingTimesText = GetFormattedTime(timesValue);
-            return _switchingTimesText;
+            switchingTimesText = GetFormattedTime(timesValue);
+            return switchingTimesText;
         }
         return null;
     }
@@ -71,11 +80,11 @@ public class GeneralSwitchingResult : ScriptableObject {
         int seconds = Mathf.FloorToInt(_timeValue % 60f);
         int milliseconds = Mathf.FloorToInt((_timeValue * 1000f) % 1000f);
 
-        return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        return string.Format("{0:00}:{1:00}:{2:0}", minutes, seconds, milliseconds);
     }
 
     public List<ConnectionData> GetErrorsList() {
-        if (_singleSwichingResults.Count > 0) {
+        if (_singleSwichingResults.Count() > 0) {
             foreach (SingleSwitchingResult iResult in _singleSwichingResults) {
                 _errorsList.AddRange(iResult.ErrorList);
             }
@@ -83,4 +92,6 @@ public class GeneralSwitchingResult : ScriptableObject {
         }
         return null;
     }
+
+
 }

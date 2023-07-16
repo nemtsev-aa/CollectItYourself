@@ -1,36 +1,51 @@
+using CustomEventBus;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SwitchBoxManager : MonoBehaviour, IService {
+    public SwitchBox ActiveSwichBox => _activeSwichBox;
+    public IEnumerable<SwitchBox> SwitchBoxes => _switchBoxes;
+
     [SerializeField] private SwitchBox _switchBoxPrefab1;
     [SerializeField] private SwitchBox _switchBoxPrefab2;
     [SerializeField] private CompanentConfig _companentConfig;
-    [SerializeField] private TaskData _taskData;
+    
+    private List<SwitchBox> _switchBoxes = new List<SwitchBox>();
 
-    public List<SwitchBox> SwitchBoxes = new List<SwitchBox>();
-    public SwitchBox ActiveSwichBox;
-    public event Action<int> ActiveSwitchBoxChanged;
-    private Stopwatch Stopwatch;
-    private Management _management;
+    private SwitchBox _activeSwichBox;
+    private TaskData _taskData;
+    private EventBus _eventBus;
 
-    public void Init() {
-
+    public void Init(TaskData taskData) {
+        _taskData = taskData;
+        
     }
 
     public void SetActiveSwichBox(SwitchBox switchBox) {
-        ActiveSwichBox = switchBox;
-        ActiveSwitchBoxChanged?.Invoke(switchBox.SwitchBoxData.PartNumber);
+        _activeSwichBox = switchBox;
+    }
+
+    public void SetActiveSwichBox(int number) {
+        if (_activeSwichBox != null) {
+            _activeSwichBox.GetTimeValue();  // Çàïèñûâàåì âðåìÿ êîììóòàöèè â äåàêòèâèðóåìóþ êîðîáêó
+        }
+        _activeSwichBox = _switchBoxes[number - 1];
+        _activeSwichBox.SetTimeValue();      // Óñòàíàâëèâàåì âðåìÿ ñáîðêè àêòèâèðóåìîé êîðîáêè
+    }
+
+    public void CreateSwitchBoxs() {
+        if (_taskData.SwitchBoxsData.Count > 0) {
+            foreach (var iSwitchBox in _taskData.SwitchBoxsData) {
+                CreateSwichBox(iSwitchBox);
+            }
+        } else {
+            CreateSwichBox(_taskData.SwitchBoxsData[0]);
+        }
     }
 
     public SwitchBox CreateSwichBox(SwitchBoxData switchBoxData) {
-        //foreach (var iSwichBox in SwitchBoxes) {
-        //    if (iSwichBox.SwitchBoxData == switchBoxData) {
-        //        return null;
-        //    }
-        //}
-
         SwitchBox newSwitchBox;
         SwitchBox _switchBoxPrefab;
         if (switchBoxData.Companents.Count <= 6) {
@@ -59,44 +74,67 @@ public class SwitchBoxManager : MonoBehaviour, IService {
             newCompanent.transform.position = _switchBoxPrefab.Slots[data.SlotNumber].position;
 
             newSwitchBox.Companents.Add(newCompanent);
-            newSwitchBox.Initialized(Stopwatch, this);
+            newSwitchBox.Init();
         }
 
         return newSwitchBox;
     }
 
-    private void SwitchBox_OnLose(GeneralSwitchingResult switchingResult) {
-
-    }
-
-    private void SwitchBox_OnWin(GeneralSwitchingResult switchingResult) {
-     
-    }
-
     public void AddSwichBoxToList(SwitchBox switchBox) {
-        SwitchBoxes.Add(switchBox);
+        _switchBoxes.Add(switchBox);
     }
 
     public void RemoveSwichBoxFromList(SwitchBox switchBox) {
-        if (SwitchBoxes.Contains(switchBox)) {
-            SwitchBoxes.Remove(switchBox);
+        if (_switchBoxes.Contains(switchBox)) {
+            _switchBoxes.Remove(switchBox);
             Destroy(switchBox.gameObject);
         }
     }
 
     public void CheckSwichBox(int number) {
-        SwitchBoxes[number-1].ÑheckingÑonnections();
+        _switchBoxes[number-1].ÑheckingÑonnections();
     }
 
     public void CheckSwichBoxes() {
         int errorsCount = 0;
-        float switchingsTime = 0f;
+        GeneralSwitchingResult generalResult;
+        string resultTaskName = _taskData.ID;
+        bool resultCheckStatus;
+        int resultSwitchBoxNumer;
+        string resultErrorCountText;
+        float resultSwitchingTimeValue = 0f;
 
-        foreach (SwitchBox iSwichBox in SwitchBoxes) {
-            switchingsTime += iSwichBox.Result.SwitchingTimeValue;
-            errorsCount += iSwichBox.ÑheckingÑonnections();
-        }
+        List<ConnectionData> resultErrorList = new List<ConnectionData>();
+
+        if (_taskData.SwitchBoxsData.Count > 0) {
+            List<SingleSwitchingResult> singleSwitchingResultList = new List<SingleSwitchingResult>();
+
+            foreach (SwitchBox iSwichBox in SwitchBoxes) {
+                SingleSwitchingResult singleSwitchingResult = iSwichBox.ÑheckingÑonnections();
+                singleSwitchingResultList.Add(singleSwitchingResult);
+                resultErrorList.AddRange(singleSwitchingResult.ErrorList);
+
+                errorsCount += int.Parse(singleSwitchingResult.ErrorCountText);
+                resultSwitchingTimeValue += singleSwitchingResult.SwitchingTimeValue;
+            }
+
+            if (resultErrorList.Count > 0) {
+                resultCheckStatus = false;
+                resultSwitchBoxNumer = 0;
+                resultErrorCountText = errorsCount.ToString();
+            } else {
+                resultCheckStatus = true;
+                resultSwitchBoxNumer = 0;
+                resultErrorCountText = "-";
+            }
+
+            generalResult = GeneralSwitchingResult.CreateInstance(_taskData, resultCheckStatus, resultSwitchBoxNumer, singleSwitchingResultList, resultErrorCountText, resultSwitchingTimeValue, resultErrorList);
+        }      
     }
+
+
+    //ShowErrorConnections();
+
 
     public SwitchBox GetSwitchBoxByName(string name) {
         foreach (SwitchBox iBox in SwitchBoxes) {
@@ -117,6 +155,23 @@ public class SwitchBoxManager : MonoBehaviour, IService {
     }
 
     public void ShowCurrent(bool status) {
-        ActiveSwichBox.ShowCurrent(status);
+        _activeSwichBox.ShowCurrent(status);
     }
+
+    public void ShowSwitchBoxs() {
+        if (_switchBoxes.Count > 0) {
+            foreach (SwitchBox iSB in SwitchBoxes) {
+                iSB.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void HideSwitchBoxs() {
+        if (_switchBoxes.Count > 0) {
+            foreach (SwitchBox iSB in SwitchBoxes) {
+                iSB.gameObject.SetActive(false);
+            }
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResultsView : MonoBehaviour {
@@ -20,7 +21,7 @@ public class ResultsView : MonoBehaviour {
     public void Initialize(GeneralSwitchingResult switchingResult) {
         _generalResult = switchingResult;
         // Если в результате содержатся данные о сборке отдельных РК
-        if (_generalResult.SingleSwichingResults.Count != 0) {
+        if (_generalResult.SingleSwichingResults.Count() != 0) {
             foreach (SingleSwitchingResult iSingleResult in _generalResult.SingleSwichingResults) {
                 if (!_singleResults.Contains(iSingleResult)) {
                     _singleResults.Add(iSingleResult);
@@ -36,14 +37,14 @@ public class ResultsView : MonoBehaviour {
         newPanel.transform.position = new Vector3(newPanel.transform.position.x, newPanel.transform.position.y, 0f);
         newPanel.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         newPanel.transform.SetSiblingIndex(0);
-        newPanel.Initialization(_generalResult);
+        newPanel.Init(_generalResult);
         newPanel.ShowGeneralResult();
         Debug.Log("Панель для отображения общего результата создана!");
     }
 
     public void UploadResultsToSinglePanel() {
         // Если в результате содержатся данные о сборке отдельных РК
-        if (_generalResult.SingleSwichingResults.Count != 0) {
+        if (_generalResult.SingleSwichingResults.Count() != 0) {
             foreach (SingleSwitchingResult iResult in _singleResults) {
                 ResultPanel newPanel;
                 newPanel = Instantiate(_singleResultView, _content.transform);
@@ -51,7 +52,7 @@ public class ResultsView : MonoBehaviour {
                 newPanel.transform.position = new Vector3(newPanel.transform.position.x, newPanel.transform.position.y, 0f);
                 newPanel.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
                 newPanel.transform.SetSiblingIndex(_content.transform.childCount - 1);
-                newPanel.Initialization(iResult);
+                newPanel.Init(iResult);
                 newPanel.ShowSingleResult();
                 Debug.Log("Панель для отображения локального результата создана!");
             }

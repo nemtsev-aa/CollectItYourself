@@ -13,27 +13,27 @@ public class LineScript : MonoBehaviour
     public Pointer Pointer;
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            if (line == null) {
-                createLine();
-            }
+        //if (Input.GetMouseButtonDown(0)) {
+        //    if (line == null) {
+        //        createLine();
+        //    }
 
-            Debug.Log("Start");
+        //    Debug.Log("Start");
             
-            line.SetPosition(0, Pointer.Aim.transform.position);
-            line.SetPosition(1, Pointer.Aim.transform.position);
-        } else if (Input.GetMouseButtonUp(0) && line) {
-            Debug.Log("End");
+        //    line.SetPosition(0, Pointer.Aim.transform.position);
+        //    line.SetPosition(1, Pointer.Aim.transform.position);
+        //} else if (Input.GetMouseButtonUp(0) && line) {
+        //    Debug.Log("End");
            
-            line.SetPosition(1, Pointer.Aim.transform.position);
-            line = null;
-            currentLines++;
+        //    line.SetPosition(1, Pointer.Aim.transform.position);
+        //    line = null;
+        //    currentLines++;
 
-        } else if (Input.GetMouseButton(0) && line) {
-            Debug.Log("Move");
+        //} else if (Input.GetMouseButton(0) && line) {
+        //    Debug.Log("Move");
            
-            line.SetPosition(1, Pointer.Aim.transform.position);
-        }
+        //    line.SetPosition(1, Pointer.Aim.transform.position);
+        //}
     }
 
     private void createLine() {

@@ -73,9 +73,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _outsideClickArea: {fileID: 0}
-  LearningProgressView: {fileID: 1557640212329354836}
+  ProgressView: {fileID: 1557640212329354836}
   ResultsView: {fileID: 1557814355895671249}
-  _nextLevelButton: {fileID: 6597740669573187932}
+  _nextTaskButton: {fileID: 6597740669573187932}
   _goToMenuButton: {fileID: 3611984852258196049}
 --- !u!1 &1557640211516129170
 GameObject:
@@ -613,8 +613,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.19857138}
   m_AnchorMax: {x: 1, y: 0.7975}
-  m_AnchoredPosition: {x: 0, y: -2.798645}
-  m_SizeDelta: {x: -632, y: 96.03711}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1557814355895671255
 CanvasRenderer:
@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7629473609090437879}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.20758487
+  m_Size: 0.21720964
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

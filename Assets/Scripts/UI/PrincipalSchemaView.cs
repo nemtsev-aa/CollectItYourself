@@ -11,8 +11,12 @@ public class PrincipalSchemaView : MonoBehaviour
     [Tooltip("Панель секундомера")]
     [SerializeField] private TimeView _timeView;
 
-    public void Show(SwitchBox switchBox) {
-        _name.text = switchBox.TaskName;
-        //_image.sprite = switchBox.SwitchBoxData.Task.TaskDataList[switchBox.SwitchBoxData.PartNumber-1].PrincipalShema;
+    public void Init(Stopwatch stopwatch) {
+        _timeView.Init(stopwatch);
+    }
+
+    public void Show(string name, Sprite sprite) {
+        _name.text = name;
+        _image.sprite = sprite;
     }
 }

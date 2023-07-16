@@ -12,7 +12,7 @@ public class Stopwatch : MonoBehaviour, IService
     public event Action<bool> StatusChanged;
  
     public void Init() {
-        _timeView.Initialization(this);
+        _timeView.Init(this);
     }
 
     private void Update() {

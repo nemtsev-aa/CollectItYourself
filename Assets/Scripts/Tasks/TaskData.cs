@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Xml.Serialization;
-using System.IO;
+using UnityEngine;
 public enum TaskMode {
     Training,
     Exam
@@ -20,51 +19,70 @@ public class TaskData : ScriptableObject {
     /// Уникальный ID задания
     /// </summary>
     [XmlElement("ID")]
-    [SerializeField] private int id;
+    [SerializeField] private string _id;
     /// <summary>
     /// Количество очков за выполнение
     /// </summary>
     [XmlElement("ExpValue")]
-    [SerializeField] private int expValue;
+    [SerializeField] private int _expValue;
     /// <summary>
     /// Модификация задания
     /// </summary>
     [XmlElement("TaskMode")]
-    [SerializeField] private TaskMode mode;
+    [SerializeField] private TaskMode _mode;
     /// <summary>
     /// Тип задания
     /// </summary>
     [XmlElement("TaskType")]
-    [SerializeField] private TaskType type;
+    [SerializeField] private TaskType _type;
     /// <summary>
     /// Вариант задания
     /// </summary>
     [XmlElement("TaskVariant")]
-    [SerializeField] private int variant;
+    [SerializeField] private int _variant;
+    /// <summary>
+    /// Принципиальная схема
+    /// </summary>
+    [XmlElement("WiringShema")]
+    [SerializeField] private Sprite _wiringShema;
     /// <summary>
     /// Принципиальная схема
     /// </summary>
     [XmlElement("PrincipalShema")]
-    [SerializeField] private List<Sprite> principalShema;
+    [SerializeField] private List<Sprite> _principalShema;
     /// <summary>
     /// Комплектация распределительной коробки
     /// </summary>
     [XmlElement("SwitchBoxsData")]
-    [SerializeField] private List<SwitchBoxData> switchBoxsData;
+    [SerializeField] private List<SwitchBoxData> _switchBoxsData;
     /// <summary>
     /// Верное подключение компанентов
     /// </summary>
     [XmlElement("Answer")]
-    [SerializeField] private List<Answer> answer;
+    [SerializeField] private List<Answer> _answer;
 
 
-    public int ID => id;
-    public int ExpValue => expValue;
-    public TaskMode Mode => mode;
-    public TaskType Type => type;
-    public int Variant => variant;
-    public List<Sprite> PrincipalShema => principalShema;
-    public List<SwitchBoxData> SwitchBoxsData => switchBoxsData;
-    public List<Answer> Answer => answer;
+    public string ID => _id;
+    public int ExpValue => _expValue;
+    public TaskMode Mode => _mode;
+    public TaskType Type => _type;
+    public int Variant => _variant;
+    public Sprite WiringShema => _wiringShema;
+    public List<Sprite> PrincipalShemas => _principalShema;
+    public List<SwitchBoxData> SwitchBoxsData => _switchBoxsData;
+    public List<Answer> Answers => _answer;
 
+    /// <summary>
+    /// Общее количество подключений в ответе
+    /// </summary>
+    /// <returns></returns>
+    public int GetConnectionsCount() {
+        int connectionsCount = 0;
+        foreach (var iAnswer in Answers) {
+            foreach (var iAnswerData in iAnswer.AnswerDataList) {
+                connectionsCount += iAnswerData.Connections.Count;
+            }
+        }
+        return connectionsCount;
+    }
 }

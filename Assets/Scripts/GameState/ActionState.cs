@@ -34,7 +34,7 @@ public class ActionState : GameState
     }
 
     public void ShowSwitchBox(SwitchBox switchBox) {
-        _principalSchemaView.Show(switchBox);
+        //_principalSchemaView.Show(switchBox);
     }
 
     public void SetActiveSwitchBoxNumber(int number) {

@@ -12,45 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43879f8996fed66418ecbe77941cbe28, type: 3}
   m_Name: SBD_T4_1
   m_EditorClassIdentifier: 
-  PartNumber: 1
+  PartNumber: 4
   Companents:
   - SlotNumber: 0
-    Name: SA6
+    Name: SA7
     TaskMode: 0
     CompanentType: 4
     VersionExecution: 0
   - SlotNumber: 1
-    Name: SA5
+    Name: BK
     TaskMode: 0
-    CompanentType: 4
-    VersionExecution: 0
-  - SlotNumber: 2
-    Name: Output
-    TaskMode: 0
-    CompanentType: 1
+    CompanentType: 5
     VersionExecution: 3
+  - SlotNumber: 2
+    Name: EL5
+    TaskMode: 0
+    CompanentType: 3
+    VersionExecution: 1
   - SlotNumber: 3
-    Name: EL3
+    Name: EL6
     TaskMode: 0
     CompanentType: 3
     VersionExecution: 1
   - SlotNumber: 4
-    Name: EL4
-    TaskMode: 0
-    CompanentType: 3
-    VersionExecution: 1
-  - SlotNumber: 5
     Name: Input
     TaskMode: 0
     CompanentType: 0
     VersionExecution: 2
-  - SlotNumber: 6
+  - SlotNumber: 5
     Name: SA8
-    TaskMode: 0
-    CompanentType: 4
-    VersionExecution: 0
-  - SlotNumber: 7
-    Name: SA7
     TaskMode: 0
     CompanentType: 4
     VersionExecution: 0

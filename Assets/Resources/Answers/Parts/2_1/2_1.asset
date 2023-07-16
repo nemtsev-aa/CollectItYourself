@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a07d39a15bb0a42a21fa6ca5642450, type: 3}
   m_Name: 2_1
   m_EditorClassIdentifier: 
-  WagoClipNumber: 6
+  WagoClipNumber: 5
   AnswerDataList:
-  - {fileID: 11400000, guid: d781dde177f45174e9f2016d17f6c30e, type: 2}
-  - {fileID: 11400000, guid: a7fedac9bc8f2934b924b9ec0548a8ad, type: 2}
-  - {fileID: 11400000, guid: c19e33316ced96a4f9277f8cb3bd9cf6, type: 2}
-  - {fileID: 11400000, guid: 9f17373f101e8e84dab13269d1062726, type: 2}
-  - {fileID: 11400000, guid: 3b2ec8ab7a090904b82a89added2603c, type: 2}
-  - {fileID: 11400000, guid: 76fe58415886b8b43942f7dff7209204, type: 2}
+  - {fileID: 11400000, guid: 04cd3337ed2e25d4481bb5bf7090246e, type: 2}
+  - {fileID: 11400000, guid: 03cf51473b7f68b40a13ce164ec87491, type: 2}
+  - {fileID: 11400000, guid: 4ff7a853cfa0962409f81f3679aebc5a, type: 2}
+  - {fileID: 11400000, guid: 6d00a64f78fccd14a94288f5506dbf1e, type: 2}
+  - {fileID: 11400000, guid: f6bc5df69d6d9f94bbf731cf629118a2, type: 2}

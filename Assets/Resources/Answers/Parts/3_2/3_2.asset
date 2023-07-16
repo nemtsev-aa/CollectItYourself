@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a07d39a15bb0a42a21fa6ca5642450, type: 3}
+  m_Name: 3_2
+  m_EditorClassIdentifier: 
+  WagoClipNumber: 7
+  AnswerDataList:
+  - {fileID: 11400000, guid: e128186267c8f144f98de214d7befe3f, type: 2}
+  - {fileID: 11400000, guid: 2e3db15cb939702448fa90728a888406, type: 2}
+  - {fileID: 11400000, guid: 96fe243d8cd076e40951ef2ade52c0e8, type: 2}
+  - {fileID: 11400000, guid: f4b24dda26d8d7b43b46fe857cb86d2f, type: 2}
+  - {fileID: 11400000, guid: 646d4ae94f6a4484997b573a5ef00182, type: 2}
+  - {fileID: 11400000, guid: d7af504612cfec04992f98af286c3400, type: 2}
+  - {fileID: 11400000, guid: 766096fd65a2dbd4ca85e280130ec1c1, type: 2}

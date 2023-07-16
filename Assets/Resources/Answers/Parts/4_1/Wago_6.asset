@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Connections:
   - CompanentType: 4
-    CompanentName: SA6
-    ContactType: 3
-  - CompanentType: 4
     CompanentName: SA8
-    ContactType: 3
+    ContactType: 4
+  - CompanentType: 3
+    CompanentName: EL6
+    ContactType: 0

@@ -1,3 +1,4 @@
+using CustomEventBus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,18 +26,15 @@ public class SwitchBox : MonoBehaviour {
     public List<Wire> Wires = new List<Wire>();
 
     private Stopwatch _stopwatch;
-    private SwitchBoxManager _switchBoxManager;
     private List<WagoContact> _freeWagoContacts = new List<WagoContact>();
 
     public event Action<SingleSwitchingResult> SingleIncorrectChecked;
     public event Action<bool> OnShowCurrent;
+    private EventBus _eventBus;
 
-    public void Initialized(Stopwatch stopwatch, SwitchBoxManager switchBoxManager) {
-        _stopwatch = stopwatch;
-        Result = ScriptableObject.CreateInstance<SingleSwitchingResult>();
-        List<ConnectionData> errorList = new();
-        Result.ErrorList = errorList;
-        _switchBoxManager = switchBoxManager;
+    public void Init() {
+        _stopwatch = ServiceLocator.Current.Get<Stopwatch>();
+        _eventBus = ServiceLocator.Current.Get<EventBus>();
     }
 
     #region CreatingAndEditingLists
@@ -77,7 +75,7 @@ public class SwitchBox : MonoBehaviour {
     }
 
     public void GetTimeValue() {
-        Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
+        Result.SetSwitchingTimeValue(_stopwatch.GetTimeValue());
     }
     #endregion
 
@@ -159,16 +157,19 @@ public class SwitchBox : MonoBehaviour {
     #endregion
 
     #region СheckingСonnections
-    // Функции для проверки сборки
-    public int СheckingСonnections() {
+    /// <summary>
+    /// Проверка сборки 
+    /// </summary>
+    /// <returns></returns>
+    public SingleSwitchingResult СheckingСonnections() {
         if (WagoClips.Count == 0) {
             Debug.Log("Схема не собрана!");
-            return 100;
+            return null;
         }
 
-        _stopwatch.SetStatus(false);
+        //_stopwatch.SetStatus(false);
 
-        float errorsProcentage = 0; // Процент ошибок в сборке
+        //float errorsProcentage = 0; // Процент ошибок в сборке
         int allContactsCount = 0; // Общее количество контактов в коробке
         int allErrorsCount; // Количество контактов подключенных с ошибкой
 
@@ -195,35 +196,34 @@ public class SwitchBox : MonoBehaviour {
 
         allErrorsCount = ErrorConnects.Count; // Общее количество ошибок
 
-        Result.TaskName = TaskName;
-        Result.SwitchBoxNumer = SwitchBoxData.PartNumber;
-        Result.ErrorCountText = allErrorsCount + "/" + allContactsCount;
-
+        string resultTaskName = TaskName;
+        bool resultCheckStatus;
+        int resultSwitchBoxNumer = SwitchBoxData.PartNumber;
+        string resultErrorCountText = allErrorsCount + "/" + allContactsCount;
+        
+        List<ConnectionData> resultErrorList = new List<ConnectionData>();
         if (ErrorConnects.Count > 0) {
-            if (!CreateErrorsList()) {
-                Debug.Log("Ошибка переноса списка ошибок из словаря!" + this.name);
+            resultErrorList = CreateErrorsList();
+            if (resultErrorList == null) {
+                Debug.LogError("Ошибка переноса списка ошибок из словаря!" + this.name);
             }
         }
 
-        Result.SwitchingTimeValue = _stopwatch.GetTimeValue();
-        Result.SwitchingTimeText = _stopwatch.GetTimeText();
-
-        gameObject.SetActive(false);
+        float resultSwitchingTimeValue = _stopwatch.GetTimeValue();
+        
 
         if (allErrorsCount > 0) {
-            ShowErrorConnections();
-            errorsProcentage = (allErrorsCount / allContactsCount) * 100;
+            //errorsProcentage = (allErrorsCount / allContactsCount) * 100;
             Debug.Log("Ошибок в сборке: " + allErrorsCount + "/" + allContactsCount);
-            //EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
-            GameStateManager.Instance.SetLose();
-        }
-        else {
+            resultCheckStatus = false;
+        } else {
             Debug.Log("Верная сборка!");
-            //EventBus.Instance.SingleIncorrectChecked?.Invoke(Result);
-            GameStateManager.Instance.SetWin();
+            resultCheckStatus = true;
         }
-       
-        return (int)errorsProcentage;
+
+        Result = SingleSwitchingResult.CreateInstance(resultTaskName, resultCheckStatus, resultSwitchBoxNumer,
+                                           resultErrorCountText, resultSwitchingTimeValue, resultErrorList);
+        return Result;
     }
 
     private List<ConnectionData> FindConnectionInAnswer(ConnectionData connectionData) {
@@ -278,14 +278,22 @@ public class SwitchBox : MonoBehaviour {
         return null;
     }
 
-    private bool CreateErrorsList() {
+    private List<ConnectionData> CreateErrorsList() {
+        List<ConnectionData> resultErrorList = new List<ConnectionData>();
         foreach (KeyValuePair<string, ConnectionData> iConnection in ErrorConnects) {
-            if (!Result.ErrorList.Contains(iConnection.Value)) {
-                Result.ErrorList.Add(iConnection.Value);
+            if (!resultErrorList.Contains(iConnection.Value)) {
+                resultErrorList.Add(iConnection.Value);
             }
         }
-        return ErrorConnects.Count != Result.ErrorList.Count ? true : false;
+        return ErrorConnects.Count != resultErrorList.Count ? null : resultErrorList;
     }
 
+    public int GetConnectionsCount() {
+        int connectionsCoint = 0;
+        foreach (var iWagoClip in WagoClips) {
+            connectionsCoint += iWagoClip.Connections.Count;
+        }
+        return connectionsCoint;
+    }
     #endregion
 }

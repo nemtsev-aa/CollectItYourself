@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Wago_2
   m_EditorClassIdentifier: 
   Connections:
-  - CompanentType: 3
-    CompanentName: EL2
+  - CompanentType: 0
+    CompanentName: Input
+    ContactType: 1
+  - CompanentType: 1
+    CompanentName: Output
     ContactType: 1
   - CompanentType: 3
     CompanentName: EL1
     ContactType: 1
-  - CompanentType: 5
-    CompanentName: BK
-    ContactType: 1
-  - CompanentType: 0
-    CompanentName: Input
+  - CompanentType: 3
+    CompanentName: EL2
     ContactType: 1

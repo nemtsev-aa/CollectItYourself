@@ -19,8 +19,8 @@ public class WireCreator : MonoBehaviour, IService {
     private Vector3 _mousePosition;
     private LineRenderer _lineRender;
 
-    public void Init() {
-        _management = ServiceLocator.Current.Get<Management>();
+    public void Init(Management management) {
+        _management = management;
         _lineRender = GetComponent<LineRenderer>();
     }
 

@@ -52,7 +52,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
             default:
                 break;
         }
-
+        Debug.Log("Awake complite");
         RegisterServices();
         Init();
         AddDisposables();
@@ -72,6 +72,8 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         ServiceLocator.Current.Register(_wireCreator);
         ServiceLocator.Current.Register(_wagoCreator);
         ServiceLocator.Current.Register(_pointer);
+
+        Debug.Log("RegisterServices complite");
     }
 
     private void Init() {
@@ -79,12 +81,6 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _taskController.Init();
         _progressView.Init();
         _trainingModeProgressManager.Init(_progressView);
-        _management.Init();
-        _switchBoxManager.Init();
-        _wagoCreator.Init();
-        _wireCreator.Init();
-        _stopwatch.Init();
-        _pointer.Init();
 
         var loaders = new List<ILoader> {
             _taskLoader
@@ -92,10 +88,17 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
 
         _configDataLoader = new ConfigDataLoader();
         _configDataLoader.Init(loaders);
+
+        Debug.Log("InitServices complite");
     }
 
     private void AddDisposables() {
         _disposables.Add(_taskController);
+
+
+
+
+
 
     }
 

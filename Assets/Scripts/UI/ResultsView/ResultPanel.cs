@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -20,26 +17,26 @@ public class ResultPanel : MonoBehaviour
     private GeneralSwitchingResult _generalResult;
     private SingleSwitchingResult _singleResult;
 
-    public void Initialization(GeneralSwitchingResult result) {
+    public void Init(GeneralSwitchingResult result) {
         _generalResult = result;
     }
 
-    public void Initialization(SingleSwitchingResult result) {
+    public void Init(SingleSwitchingResult result) {
         _singleResult = result;
     }
 
     public void ShowGeneralResult() {
         if (_generalResult != null) {
-            _nameText.text = $"Часть {_generalResult.TaskData.Type}, Вариант {_generalResult.TaskData.Variant}";
+            _nameText.text = _generalResult.TaskData.ID;
             _timeText.text = _generalResult.GetSwitchingTimesText();
-            _errorsText.text = _generalResult.GetErrorsCountText();
+            _errorsText.text = _generalResult.ErrorsCountText + "/" + _generalResult.TaskData.GetConnectionsCount().ToString();
         }   
     }
     public void ShowSingleResult() {
         if (_singleResult != null) {
             _nameText.text = _singleResult.SwitchBoxNumer.ToString();
-            _timeText.text = _singleResult.SwitchingTimeText;
-            _errorsText.text = _singleResult.ErrorCountText;
+            _timeText.text = _singleResult.GetSwitchingTimesText();
+            _errorsText.text = _generalResult.ErrorsCountText + "/" + _generalResult.TaskData.GetConnectionsCount().ToString();
         }
     }
 }

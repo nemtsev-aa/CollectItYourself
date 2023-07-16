@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
+  m_Name: T4_4
+  m_EditorClassIdentifier: 
+  _id: T4_4
+  _expValue: 40
+  _mode: 0
+  _type: 3
+  _variant: 4
+  _wiringShema: {fileID: 21300000, guid: 7bba18d05432ecc48b6e34dbcaf38e40, type: 3}
+  _principalShema:
+  - {fileID: 21300000, guid: c374f17f35c099d4bb6f03752d83b017, type: 3}
+  _switchBoxsData:
+  - {fileID: 11400000, guid: f7551f3965b62d14c8ac3b197784aad5, type: 2}
+  _answer:
+  - {fileID: 11400000, guid: 50de132c6d3821f4f95deee9c26dd68a, type: 2}

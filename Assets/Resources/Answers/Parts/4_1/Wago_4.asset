@@ -15,7 +15,7 @@ MonoBehaviour:
   Connections:
   - CompanentType: 4
     CompanentName: SA7
-    ContactType: 0
-  - CompanentType: 3
-    CompanentName: EL5
+    ContactType: 3
+  - CompanentType: 5
+    CompanentName: BK
     ContactType: 0

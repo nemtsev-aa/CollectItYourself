@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1263886312237828200}
   - component: {fileID: 1263886312237828198}
   m_Layer: 5
-  m_Name: Pause
+  m_Name: Pause (Button)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 20, y: -20}
+  m_AnchoredPosition: {x: 66.9, y: -20}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1263886312237828199
@@ -60,14 +60,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.49411768, b: 0.9960785, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1cb828cd4e5883b4e8115508c40964d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 500ea6f2381e3d6479aa7a8f82b586b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -253,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.46002197, y: 10.800049}
+  m_AnchoredPosition: {x: 0.45996094, y: 10.800049}
   m_SizeDelta: {x: 22.119995, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1541095438979931524
@@ -929,12 +929,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5785530300533671202}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.1}
+  m_AnchorMax: {x: 1, y: 0.8953856}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0.000008583069}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5785530299652313609
 CanvasRenderer:
@@ -1812,7 +1812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0d95f4ad9c38c459880e1c70d769d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentNumber>k__BackingField: 1
   _buttons: {fileID: 5785530300241555508}
 --- !u!114 &5785530300241555506
 MonoBehaviour:
@@ -2461,8 +2460,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7072026742605213600}
-  - {fileID: 5785530299652313615}
   - {fileID: 5785530300838436499}
+  - {fileID: 5785530299652313615}
   - {fileID: 5785530301192991220}
   m_Father: {fileID: 5785530300163900205}
   m_RootOrder: 0
@@ -2959,12 +2958,12 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5785530300838436498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5785530300533671202}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4700,3 +4699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _outsideClickArea: {fileID: 0}
+  _principalSchemaView: {fileID: 5785530300533671213}
+  _switchBoxsSelectorView: {fileID: 5785530300241555511}
+  _pauseButton: {fileID: 1263886312237828198}
+  _checkSwitching: {fileID: 5785530300865226328}

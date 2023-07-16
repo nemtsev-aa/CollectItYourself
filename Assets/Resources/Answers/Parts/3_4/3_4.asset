@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a07d39a15bb0a42a21fa6ca5642450, type: 3}
+  m_Name: 3_4
+  m_EditorClassIdentifier: 
+  WagoClipNumber: 9
+  AnswerDataList:
+  - {fileID: 11400000, guid: abde6570e5dfe8244b70a7958edf2a24, type: 2}
+  - {fileID: 11400000, guid: 2dfe79f0b56f1e5498989c2b11c45066, type: 2}
+  - {fileID: 11400000, guid: 9512fff1ecaecbc49b08515b1282dc8c, type: 2}
+  - {fileID: 11400000, guid: 8ec602e4185bca44aa908779d70d2e3f, type: 2}
+  - {fileID: 11400000, guid: e55cc0f779c4db4478548f73ff7de6b6, type: 2}
+  - {fileID: 11400000, guid: 8deaf2f2bff39fd4c91587d597a105a1, type: 2}
+  - {fileID: 11400000, guid: f8235d10fdefe144db5c95e386bcf276, type: 2}
+  - {fileID: 11400000, guid: f79ebaab294c82340958d1ffa8089c5e, type: 2}
+  - {fileID: 11400000, guid: 9190b5d798db5924a8ba3fbd43571909, type: 2}

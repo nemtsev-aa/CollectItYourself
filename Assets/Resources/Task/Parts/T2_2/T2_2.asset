@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
   m_Name: T2_2
   m_EditorClassIdentifier: 
-  id: 3
-  expValue: 40
-  mode: 0
-  type: 1
-  variant: 2
-  principalShema:
-  - {fileID: 21300000, guid: 25e3c191611a6704398e931d39fa4814, type: 3}
-  switchBoxsData:
-  - {fileID: 11400000, guid: 35c1824ae07293a43bbb11d83d3508d7, type: 2}
-  answer:
-  - {fileID: 11400000, guid: f0ad791155270af448731c17403734d7, type: 2}
+  _id: T2_2
+  _expValue: 20
+  _mode: 0
+  _type: 1
+  _variant: 2
+  _wiringShema: {fileID: 21300000, guid: 0151f2cbd94ccf246ba80d0077cc00f2, type: 3}
+  _principalShema:
+  - {fileID: 21300000, guid: 850c2f71a43905f48b7235174bd7173f, type: 3}
+  _switchBoxsData:
+  - {fileID: 11400000, guid: 8af0e133b99d1614f96334b4d5c76b5d, type: 2}
+  _answer:
+  - {fileID: 11400000, guid: 6bf0736b0371e2d418aea2c966f82ec6, type: 2}

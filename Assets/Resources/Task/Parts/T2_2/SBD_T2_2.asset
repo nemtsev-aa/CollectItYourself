@@ -20,9 +20,9 @@ MonoBehaviour:
     CompanentType: 4
     VersionExecution: 0
   - SlotNumber: 1
-    Name: BK
+    Name: Input
     TaskMode: 0
-    CompanentType: 5
+    CompanentType: 0
     VersionExecution: 3
   - SlotNumber: 2
     Name: EL1
@@ -35,9 +35,9 @@ MonoBehaviour:
     CompanentType: 3
     VersionExecution: 1
   - SlotNumber: 4
-    Name: Input
+    Name: Output
     TaskMode: 0
-    CompanentType: 0
+    CompanentType: 1
     VersionExecution: 2
   - SlotNumber: 5
     Name: SA2

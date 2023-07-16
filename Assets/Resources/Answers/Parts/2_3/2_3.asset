@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WagoClipNumber: 6
   AnswerDataList:
-  - {fileID: 11400000, guid: c481bed98d8c15b438bea20b54a452f0, type: 2}
-  - {fileID: 11400000, guid: f1d89fe97f05a6a41947a04e63978df6, type: 2}
-  - {fileID: 11400000, guid: 2d356cb2fd7cc3a48b1479c793854ad3, type: 2}
-  - {fileID: 11400000, guid: 2cfe8fd5e5ff67c4ca6e8d6e33ec108a, type: 2}
-  - {fileID: 11400000, guid: 762c2e8cfcd51f646a4f0ec2dcdf26f3, type: 2}
-  - {fileID: 11400000, guid: cfd1072be3f570b49bb05ee69e24eb8a, type: 2}
+  - {fileID: 11400000, guid: d004c67cd24795d40bb12a136f49542d, type: 2}
+  - {fileID: 11400000, guid: 431ed8e9e3103f542b66b331b211521a, type: 2}
+  - {fileID: 11400000, guid: 40babdabf9f0e6245924b4d2c6653bbd, type: 2}
+  - {fileID: 11400000, guid: 77c5571b875f8cd4fbb1964a9c1d2432, type: 2}
+  - {fileID: 11400000, guid: 4472e972f470c02478951a04bd28bda2, type: 2}
+  - {fileID: 11400000, guid: bd06f9409d867d24ea329c328a2305c8, type: 2}

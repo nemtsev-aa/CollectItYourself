@@ -12,19 +12,22 @@ using UnityEngine;
 /// Уведомляет что задание пройдено
 /// </summary>
 public class TaskController : MonoBehaviour, IService, IDisposable {
-    public int CurrentTaskId => _currentTaskId;
+    public string CurrentTaskId => _currentTaskId;
     public TaskData CurrentTaskData => _currentTaskData;
+    [SerializeField] private TasksConfig _tasksConfig;
 
-    [SerializeField] private List<TaskData> Tasks = new List<TaskData>();
-    
+    [SerializeField] private List<TaskVariantCard> _taskVariantCards = new List<TaskVariantCard>();
+    [SerializeField] TaskConnectorsManager _taskConnectorsManager;
+    //[SerializeField] private TaskVariantCard _startCard;
+    //[SerializeField] private List<TaskVariantCard> _nextCards;
+
     private ITaskLoader _taskLoader;
-    private int _currentTaskId;
+    private string _currentTaskId;
     private TaskData _currentTaskData;
     private EventBus _eventBus;
 
-
-    public TaskData FindTask(int id) {
-        foreach (var iTask in Tasks) {
+    public TaskData FindTask(string id) {
+        foreach (var iTask in _tasksConfig.Tasks) {
             if (iTask.ID == id) {
                 _currentTaskData = iTask;
                 return iTask;
@@ -41,7 +44,6 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         _eventBus.Subscribe<RestartTaskSignal>(RestartTask);
 
         _taskLoader = ServiceLocator.Current.Get<ITaskLoader>();
-        _currentTaskId = PlayerPrefs.GetInt(StringConstants.CURRENT_TASK, 0);
 
         OnInit();
     }
@@ -57,22 +59,25 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     }
 
     private void NextTask(TaskNextSignal signal) {
-        _currentTaskId++;
-        SelectTask(_currentTaskId);
+        //_currentTaskId++;
+        //SelectTask(_currentTaskId);
     }
 
     private void RestartTask(RestartTaskSignal signal) {
         _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
     }
 
-    private void SelectTask(int level) {
-        _currentTaskId = level;
+    private void SelectTask(string taskId) {
+        _currentTaskId = taskId;
         _currentTaskData = _taskLoader.GetTasks().FirstOrDefault(x => x.ID == _currentTaskId);
         _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
     }
 
     private void TaskTimePassed(TaskTimePassedSignal signal) {
         /// Убедиться в том, что РК не собрана полностью и принять решение о дальнейших действиях
+        if (true) {
+
+        }
         /// Сборка на время - проработать основную механику и систему вознаграждения и штрафов
 
         //PlayerPrefs.SetInt(StringConstants.CURRENT_TASK, (_currentTaskId + 1));
@@ -81,6 +86,15 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
 
     public void Dispose() {
         _eventBus.Unsubscribe<TaskNextSignal>(NextTask);
-        _eventBus.Unsubscribe<CustomEventBus.Signals.TaskTimePassedSignal>(this.TaskTimePassed);
+        _eventBus.Unsubscribe<TaskTimePassedSignal>(TaskTimePassed);
+    }
+
+    [ContextMenu("CreateConnect")]
+    public void CreateConnects() {
+        if (_taskVariantCards.Count < 1) Debug.LogError("TaskController: карточки с заданиями не добавлены в список"); 
+        foreach (TaskVariantCard iTaskCard in _taskVariantCards) {
+            
+        }
+        //_taskConnectorsManager.CreateConnect(_startCard, _nextCards);
     }
 }

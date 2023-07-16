@@ -15,7 +15,7 @@ public class TimeView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timeText;
     private Stopwatch _stopwatch;
 
-    public void Initialization(Stopwatch stopwatch) {
+    public void Init(Stopwatch stopwatch) {
         _stopwatch = stopwatch;
         _stopwatch.TimeChanged += ShowTimeValue;
     }
@@ -27,7 +27,4 @@ public class TimeView : MonoBehaviour
     private void OnDisable() {
         _stopwatch.TimeChanged -= ShowTimeValue;
     }
-    //private void Update() {
-    //    _timeText.text = _stopwatch.GetFormattedTime();
-    //}
 }

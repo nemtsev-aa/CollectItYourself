@@ -22,3 +22,6 @@ MonoBehaviour:
   - CompanentType: 3
     CompanentName: EL2
     ContactType: 2
+  - CompanentType: 1
+    CompanentName: Output
+    ContactType: 2

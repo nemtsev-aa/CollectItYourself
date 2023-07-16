@@ -12,14 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a07d39a15bb0a42a21fa6ca5642450, type: 3}
   m_Name: 4_1
   m_EditorClassIdentifier: 
-  WagoClipNumber: 9
+  WagoClipNumber: 6
   AnswerDataList:
-  - {fileID: 11400000, guid: 6ffb7bd41720f4f4aa6af8f2a8692df5, type: 2}
-  - {fileID: 11400000, guid: fd9bad8c3b79e894e864e7924d957a1b, type: 2}
-  - {fileID: 11400000, guid: acce64e811723c94a8f01a28798fccb0, type: 2}
-  - {fileID: 11400000, guid: 7bd9b7ab04e4c064eb88731e287b9efc, type: 2}
-  - {fileID: 11400000, guid: 8da637f8770ead74288b345739067ce6, type: 2}
-  - {fileID: 11400000, guid: 0927ddc0924422c48bb2187154edbb92, type: 2}
-  - {fileID: 11400000, guid: 5a4a07788b98d26428cfa9e80288b168, type: 2}
-  - {fileID: 11400000, guid: 03ec754cfeec5d14292d09f7cd7d424a, type: 2}
-  - {fileID: 11400000, guid: 7ccc948305a85854084de93cda84e353, type: 2}
+  - {fileID: 11400000, guid: d781dde177f45174e9f2016d17f6c30e, type: 2}
+  - {fileID: 11400000, guid: a7fedac9bc8f2934b924b9ec0548a8ad, type: 2}
+  - {fileID: 11400000, guid: c19e33316ced96a4f9277f8cb3bd9cf6, type: 2}
+  - {fileID: 11400000, guid: 9f17373f101e8e84dab13269d1062726, type: 2}
+  - {fileID: 11400000, guid: 3b2ec8ab7a090904b82a89added2603c, type: 2}
+  - {fileID: 11400000, guid: 76fe58415886b8b43942f7dff7209204, type: 2}

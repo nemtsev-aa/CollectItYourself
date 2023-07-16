@@ -4,21 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SwitchBoxsSelectorView : MonoBehaviour {
-    [field: SerializeField] public int CurrentNumber { get; private set; }
-
+    public int CurrentNumber => _currentNumber;
     [SerializeField] private Transform _buttons;
+    private int _currentNumber;
+
     public Action<int> ActiveSwitchBoxChanged;
     
-
-    private void Start() {
+    public void Init(SwitchBoxManager switchBoxManager) {
         foreach (Button iButton in _buttons.GetComponentsInChildren<Button>()) {
             iButton.onClick.AddListener(() => OnButtonClick(iButton));
         }
+        
+        ActiveSwitchBoxChanged += switchBoxManager.SetActiveSwichBox;
     }
 
     private void OnButtonClick(Button iButton) {
-        CurrentNumber = int.Parse(iButton.gameObject.name);
-        ActiveSwitchBoxChanged.Invoke(CurrentNumber);
+        _currentNumber = int.Parse(iButton.gameObject.name);
+        ActiveSwitchBoxChanged.Invoke(_currentNumber);
         Debug.Log(CurrentNumber);
     }
 }
