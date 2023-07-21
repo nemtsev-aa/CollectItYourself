@@ -17,20 +17,30 @@ public enum SelectionState {
 }
 
 public class Management : MonoBehaviour, IService {
+    public bool IsOverUI => _isOverUI;
     [SerializeField] private Camera _camera;
+
     private List<SelectableObject> _listOfSelected = new List<SelectableObject>();
     private SelectionState _currentSelectionState;
     private WireCreator _wireCreator;
+    private Pointer _pointer;
     private SelectableObject _hovered;
     private bool _isOverUI;
 
     public void Init() {
         _wireCreator = ServiceLocator.Current.Get<WireCreator>();
+        _pointer = ServiceLocator.Current.Get<Pointer>();
     }
 
     void Update() {
+        if (EventSystem.current == null) {
+            // Создаем новый объект EventSystem
+            GameObject eventSystemObj = new GameObject("EventSystem");
+            eventSystemObj.AddComponent<EventSystem>();
+            eventSystemObj.AddComponent<StandaloneInputModule>();
+        }
         _isOverUI = EventSystem.current.IsPointerOverGameObject();
-
+        
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition); // Луч из камеры в точку расположения курсора мыши на экране
         Debug.DrawLine(ray.origin, ray.direction * 10f, Color.red); // Визуализация луча
 
@@ -77,7 +87,7 @@ public class Management : MonoBehaviour, IService {
                         if (_wireCreator.StartContact == null) {
                             Wire wire = wagoContact.ConnectionWire;
                             ServiceLocator.Current.Get<SwitchBoxManager>().ActiveSwichBox.RemoveLineToList(wire);
-                            
+                            _pointer.Disconnect();
                         } else {
                             Debug.Log("Wago-контакт занят!");
                         }

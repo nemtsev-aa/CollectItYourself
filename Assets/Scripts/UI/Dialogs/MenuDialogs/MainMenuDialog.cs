@@ -11,14 +11,14 @@ namespace UI.Dialogs {
         [SerializeField] private Button _trainingButton;
         [SerializeField] private Button _examButton;
 
-        protected override void Awake() {
+        public override void Awake() {
             base.Awake();
             _learningButton.onClick.AddListener(OnLearningButtonClick);
             _trainingButton.onClick.AddListener(OnTrainingButtonClick);
             _examButton.onClick.AddListener(OnExamButtonClick);
         }
 
-        private void OnLearningButtonClick() {
+        public void OnLearningButtonClick() {
             SceneManager.LoadScene(1);
             //DialogManager.ShowDialog<SelectLearningChapterDialog>();
         }

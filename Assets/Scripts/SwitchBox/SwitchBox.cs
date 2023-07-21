@@ -17,6 +17,7 @@ public class SwitchBox : MonoBehaviour {
     [SerializeField] private Transform CompanentsTransform;
     public List<Companent> Companents = new List<Companent>();
     public string TaskName;
+ 
     [Header("Clips")]
     public Transform WagoClipsTransform;
     public List<WagoClip> WagoClips = new List<WagoClip>();
@@ -30,6 +31,7 @@ public class SwitchBox : MonoBehaviour {
 
     public event Action<SingleSwitchingResult> SingleIncorrectChecked;
     public event Action<bool> OnShowCurrent;
+    
     private EventBus _eventBus;
 
     public void Init() {
@@ -71,10 +73,12 @@ public class SwitchBox : MonoBehaviour {
 
     #region WorkingWithTime
     public void SetTimeValue() {
+        if (!Result) return;
         _stopwatch.SetTimeValue(Result.SwitchingTimeValue);
     }
 
     public void GetTimeValue() {
+        if (!Result) return;
         Result.SetSwitchingTimeValue(_stopwatch.GetTimeValue());
     }
     #endregion
@@ -158,7 +162,7 @@ public class SwitchBox : MonoBehaviour {
 
     #region СheckingСonnections
     /// <summary>
-    /// Проверка сборки 
+    /// Проверка сборки отдельной распределительной коробки 
     /// </summary>
     /// <returns></returns>
     public SingleSwitchingResult СheckingСonnections() {
@@ -196,6 +200,10 @@ public class SwitchBox : MonoBehaviour {
 
         allErrorsCount = ErrorConnects.Count; // Общее количество ошибок
 
+        foreach (string iKey in ErrorConnects.Keys) {
+            Debug.Log(iKey);
+        }
+       
         string resultTaskName = TaskName;
         bool resultCheckStatus;
         int resultSwitchBoxNumer = SwitchBoxData.PartNumber;
@@ -227,17 +235,22 @@ public class SwitchBox : MonoBehaviour {
     }
 
     private List<ConnectionData> FindConnectionInAnswer(ConnectionData connectionData) {
+        TaskData taskData = ServiceLocator.Current.Get<TaskController>().CurrentTaskData;
+        Answer answer;                                                                      // Данные верного подключения
+        if (taskData.Type == TaskType.Full) {
+            answer = taskData.Answers[SwitchBoxData.PartNumber]; 
+        } else {
+            answer = taskData.Answers[0]; 
+        }
+        
+        List<AnswerData> answerDatas = answer.AnswerDataList; // Список Wago-зажимов
 
-        ////Answer answer = ServiceLocator.Current.Get<TaskManager>.CurrentTask.SwitchBoxData.Answer; // Данные верного подключения
-        //Answer answer;
-        //List<AnswerData> answerDatas = answer.AnswerDataList; // Список Wago-зажимов
-
-        //foreach (AnswerData iWagoAnswer in answerDatas) {
-        //    List<ConnectionData> connectionDatas = iWagoAnswer.Connections; // Список данных о подключениях к Wago-зажиму
-        //    if (connectionDatas.Contains(connectionData)) { // Верное подключение содержит искомый компанент и контакт
-        //        return connectionDatas;
-        //    }
-        //}
+        foreach (AnswerData iWagoAnswer in answerDatas) {
+            List<ConnectionData> connectionDatas = iWagoAnswer.Connections; // Список данных о подключениях к Wago-зажиму
+            if (connectionDatas.Contains(connectionData)) { // Верное подключение содержит искомый компанент и контакт
+                return connectionDatas;
+            }
+        }
         return null;
     }
 

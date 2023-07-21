@@ -13,7 +13,7 @@ public class ActionState : GameState
     [SerializeField] private SwitchBoxsSelectorView _switchBoxsSelectorView;
 
     private void Awake() {
-        _switchBoxsSelectorView.ActiveSwitchBoxChanged += SetActiveSwitchBoxNumber;
+        //_switchBoxsSelectorView.ActiveSwitchBoxChanged += SetActiveSwitchBoxNumber;
     }
 
     public override void EnterFirstTime() {
@@ -43,6 +43,6 @@ public class ActionState : GameState
     }
 
     private void OnDisable() {
-        _switchBoxsSelectorView.ActiveSwitchBoxChanged += SetActiveSwitchBoxNumber;
+        //_switchBoxsSelectorView.ActiveSwitchBoxChanged += SetActiveSwitchBoxNumber;
     }
 }

@@ -2,7 +2,6 @@ using CustomEventBus;
 using CustomEventBus.Signals;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsDialog : Dialog {
@@ -13,7 +12,7 @@ public class SettingsDialog : Dialog {
 
     private EventBus _eventBus;
 
-    public void Init(GeneralSwitchingResult result) {
+    public void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
 
         _resumeButton.onClick.AddListener(ResumeTask);
@@ -21,12 +20,12 @@ public class SettingsDialog : Dialog {
     }
 
     private void ResumeTask() {
-        _eventBus.Invoke(new TaskResumeSignal());
         Hide();
+        _eventBus.Invoke(new TaskResumeSignal());
     }
 
     private void GoToMenu() {
-        SceneManager.LoadScene(StringConstants.MENU_SCENE_NAME);
         Hide();
+        _eventBus.Invoke(new TaskListCreatedSignal());
     }
 }

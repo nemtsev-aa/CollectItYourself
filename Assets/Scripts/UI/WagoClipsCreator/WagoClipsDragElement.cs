@@ -1,11 +1,12 @@
+using EPOOutline;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
-{
+public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
     [SerializeField] private Image _mainRenderer;
     //[SerializeField] private SpriteRenderer _mainRenderer;
+    [SerializeField] private Image _outlinable;
 
     private Sprite _mainSprite;
     private Transform _defaultParentTransform;
@@ -68,6 +69,7 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     public void OnBeginDrag(PointerEventData eventData) {
         transform.SetParent(DragParentTransform);
+        _outlinable.enabled = false;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -81,5 +83,13 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
         transform.position = _defaultPosition;
 
         _newWagoClip = _wagoCreator.CreateWago(CurrentData);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        _outlinable.enabled = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        _outlinable.enabled = false;
     }
 }

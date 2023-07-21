@@ -9,14 +9,15 @@ public struct WagoClipData {
     public GameObject Prefab;
 }
 
-public class WagoClipsDragPanel : MonoBehaviour
-{
+public class WagoClipsDragPanel : MonoBehaviour {
     [SerializeField] private GameObject _dragWagoClipPrefab;
     [SerializeField] private List<WagoClipData> _dragWago = new ();
     [SerializeField] private Transform _scrollViewContent;
     [SerializeField] private WagoCreator _wagoCreator;
 
-    private void Start() {
+    public void Init(WagoCreator wagoCreator) {
+        _wagoCreator = wagoCreator;
+
         for (int i = 0; i < _dragWago.Count; i++) {
             var dragObject = Instantiate(_dragWagoClipPrefab, _scrollViewContent);
 

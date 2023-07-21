@@ -74,10 +74,10 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 960.194, y: 540.615, z: 0.00999999}
-  - {x: 960.178, y: 539.269, z: 0.009999871}
-  - {x: 959.811, y: 539.269, z: 0.009999871}
-  - {x: 959.816, y: 540.615, z: 0.00999999}
+  - {x: 0.19399977, y: 0.61500025, z: 0.00999999}
+  - {x: 0.17799997, y: -0.7310002, z: 0.009999871}
+  - {x: -0.18900013, y: -0.7310002, z: 0.009999871}
+  - {x: -0.18400002, y: 0.61500025, z: 0.00999999}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -929,7 +929,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2749517164105822063}
   Name: Wago
   Movable: 1
-  SwitchBox: {fileID: 0}
+  ParentSwitchBox: {fileID: 0}
   WagoType: 3
   WagoContacts:
   - {fileID: 5360978242130240773}
@@ -1063,22 +1063,6 @@ MonoBehaviour:
       m_Extent: {x: 0.5, y: 0.5, z: 0.5}
     CutoutThreshold: 0.5
     CullMode: 2
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
-  - IsVisible: 0
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 0}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 0
     cutoutTextureName: 
     DilateRenderingMode: 0
     cutoutTextureIndex: 0
@@ -1377,7 +1361,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.7}
-  m_SizeDelta: {x: 95, y: 50}
+  m_SizeDelta: {x: 113.5858, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5360978242455534193
 CanvasRenderer:
@@ -1409,9 +1393,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: WAGO
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5564321e6d4b1fc4f87d17c42048819c, type: 2}
-  m_sharedMaterial: {fileID: -456244840070522346, guid: 5564321e6d4b1fc4f87d17c42048819c,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1435,8 +1418,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1770,10 +1753,10 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 960.194, y: 540.615, z: 0.00999999}
-  - {x: 960.178, y: 539.269, z: 0.009999871}
-  - {x: 959.811, y: 539.269, z: 0.009999871}
-  - {x: 959.816, y: 540.615, z: 0.00999999}
+  - {x: 0.19399977, y: 0.61500025, z: 0.00999999}
+  - {x: 0.17799997, y: -0.7310002, z: 0.009999871}
+  - {x: -0.18900013, y: -0.7310002, z: 0.009999871}
+  - {x: -0.18400002, y: 0.61500025, z: 0.00999999}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

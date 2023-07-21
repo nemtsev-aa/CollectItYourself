@@ -22,11 +22,13 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
     [SerializeField] private TrainingModeProgressManager _trainingModeProgressManager;   // Прогресс в модуле "Тренировка"
     [SerializeField] private Management _management;                         // Менеджер игрового процесса
     [SerializeField] private SwitchBoxManager _switchBoxManager;             // Менеджер Распределительных коробок
+    [SerializeField] private GoldController _goldController;                 // Менеджер золота
     [SerializeField] private WagoCreator _wagoCreator;                       // Генератор Wago-зажимов
     [SerializeField] private WireCreator _wireCreator;                       // Генератор проводов
     [SerializeField] private Pointer _pointer;                               // Указатель
     [SerializeField] private Stopwatch _stopwatch;                           // Секундомер
     [SerializeField] private ProgressView _progressView;                     // Виджет прогресса
+    [SerializeField] private GoldCountView _goldView;                        // Виджет золота
     [SerializeField] private ScriptableObjectTaskLoader _scriptableObjectTaskLoader;
     
     private ITaskLoader _taskLoader;                                         // Загрузчик заданий из различных источников
@@ -38,6 +40,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _eventBus = new EventBus();
         _trainingModeController = new TrainingModeController();
         _trainingModeProgressManager = new TrainingModeProgressManager();
+        _goldController = new GoldController();
 
         switch (_currentDataSource) {
             case DataSource.ScriptableObject:
@@ -52,7 +55,8 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
             default:
                 break;
         }
-        Debug.Log("Awake complite");
+
+        //Debug.Log("Awake complite");
         RegisterServices();
         Init();
         AddDisposables();
@@ -69,14 +73,19 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         ServiceLocator.Current.Register(_taskLoader);
         ServiceLocator.Current.Register(_management);
         ServiceLocator.Current.Register(_switchBoxManager);
+        ServiceLocator.Current.Register(_goldController);
+        ServiceLocator.Current.Register(_progressView);
+        ServiceLocator.Current.Register(_goldView);
         ServiceLocator.Current.Register(_wireCreator);
         ServiceLocator.Current.Register(_wagoCreator);
         ServiceLocator.Current.Register(_pointer);
+        ServiceLocator.Current.Register(_stopwatch);
 
-        Debug.Log("RegisterServices complite");
+        //Debug.Log("RegisterServices complite");
     }
 
     private void Init() {
+        _goldController.Init();
         _trainingModeController.Init();
         _taskController.Init();
         _progressView.Init();
@@ -89,16 +98,13 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _configDataLoader = new ConfigDataLoader();
         _configDataLoader.Init(loaders);
 
-        Debug.Log("InitServices complite");
+        //Debug.Log("InitServices complite");
+        _trainingModeController.SetTrainingModeStatus(TrainingModeStatus.LoadTaskData);
     }
 
     private void AddDisposables() {
         _disposables.Add(_taskController);
-
-
-
-
-
+        _disposables.Add(_progressView);
 
     }
 

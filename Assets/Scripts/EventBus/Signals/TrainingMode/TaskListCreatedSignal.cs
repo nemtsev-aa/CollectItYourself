@@ -5,9 +5,9 @@ namespace CustomEventBus.Signals {
     /// Сигнал о том, что список заданий получен из файла
     /// </summary>
     public class TaskListCreatedSignal {
-        public readonly List<TaskData> TaskDataList;
-        public TaskListCreatedSignal(List<TaskData> taskDataList) {
-            TaskDataList = taskDataList;
-        }
+        //public readonly IEnumerable<TaskData> TaskDataList;
+        //public TaskListCreatedSignal(IEnumerable<TaskData> taskDataList) {
+        //    TaskDataList = taskDataList;
+        //}
     }
 }

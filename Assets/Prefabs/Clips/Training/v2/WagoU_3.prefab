@@ -477,10 +477,10 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 960.4, y: 540.6, z: 0}
-  - {x: 960.4, y: 539.3, z: 0}
-  - {x: 960, y: 539.3, z: 0}
-  - {x: 960, y: 540.6, z: 0}
+  - {x: 0.40001944, y: 0.6, z: 0}
+  - {x: 0.40001944, y: -0.7, z: 0}
+  - {x: 0.000019432977, y: -0.7, z: 0}
+  - {x: 0.000019432977, y: 0.6, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1410,9 +1410,9 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 960, y: 539.3, z: 0}
-  - {x: 959.60004, y: 539.3, z: 0}
-  - {x: 959.60004, y: 540.6, z: 0}
+  - {x: 0.000019432977, y: -0.7, z: 0}
+  - {x: -0.39998057, y: -0.7, z: 0}
+  - {x: -0.39998057, y: 0.6, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1834,9 +1834,9 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 960, y: 539.3, z: 0}
-  - {x: 959.60004, y: 539.3, z: 0}
-  - {x: 959.60004, y: 540.6, z: 0}
+  - {x: 0.000019432977, y: -0.7, z: 0}
+  - {x: -0.39998057, y: -0.7, z: 0}
+  - {x: -0.39998057, y: 0.6, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1986,7 +1986,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 7574041429902566867}
   Name: 
   Movable: 1
-  SwitchBox: {fileID: 0}
+  ParentSwitchBox: {fileID: 0}
   WagoType: 4
   WagoContacts:
   - {fileID: 5360978242130240773}
@@ -2943,9 +2943,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: WAGO
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5564321e6d4b1fc4f87d17c42048819c, type: 2}
-  m_sharedMaterial: {fileID: -456244840070522346, guid: 5564321e6d4b1fc4f87d17c42048819c,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2969,8 +2968,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3711,10 +3710,10 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 960.4, y: 540.6, z: 0}
-  - {x: 960.4, y: 539.3, z: 0}
-  - {x: 960, y: 539.3, z: 0}
-  - {x: 960, y: 540.6, z: 0}
+  - {x: 0.40001944, y: 0.6, z: 0}
+  - {x: 0.40001944, y: -0.7, z: 0}
+  - {x: 0.000019432977, y: -0.7, z: 0}
+  - {x: 0.000019432977, y: 0.6, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

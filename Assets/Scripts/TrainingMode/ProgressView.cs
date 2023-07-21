@@ -11,6 +11,7 @@ public class ProgressView : MonoBehaviour, IService, IDisposable {
     protected EventBus _eventBus;
     public virtual void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
+        //_eventBus.Subscribe<>
     }
 
     public virtual void ShowProgress(int value) {

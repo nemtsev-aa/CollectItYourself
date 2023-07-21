@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
@@ -7,25 +6,21 @@ public class TaskConnectorsManager : MonoBehaviour {
     [SerializeField] private List<TaskConnect> _taskConnects;
     [SerializeField] private TaskConnect _taskConnectPrefab;
 
-    public void CreateConnect(TaskVariantCard startCard, List<TaskVariantCard> nextCards) {
+    public void CreateConnect(TaskVariantCard startCard, TaskVariantCard nextCards) {
         RectTransform startPointTransform = new RectTransform();
         RectTransform nextRectTransform = new RectTransform();
+        
+        if (startCard.TaskData.Type != nextCards.TaskData.Type) { // Следующая карта на высшем уровне
+            startPointTransform = startCard.Points[0];      // Up
+            nextRectTransform = nextCards.Points[1];        // Down
+        } else { // Задания на одном уровне
+            startPointTransform = startCard.Points[3];      // Left
+            nextRectTransform = nextCards.Points[2];        // Right
+        }
 
-        foreach (var iCard in nextCards) {
-            //Debug.Log(startCard.Points[0].position.y + "|" + iCard.Points[0].position.y);
-            if (startCard.Points[0].position.y < iCard.Points[0].position.y) { // Следующая карта на высшем уровне
-                startPointTransform = startCard.Points[0]; // Up
-                nextRectTransform = iCard.Points[1];       // Down
-            } else { // Задания на одном уровне
-                Debug.Log(startCard.Points[0].position.y + "|" + iCard.Points[0].position.y);
-                startPointTransform = startCard.Points[3]; // Left
-                nextRectTransform = iCard.Points[2];       // Right
-            }
-
-            TaskConnect newConnect = Instantiate(_taskConnectPrefab, transform);
-            RectTransform[] newPoints = new RectTransform[2] { startPointTransform, nextRectTransform };
-            newConnect.GetComponent<UILineConnector>().transforms = newPoints;
-            _taskConnects.Add(newConnect);
-        } 
+        TaskConnect newConnect = Instantiate(_taskConnectPrefab, transform);
+        RectTransform[] newPoints = new RectTransform[2] { startPointTransform, nextRectTransform };
+        newConnect.GetComponent<UILineConnector>().transforms = newPoints;
+        _taskConnects.Add(newConnect);
     }
 }

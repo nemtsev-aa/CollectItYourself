@@ -9,19 +9,24 @@ public class DialogManager {
 
     // ѕри создании новых окон добавл€ть их сюда
     private static readonly Dictionary<Type, string> PrefabsDictionary = new Dictionary<Type, string>() {
-            {typeof(MainMenuDialog),"MenuDialogs/MainMenuDialog"},
-            {typeof(SelectLearningChapterDialog),"MenuDialogs/SelectLearningChapterDialog"},
-            {typeof(SelectTrainingTaskDialog),"MenuDialogs/SelectTrainingTaskDialog"},
-            {typeof(SelectExamTaskDialog),"MenuDialogs/SelectExamTaskDialog"},
-            {typeof(PauseDialog),"MenuDialogs/PauseDialog"},
+            {typeof(MainMenuDialog),"MenuDialog/MainMenuDialog"},
+            {typeof(SelectLearningChapterDialog),"MenuDialog/SelectLearningChapterDialog"},
+            {typeof(SelectTrainingTaskDialog),"MenuDialog/SelectTrainingTaskDialog"},
+            //{typeof(SelectExamTaskDialog),"MenuDialog/SelectExamTaskDialog"},
+            {typeof(PauseDialog),"MenuDialog/PauseDialog"},
+            {typeof(SettingsDialog),"MenuDialog/SettingsDialog"},
 
+
+            {typeof(CountdownDialog), "CountdownDialog"},
+            {typeof(TrainingSwitchingDialog),"TrainingSwitchingDialog"},
             {typeof(CorrectSwitchingDialog),"CorrectSwitchingDialog"},
             {typeof(IncorrectSwitchingDialog),"IncorrectSwitchingDialog"},
             {typeof(LoadingDialog),"LoadingDialog"},
-            
+            {typeof(TaskDescriptionDialog),"TaskDescriptionDialog"},
+            {typeof(TaskUnlockedDialog),"TaskUnlockedDialog"},
+           
             //{typeof(MenuDialog),"MenuDialogs/MenuDialog"},
             //{typeof(ScoreTableDialog),"MenuDialogs/ScoreTableDialog"},
-            //{typeof(SettingsDialog),"MenuDialogs/SettingsDialog"},
             //{typeof(CustomizeShipDialog),"MenuDialogs/CustomizeShipDialog"},
     };
 

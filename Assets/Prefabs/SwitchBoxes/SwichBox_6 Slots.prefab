@@ -59,8 +59,10 @@ MonoBehaviour:
   - {fileID: 3080780204061591813}
   CompanentsTransform: {fileID: 2986711170854897164}
   Companents: []
+  TaskName: 
   WagoClipsTransform: {fileID: 2779096372514162955}
   WagoClips: []
+  ActiveWagoClip: {fileID: 0}
   WiresTransform: {fileID: 4817380892104836615}
   Wires: []
 --- !u!1 &2079459533652549804

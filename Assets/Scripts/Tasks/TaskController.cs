@@ -3,10 +3,13 @@ using System.Linq;
 using CustomEventBus;
 using CustomEventBus.Signals;
 using Cysharp.Threading.Tasks;
+using UI.Dialogs;
 using UnityEngine;
 
 /// <summary>
 /// Отвечает за логику заданий:
+/// Создаёт карточки заданий из config-файла с заданиями
+/// Визуализирует связи между заданиями
 /// Переключает текущее задание на следующее
 /// Уведомляет остальные системы что задание изменилось
 /// Уведомляет что задание пройдено
@@ -14,17 +17,110 @@ using UnityEngine;
 public class TaskController : MonoBehaviour, IService, IDisposable {
     public string CurrentTaskId => _currentTaskId;
     public TaskData CurrentTaskData => _currentTaskData;
+    public TasksConfig TasksConfig => _tasksConfig;
+
     [SerializeField] private TasksConfig _tasksConfig;
 
-    [SerializeField] private List<TaskVariantCard> _taskVariantCards = new List<TaskVariantCard>();
-    [SerializeField] TaskConnectorsManager _taskConnectorsManager;
-    //[SerializeField] private TaskVariantCard _startCard;
-    //[SerializeField] private List<TaskVariantCard> _nextCards;
+    [SerializeField] private SelectTrainingTaskDialog _selectTrainingTaskDialog;                    // Окно выбора заданий
+    [SerializeField] private TaskConnectorsManager _taskConnectorsManager;                          // Менеджер связей между заданиями
+    [SerializeField] private TaskVariantCard _taskVariantCardPrefab;                                // Префаб карточки с заданием
+    [SerializeField] private List<TaskVariantCard> _taskVariantCards = new List<TaskVariantCard>(); // Список карточек с заданиями
 
     private ITaskLoader _taskLoader;
     private string _currentTaskId;
     private TaskData _currentTaskData;
     private EventBus _eventBus;
+   
+    public void Init() {
+        _eventBus = ServiceLocator.Current.Get<EventBus>();
+        _eventBus.Subscribe<TaskStartedSignal>(TaskSelect);              // Задание выбрано
+        _eventBus.Subscribe<TaskTimePassedSignal>(TaskTimePassed);
+        _eventBus.Subscribe<TaskNextSignal>(NextTask);
+        _eventBus.Subscribe<RestartTaskSignal>(RestartTask);
+    }
+
+    public void CreateTaskListFromSource() {
+        ///////////////////////////////////////////////////////////////////////////////////
+        /// Место для добавления процедуры загрузки заданий из файлов xml, json и т.д. ////
+        ///////////////////////////////////////////////////////////////////////////////////
+
+        if (_tasksConfig.Tasks.Count() > 0) {
+            _eventBus.Invoke(new TaskListCreatedSignal());
+            //_eventBus.Invoke(new TaskListCreatedSignal(_tasksConfig.Tasks));
+        }
+
+        //_taskLoader = ServiceLocator.Current.Get<ITaskLoader>();
+        //OnInit();
+    }
+
+    //private async void OnInit() {
+    //    await UniTask.WaitUntil(_taskLoader.IsLoaded);
+    //    _currentTaskData = _taskLoader.GetTasks().FirstOrDefault(x => x.ID == _currentTaskId);
+    //    if (_currentTaskData == null) {
+    //        Debug.LogErrorFormat("Can't find task with id {0}", _currentTaskId);
+    //        return;
+    //    }
+    //    _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
+    //}
+
+    #region CreateTaskMap
+    /// <summary>
+    /// Создание карты заданий
+    /// </summary>
+    public void CreateTaskMap(SelectTrainingTaskDialog selectTrainingTaskDialog, TaskConnectorsManager taskConnectorsManager) {
+        _selectTrainingTaskDialog = selectTrainingTaskDialog;
+        _taskConnectorsManager = taskConnectorsManager;
+        if (_tasksConfig != null && _tasksConfig.Tasks.Count() > 0) {
+            int taskNumber = 1;
+            foreach (TaskData iTaskData in _tasksConfig.Tasks) {
+                RectTransform parent = new RectTransform();
+                switch (iTaskData.Type) {
+                        case TaskType.Full:
+                        parent = _selectTrainingTaskDialog.TaskGroupParent.ElementAt(0);
+                        break;
+                    case TaskType.Part1:
+                        parent = _selectTrainingTaskDialog.TaskGroupParent.ElementAt(1);
+                        break;
+                    case TaskType.Part2:
+                        parent = _selectTrainingTaskDialog.TaskGroupParent.ElementAt(2);
+                        break;
+                    case TaskType.Part3:
+                        parent = _selectTrainingTaskDialog.TaskGroupParent.ElementAt(3);
+                        break;
+                    case TaskType.Part4:
+                        parent = _selectTrainingTaskDialog.TaskGroupParent.ElementAt(4);
+                        break;
+                    default:
+                        break;
+                }
+
+                TaskVariantCard newCard = Instantiate(_taskVariantCardPrefab, parent);
+                newCard.name = $"TaskCard ({taskNumber})";
+                newCard.Init(iTaskData, taskNumber);
+                _taskVariantCards.Add(newCard);
+
+                taskNumber++;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Создание связи между отдельными заданиями
+    /// </summary>
+    [ContextMenu("CreateConnects")]
+    public void CreateConnects() {
+        if (_taskVariantCards.Count < 1) Debug.LogError("TaskController: карточки с заданиями не добавлены в список");
+        foreach (TaskVariantCard iTaskCard in _taskVariantCards) {
+            if (iTaskCard.TaskData.NextTaskData.Count > 0) {
+                foreach (TaskData iNextTaskData in iTaskCard.TaskData.NextTaskData) {
+                    TaskVariantCard startTaskCard = iTaskCard;
+                    TaskVariantCard nextTaskCard = _taskVariantCards.First(t => t.TaskData == iNextTaskData);
+                    _taskConnectorsManager.CreateConnect(iTaskCard, nextTaskCard);
+                }
+            }
+        }
+    }
+    #endregion
 
     public TaskData FindTask(string id) {
         foreach (var iTask in _tasksConfig.Tasks) {
@@ -35,27 +131,6 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         }
         _currentTaskData = null;
         return null;
-    }
-
-    public void Init() {
-        _eventBus = ServiceLocator.Current.Get<EventBus>();
-        _eventBus.Subscribe<TaskTimePassedSignal>(TaskTimePassed);
-        _eventBus.Subscribe<TaskNextSignal>(NextTask);
-        _eventBus.Subscribe<RestartTaskSignal>(RestartTask);
-
-        _taskLoader = ServiceLocator.Current.Get<ITaskLoader>();
-
-        OnInit();
-    }
-
-    private async void OnInit() {
-        await UniTask.WaitUntil(_taskLoader.IsLoaded);
-        _currentTaskData = _taskLoader.GetTasks().FirstOrDefault(x => x.ID == _currentTaskId);
-        if (_currentTaskData == null) {
-            Debug.LogErrorFormat("Can't find task with id {0}", _currentTaskId);
-            return;
-        }
-        _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
     }
 
     private void NextTask(TaskNextSignal signal) {
@@ -71,6 +146,11 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         _currentTaskId = taskId;
         _currentTaskData = _taskLoader.GetTasks().FirstOrDefault(x => x.ID == _currentTaskId);
         _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
+    }
+    
+    private void TaskSelect(TaskStartedSignal signal) {
+        _currentTaskData = signal.TaskData;
+        _currentTaskId = signal.TaskData.ID.ToString();
     }
 
     private void TaskTimePassed(TaskTimePassedSignal signal) {
@@ -89,12 +169,4 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         _eventBus.Unsubscribe<TaskTimePassedSignal>(TaskTimePassed);
     }
 
-    [ContextMenu("CreateConnect")]
-    public void CreateConnects() {
-        if (_taskVariantCards.Count < 1) Debug.LogError("TaskController: карточки с заданиями не добавлены в список"); 
-        foreach (TaskVariantCard iTaskCard in _taskVariantCards) {
-            
-        }
-        //_taskConnectorsManager.CreateConnect(_startCard, _nextCards);
-    }
 }

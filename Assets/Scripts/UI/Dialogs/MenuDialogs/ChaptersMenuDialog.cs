@@ -8,12 +8,12 @@ public class ChaptersMenuDialog : Dialog {
 
     [SerializeField] private Button _exitButton;
 
-    protected override void Awake() {
+    public override void Awake() {
         base.Awake();
         _exitButton.onClick.AddListener(Hide);
     }
 
-    protected override void Hide() {
+    public override void Hide() {
         base.Hide();
         _exitButton.onClick.RemoveAllListeners();
     }

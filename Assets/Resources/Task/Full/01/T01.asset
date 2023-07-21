@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: T01
   m_EditorClassIdentifier: 
   _id: T01
+  _status: 1
   _expValue: 400
+  _coinsCount: 100
   _mode: 0
   _type: 4
   _variant: 1
@@ -34,3 +36,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6bf0736b0371e2d418aea2c966f82ec6, type: 2}
   - {fileID: 11400000, guid: 73de1e7b309e89540ae61416d967f8aa, type: 2}
   - {fileID: 11400000, guid: e16e82765a6174a47a563c7be6ea1bce, type: 2}
+  _nextTaskData:
+  - {fileID: 11400000, guid: ffc858ef098f08a428ad5f13083da1f4, type: 2}
+  _taskStatistics: {fileID: 11400000, guid: 416201a4d70d4ce4d90ff2a359a845f6, type: 2}

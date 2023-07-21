@@ -17,10 +17,10 @@ public class CompanentPrefabData {
     [Tooltip("Версия исполнения")]
     [SerializeField] private VersionExecution _versionExecution;
     [Tooltip("Префаб")]
-    [SerializeField] private Component _prefab;
+    [SerializeField] private Companent _prefab;
 
     public TaskMode TaskMode =>_taskMode;
     public CompanentType CompanentType => _companentType;
     public VersionExecution VersionExecution => _versionExecution;
-    public Component Prefab => _prefab;
+    public Companent Prefab => _prefab;
 }

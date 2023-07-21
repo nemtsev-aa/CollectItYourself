@@ -99,20 +99,20 @@ public class XMLManager : MonoBehaviour {
                         Debug.Log("ContactType " + contactData.ContactType);
                         answerData.Connections.Add(contactData);
                     }
-                    
+#if UNITY_EDITOR
                     AssetDatabase.CreateAsset(answerData, CreateFolder("Assets/Resources/Answers/Parts/" + AnswerName + "/") + answerData.name + ".asset");
                     AssetDatabase.SaveAssets();
-                    
+#endif
                     answer.AnswerDataList.Add(answerData);
                     iWagoNumber++;
                 }
             }
+#if UNITY_EDITOR
             AssetDatabase.CreateAsset(answer, CreateFolder("Assets/Resources/Answers/Parts/" + AnswerName + "/") + AnswerName + ".asset");
             AssetDatabase.SaveAssets();
-
             EditorUtility.FocusProjectWindow();
-
             Selection.activeObject = answer;
+#endif
             return answer;
         } else {
             return null;

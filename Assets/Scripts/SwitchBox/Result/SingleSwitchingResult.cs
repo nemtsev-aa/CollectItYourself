@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine; 
 
 [System.Serializable]
 [CreateAssetMenu(fileName = nameof(SingleSwitchingResult), menuName = nameof(SingleSwitchingResult))]
 public class SingleSwitchingResult : ScriptableObject {
-
     public string TaskName { get { return _taskName; } private set { _taskName = value; } }
     public bool CheckStatus { get { return _checkStatus; } private set { _checkStatus = value; } }
     public int SwitchBoxNumer { get { return _switchBoxNumer; } private set { _switchBoxNumer = value; } }
@@ -12,6 +12,14 @@ public class SingleSwitchingResult : ScriptableObject {
     public float SwitchingTimeValue { get { return _switchingTimeValue; } private set { _switchingTimeValue = value; } }
     public List<ConnectionData> ErrorList { get { return _errorList; } private set { _errorList = value; } }
     
+    [SerializeField] private string _taskName;
+    [SerializeField] private bool _checkStatus;
+    [SerializeField] private int _switchBoxNumer;
+    [SerializeField] private string _errorCountText;
+    [SerializeField] private string _switchingTimeText;
+    [SerializeField] private float _switchingTimeValue;
+    [SerializeField] private List<ConnectionData> _errorList;
+
     // Конструктор класса
     public SingleSwitchingResult(string taskName, bool checkStatus, int switchBoxNumer, string errorCountText,
                                   float switchingTimeValue, List<ConnectionData> errorList) {
@@ -33,16 +41,22 @@ public class SingleSwitchingResult : ScriptableObject {
         instance.ErrorCountText = errorCountText;
         instance.SwitchingTimeValue = switchingTimeValue;
         instance.ErrorList = errorList;
+
+#if UNITY_EDITOR
+        // Создаем путь для сохранения ScriptableObject
+        string path = $"Assets/Resources/Task/SingleResult_{taskName}.asset";
+        // Проверяем, существует ли файл по указанному пути
+        if (AssetDatabase.IsValidFolder(path)) {
+            // Если файл уже существует, удаляем его
+            AssetDatabase.DeleteAsset(path);
+        }
+        // Создаем ресурс по указанному пути
+        AssetDatabase.CreateAsset(instance, path);
+        // Обновляем активную базу данных ресурсов
+        AssetDatabase.Refresh();
+#endif
         return instance;
     }
-
-    private string _taskName;
-    private bool _checkStatus;
-    private int _switchBoxNumer;
-    private string _errorCountText;
-    private string _switchingTimeText;
-    private float _switchingTimeValue;
-    private List<ConnectionData> _errorList;
 
     public void SetSwitchingTimeValue(float value) {
         _switchingTimeValue = value;

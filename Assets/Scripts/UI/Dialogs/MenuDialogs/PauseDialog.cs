@@ -15,7 +15,7 @@ public class PauseDialog : Dialog {
 
     private EventBus _eventBus;
 
-    public void Init(GeneralSwitchingResult result) {
+    public void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
 
         _settingsButton.onClick.AddListener(ShowSettings);
@@ -25,15 +25,18 @@ public class PauseDialog : Dialog {
 
     private void ShowSettings() {
         DialogManager.ShowDialog<SettingsDialog>();
+        Hide();
     }
 
     private void ResumeTask() {
-        _eventBus.Invoke(new TaskResumeSignal());
+        Debug.Log("PauseDialog: ResumeTask");
         Hide();
+        _eventBus.Invoke(new TaskResumeSignal());
     }
 
     private void GoToMenu() {
-        SceneManager.LoadScene(StringConstants.MENU_SCENE_NAME);
         Hide();
+        //ServiceLocator.Current.Get<TaskController>().TasksConfig.Tasks);
+        _eventBus.Invoke(new TaskListCreatedSignal());
     }
 }

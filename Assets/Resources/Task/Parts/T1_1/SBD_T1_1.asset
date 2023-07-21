@@ -37,5 +37,5 @@ MonoBehaviour:
   - SlotNumber: 4
     Name: Output
     TaskMode: 0
-    CompanentType: 2
-    VersionExecution: 1
+    CompanentType: 1
+    VersionExecution: 2

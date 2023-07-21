@@ -2366,7 +2366,7 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3997457366447045042}
   Name: Wago
   Movable: 1
-  SwitchBox: {fileID: 0}
+  ParentSwitchBox: {fileID: 0}
   WagoType: 2
   WagoContacts:
   - {fileID: 5360978242130240773}
@@ -3277,9 +3277,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: WAGO
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5564321e6d4b1fc4f87d17c42048819c, type: 2}
-  m_sharedMaterial: {fileID: -456244840070522346, guid: 5564321e6d4b1fc4f87d17c42048819c,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3303,8 +3302,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

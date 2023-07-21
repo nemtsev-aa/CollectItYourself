@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+public enum TaskStatus {
+    Lock,
+    Unlock,
+    Complete
+}
+
 public enum TaskMode {
     Training,
     Exam
@@ -12,6 +18,7 @@ public enum TaskType {
     Part4,
     Full
 }
+
 [CreateAssetMenu(fileName = nameof(TaskData), menuName = "Tasks/ScriptableObjects/" + nameof(TaskData))]
 [System.Serializable]
 public class TaskData : ScriptableObject {
@@ -21,10 +28,20 @@ public class TaskData : ScriptableObject {
     [XmlElement("ID")]
     [SerializeField] private string _id;
     /// <summary>
+    /// Уникальный ID задания
+    /// </summary>
+    [XmlElement("TaskStatus")]
+    [SerializeField] private TaskStatus _status;
+    /// <summary>
     /// Количество очков за выполнение
     /// </summary>
     [XmlElement("ExpValue")]
     [SerializeField] private int _expValue;
+    /// <summary>
+    /// Количество монет за выполнение
+    /// </summary>
+    [XmlElement("CoinsCount")]
+    [SerializeField] private int _coinsCount;
     /// <summary>
     /// Модификация задания
     /// </summary>
@@ -60,10 +77,21 @@ public class TaskData : ScriptableObject {
     /// </summary>
     [XmlElement("Answer")]
     [SerializeField] private List<Answer> _answer;
-
+    /// <summary>
+    /// Верное подключение компанентов
+    /// </summary>
+    [XmlElement("NextTask")]
+    [SerializeField] private List<TaskData> _nextTaskData;
+    /// <summary>
+    /// Статистика задания
+    /// </summary>
+    [XmlElement("TaskStatistics")]
+    [SerializeField] private TaskStatistics _taskStatistics;
 
     public string ID => _id;
+    public TaskStatus TaskStatus => _status;
     public int ExpValue => _expValue;
+    public int CoinsCount => _coinsCount;
     public TaskMode Mode => _mode;
     public TaskType Type => _type;
     public int Variant => _variant;
@@ -71,6 +99,8 @@ public class TaskData : ScriptableObject {
     public List<Sprite> PrincipalShemas => _principalShema;
     public List<SwitchBoxData> SwitchBoxsData => _switchBoxsData;
     public List<Answer> Answers => _answer;
+    public List<TaskData> NextTaskData => _nextTaskData;
+    public TaskStatistics TaskStatistics => _taskStatistics;
 
     /// <summary>
     /// Общее количество подключений в ответе
@@ -84,5 +114,9 @@ public class TaskData : ScriptableObject {
             }
         }
         return connectionsCount;
+    }
+
+    public void SetStatus(TaskStatus status) {
+        _status = status;
     }
 }

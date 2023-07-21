@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 public enum CreateType {
     DragDrop,
     DoubleClick,
@@ -18,10 +20,12 @@ public class WireCreator : MonoBehaviour, IService {
     private Management _management;
     private Vector3 _mousePosition;
     private LineRenderer _lineRender;
-
+    private Pointer _pointer;
+ 
     public void Init(Management management) {
         _management = management;
         _lineRender = GetComponent<LineRenderer>();
+        _pointer = ServiceLocator.Current.Get<Pointer>();
     }
 
     private void Update() {
@@ -47,11 +51,8 @@ public class WireCreator : MonoBehaviour, IService {
             _lineRender.enabled = false;
         }
         else if (Input.GetMouseButton(0) && StartContact != null) {
-            Vector3 mousePosition = Input.mousePosition; // Получаем текущие координаты мыши на экране
-            mousePosition.z = transform.position.z - Camera.main.transform.position.z; // Устанавливаем z-координату так, чтобы объект оставался на плоскости x0y
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition); // Преобразуем координаты мыши из экранных в мировые
-            _mousePosition = new Vector3(worldPosition.x, worldPosition.y, transform.position.z); // Фиксируем положение мыши на плоскости x0y
-
+            _mousePosition = ServiceLocator.Current.Get<Pointer>().GetPosition();
+           
             _lineRender.enabled = true;
             _lineRender.SetPosition(0, StartContact.transform.position);
             _lineRender.SetPosition(1, _mousePosition);
@@ -60,6 +61,7 @@ public class WireCreator : MonoBehaviour, IService {
             ResetWireCreator();
         }
         else if (Input.GetMouseButtonUp(0) && EndContact != null) {
+            _pointer.Connect();
             CreateWire();
             ResetWireCreator();
         }
@@ -67,7 +69,6 @@ public class WireCreator : MonoBehaviour, IService {
 
     private void DoubleClickCreation() {
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("GetMouseButtonDown");
             if (StartContact != null) {
                 if (EndContact != null) {
                     //Debug.Log("StartContact != null, EndContact != null");

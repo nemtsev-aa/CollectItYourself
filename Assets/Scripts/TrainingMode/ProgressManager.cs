@@ -2,6 +2,7 @@ using CustomEventBus;
 using CustomEventBus.Signals;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using IDisposable = CustomEventBus.IDisposable;
 
@@ -31,8 +32,8 @@ public class ProgressManager : IService, IDisposable {
     }
 
     private void GetFullExpAmount(TaskListCreatedSignal signal) {
-        List<TaskData> taskList = signal.TaskDataList;
-        if (taskList.Count > 0) {
+        IEnumerable<TaskData> taskList = ServiceLocator.Current.Get<TaskController>().TasksConfig.Tasks;
+        if (taskList.Count() > 0) { 
             foreach (var iTask in taskList) {
                 _fullExpAmount += iTask.ExpValue;
             }

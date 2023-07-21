@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: T3_1
   m_EditorClassIdentifier: 
   _id: T3_1
+  _status: 1
   _expValue: 30
+  _coinsCount: 30
   _mode: 0
   _type: 2
   _variant: 1
@@ -24,3 +26,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaf7f0660dc8c534a8d4610926ce6097, type: 2}
   _answer:
   - {fileID: 11400000, guid: 73de1e7b309e89540ae61416d967f8aa, type: 2}
+  _nextTaskData:
+  - {fileID: 11400000, guid: 09753bb7eb6262f43bfc0a49f4e6b5d5, type: 2}
+  _taskStatistics: {fileID: 11400000, guid: d47eb1eb4797b3e49a655f2c17a7d973, type: 2}

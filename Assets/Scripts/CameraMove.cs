@@ -1,5 +1,8 @@
+using CustomEventBus;
+using CustomEventBus.Signals;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class CameraMove : MonoBehaviour {
     public Camera RaycastCamera;
@@ -13,11 +16,16 @@ public class CameraMove : MonoBehaviour {
 
     private Vector3 _startPoint;
     private Vector3 _cameraStartPosition;
+    private Vector3 _defaultPosition;
     private Plane _plane;
+    private EventBus _eventBus;
 
     private bool _isOverUI;
     private void Start() {
+        _defaultPosition = transform.position;
         _plane = new Plane(Vector3.forward, Vector3.zero);
+        _eventBus = ServiceLocator.Current.Get<EventBus>();
+        _eventBus.Subscribe<ActiveSwitchBoxChangedSignal>(MoveToActiveSwitchBox);  // Перемещение к активной распределительной коробке
     }
 
     private void Update() {
@@ -68,5 +76,17 @@ public class CameraMove : MonoBehaviour {
                 transform.Translate(delta * MoveSpeed * Time.deltaTime, Space.Self);
             }
         }
+    }
+
+    private void MoveToActiveSwitchBox(ActiveSwitchBoxChangedSignal signal) {
+        Vector3 activeSwitchBoxPosition = signal.SwitchBox.transform.localPosition;
+        float zPosition = 0f; ;
+        if (signal.SwitchBox.SwitchBoxData.PartNumber == 3) {
+            zPosition = _defaultPosition.z - 3f;
+        } else {
+            zPosition = _defaultPosition.z;
+        }
+        Vector3 newCameraPosition = new Vector3(activeSwitchBoxPosition.x, activeSwitchBoxPosition.y, zPosition);
+        transform.DOMove(newCameraPosition, 0.35f).SetEase(Ease.OutFlash);
     }
 }
