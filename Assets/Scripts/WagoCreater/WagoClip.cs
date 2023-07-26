@@ -54,6 +54,14 @@ public class WagoClip : Clips {
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Select();
         }
+
+        foreach (WagoContact iWagoContact in WagoContacts) {
+            Wire wire = iWagoContact.ConnectionWire;
+            if (wire != null) {
+                wire.Select();
+            }
+        }
+
         ParentSwitchBox.ActiveWagoClip = this;
     }
 
@@ -61,6 +69,13 @@ public class WagoClip : Clips {
         base.Unselect();
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Unselect();
+        }
+
+        foreach (WagoContact iWagoContact in WagoContacts) {
+            Wire wire = iWagoContact.ConnectionWire;
+            if (wire != null) {
+                wire.Unselect();
+            }
         }
     }
 
@@ -74,10 +89,12 @@ public class WagoClip : Clips {
 
     public override void OnMouseUp() {
         base.OnMouseUp();
-        for (int i = 0; i < WagoContacts.Count; i++) {
-            WagoContact iWagoContact = WagoContacts[i];
-            iWagoContact.ConnectionWire.GenerateMeshCollider();
-        } 
+        foreach (WagoContact iWagoContact in WagoContacts) {
+            Wire wire = iWagoContact.ConnectionWire;
+            if (wire != null) {
+                wire.GenerateMeshCollider();
+            }
+        }
     }
 
     public void UpdateLocationEndContact() {

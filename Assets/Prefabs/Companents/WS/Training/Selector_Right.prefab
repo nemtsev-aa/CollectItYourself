@@ -1081,8 +1081,8 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119105451441947}
   Name: 
   Movable: 0
-  ContactType: 2
-  Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  ContactType: 3
+  Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   _renderer: {fileID: 3583119105081795106}
   ConnectionWire: {fileID: 0}
 --- !u!114 &3583119105528351440
@@ -1530,8 +1530,8 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106709757791}
   Name: 
   Movable: 0
-  ContactType: 1
-  Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  ContactType: 4
+  Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   _renderer: {fileID: 3583119105829276819}
   ConnectionWire: {fileID: 0}
 --- !u!114 &3583119105846968595
@@ -2051,7 +2051,7 @@ MonoBehaviour:
   Name: XS
   Movable: 0
   SwitchBox: {fileID: 0}
-  Type: 2
+  Type: 4
   SlotNumber: 0
   Contacts:
   - {fileID: 3583119105118806784}

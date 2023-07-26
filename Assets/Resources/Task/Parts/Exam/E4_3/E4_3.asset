@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
+  m_Name: E4_3
+  m_EditorClassIdentifier: 
+  _id: E4_3
+  _status: 0
+  _expValue: 80
+  _coinsCount: 80
+  _mode: 1
+  _type: 3
+  _variant: 3
+  _wiringShema: {fileID: 21300000, guid: d8b018838d3c4d74d9e13470366e49a6, type: 3}
+  _principalShema:
+  - {fileID: 21300000, guid: 20260a709c4f301439cd0e68d562f084, type: 3}
+  _switchBoxsData:
+  - {fileID: 11400000, guid: 1bbce8e1c1c6b234791674414a3e7425, type: 2}
+  _answer:
+  - {fileID: 11400000, guid: 0f7090f05069aec46832be2cbc096f01, type: 2}
+  _nextTaskData:
+  - {fileID: 11400000, guid: 206a99b78caab7b4c99b6d436db5e3ad, type: 2}
+  - {fileID: 11400000, guid: 7c3c12df6261f9946be6de3d608e7322, type: 2}
+  _taskStatistics: {fileID: 11400000, guid: 093204d26df96204ca9e49755f6dbabc, type: 2}

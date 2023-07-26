@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine; 
@@ -44,7 +45,8 @@ public class SingleSwitchingResult : ScriptableObject {
 
 #if UNITY_EDITOR
         // Создаем путь для сохранения ScriptableObject
-        string path = $"Assets/Resources/Task/SingleResult_{taskName}.asset";
+        string formattedTime = DateTime.Now.ToString("HHmmss");
+        string path = $"Assets/Resources/Task/SingleResult_{taskName}_{formattedTime}.asset";
         // Проверяем, существует ли файл по указанному пути
         if (AssetDatabase.IsValidFolder(path)) {
             // Если файл уже существует, удаляем его
@@ -65,8 +67,21 @@ public class SingleSwitchingResult : ScriptableObject {
     public string GetSwitchingTimesText() {
         int minutes = Mathf.FloorToInt(_switchingTimeValue / 60f);
         int seconds = Mathf.FloorToInt(_switchingTimeValue % 60f);
-        int milliseconds = Mathf.FloorToInt((_switchingTimeValue * 1000f) % 1000f);
+        //int milliseconds = Mathf.FloorToInt((_switchingTimeValue * 1000f) % 1000f);
+        
+        int milliseconds = Mathf.FloorToInt((_switchingTimeValue * 10f) % 10f);
+        //int milliseconds = Mathf.FloorToInt((_timeValue * 1000f) % 1000f);
 
-        return string.Format("{0:00}:{1:00}:{2:0}", minutes, seconds, milliseconds);
+        if (minutes < 1) {
+            return $"{seconds}.{milliseconds}";
+        }
+        else {
+            if (minutes < 10) {
+                return $"0{minutes}:{seconds}.{milliseconds}";
+            } else {
+                return $"{minutes}:{seconds}.{milliseconds}";
+            }
+        }
+        //return string.Format("{0:00}:{1:00}:{2:0}", minutes, seconds, milliseconds);
     }
 }

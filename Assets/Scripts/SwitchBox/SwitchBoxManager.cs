@@ -22,6 +22,8 @@ public class SwitchBoxManager : MonoBehaviour, IService {
     public void Init(TaskData taskData, EventBus eventBus) {
         _taskData = taskData;
         _eventBus = eventBus;
+        _eventBus.Subscribe((TrainingModeStopSignal signal) => HideSwitchBoxs());
+        _eventBus.Subscribe((TrainingModeStartSignal signal) => ShowSwitchBoxs());
     }
 
     /// <summary>
@@ -164,12 +166,18 @@ public class SwitchBoxManager : MonoBehaviour, IService {
         if (_taskData.SwitchBoxsData.Count > 0) {
             List<SingleSwitchingResult> singleSwitchingResultList = new List<SingleSwitchingResult>();
             foreach (SwitchBox iSwichBox in SwitchBoxes) {
+                Debug.Log("Проверяемая РК: " + iSwichBox.SwitchBoxData.PartNumber);
                 SingleSwitchingResult singleSwitchingResult = iSwichBox.СheckingСonnections();
-                singleSwitchingResultList.Add(singleSwitchingResult);
-                resultErrorList.AddRange(singleSwitchingResult.ErrorList);
+                if (singleSwitchingResult != null) {
+                    singleSwitchingResultList.Add(singleSwitchingResult);
+                    resultErrorList.AddRange(singleSwitchingResult.ErrorList);
 
-                errorsCount += singleSwitchingResult.ErrorList.Count;
-                resultSwitchingTimeValue += singleSwitchingResult.SwitchingTimeValue;
+                    errorsCount += singleSwitchingResult.ErrorList.Count;
+                    resultSwitchingTimeValue += singleSwitchingResult.SwitchingTimeValue;
+                } else {
+                    Debug.Log("Ошибка в процедуре проверки РК: " + iSwichBox.SwitchBoxData.PartNumber);
+                    return null;
+                }
             }
 
             if (_taskData.Type == TaskType.Full) {

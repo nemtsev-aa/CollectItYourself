@@ -28,6 +28,8 @@ public class TrainingModeController : IService, IDisposable {
     private TrainingModeStatus _currentStatus;
     private SelectTrainingTaskDialog _selectTrainingTaskDialog;
     private TrainingSwitchingDialog _trainingSwitchingDialog;
+    private CorrectSwitchingResultDialog _correctSwitchingDialog;
+    private IncorrectSwitchingResultDialog _incorrectSwitchingDialog;
     private TaskConnectorsManager _taskConnectorsManager;
     private EventBus _eventBus;
     private TaskController _taskController;
@@ -44,6 +46,7 @@ public class TrainingModeController : IService, IDisposable {
         _eventBus.Subscribe<TaskFinishedSignal>(TaskFinished);                   // Задание завершено
         _eventBus.Subscribe<TaskPauseSignal>(TaskPause);                         // Пауза в сборке
         _eventBus.Subscribe<TaskResumeSignal>(TaskResumeSwitching);              // Продолжение сборки
+
     }
     
     public void SetTrainingModeStatus(TrainingModeStatus status) {
@@ -95,8 +98,7 @@ public class TrainingModeController : IService, IDisposable {
 
         _selectTrainingTaskDialog = DialogManager.ShowDialog<SelectTrainingTaskDialog>();
         _taskConnectorsManager = _selectTrainingTaskDialog.TaskConnectorsManager;
-        _selectTrainingTaskDialog.TrainingProgressView.Init();
-        _selectTrainingTaskDialog.GoldCountView.Init();
+        _selectTrainingTaskDialog.Init();
 
         _taskController.CreateTaskMap(_selectTrainingTaskDialog, _taskConnectorsManager);
         _taskController.CreateConnects();
@@ -131,7 +133,8 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="selectionTask"></param>
     public void ShowTask() {
-        _selectTrainingTaskDialog.Hide();
+        if (_selectTrainingTaskDialog != null) _selectTrainingTaskDialog.Hide();
+
         Debug.Log("ShowTask" + _currentTaskData.ID.ToString());
         _eventBus.Invoke(new TaskStartedSignal(_currentTaskData));
 
@@ -142,10 +145,10 @@ public class TrainingModeController : IService, IDisposable {
         _trainingSwitchingDialog.SwitchBoxsSelectorView.Init(switchBoxManager);
 
         Stopwatch stopwatch = ServiceLocator.Current.Get<Stopwatch>();
-        stopwatch.Init(_trainingSwitchingDialog.PrincipalSchemaView.TimeView);
+        stopwatch.Init(_trainingSwitchingDialog.PrincipalSchemaView.TimeView, _eventBus);
 
         Pointer pointer = ServiceLocator.Current.Get<Pointer>();
-        pointer.Init();
+        pointer.Init(_eventBus);
         pointer.SetStatus(true);
 
         WagoCreator wagoCreator = ServiceLocator.Current.Get<WagoCreator>();
@@ -176,12 +179,12 @@ public class TrainingModeController : IService, IDisposable {
                 Debug.LogError("Ошибка при добавлении результата в статистику задания!");
             }
 
-            if (newResult.CheckResult) { // Верная сборка
-                
-            } else {
+            _eventBus.Invoke(new TaskFinishedSignal(newResult));
+            //if (newResult.CheckResult) { // Верная сборка
 
-            }
+            //} else {
 
+            //}
         } else {
             Debug.LogError("TrainingModeController: Ошибка в процедуре проверки сборки!");
         }
@@ -199,10 +202,17 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void TaskFinished(TaskFinishedSignal signal) {
-        if(signal.GeneralSwitchingResult.CheckResult) {
+        if (_trainingSwitchingDialog != null) {
+            _trainingSwitchingDialog.Hide();
+        }
+        if (signal.GeneralSwitchingResult.CheckStatus) {
             // Показываем окошко о победе
-            CorrectSwitchingDialog correctSwitchingDialog = DialogManager.ShowDialog<CorrectSwitchingDialog>();
-            correctSwitchingDialog.Init(signal.GeneralSwitchingResult);
+            _correctSwitchingDialog = DialogManager.ShowDialog<CorrectSwitchingResultDialog>();
+            _correctSwitchingDialog.Init(signal.GeneralSwitchingResult);
+        } else { 
+            // Показываем окошко о неверной сборке
+            _incorrectSwitchingDialog = DialogManager.ShowDialog<IncorrectSwitchingResultDialog>();
+            _incorrectSwitchingDialog.Init(signal.GeneralSwitchingResult);
         }
     }
 
@@ -210,11 +220,10 @@ public class TrainingModeController : IService, IDisposable {
     /// Режим "Тренировка" преостановлен
     /// </summary>
     public void TaskStop() {
-        ServiceLocator.Current.Get<Stopwatch>().SetStatus(false);           // Останавливаем секундомер
-        ServiceLocator.Current.Get<Pointer>().SetStatus(false);             // Останавливаем указатель
-        ServiceLocator.Current.Get<SwitchBoxManager>().HideSwitchBoxs();    // Скрываем РК
-        
-        //_eventBus.Invoke(new TrainingModeStopSignal());
+        // Останавливаем секундомер
+        // Останавливаем указатель
+        // Скрываем РК
+        _eventBus.Invoke(new TrainingModeStopSignal());
     }
 
     public void ClearTask(TaskData hideTask) {
@@ -226,9 +235,11 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void TaskPause(TaskPauseSignal signal) {
-        ServiceLocator.Current.Get<Stopwatch>().SetStatus(false);           // Останавливаем секундомер
-        ServiceLocator.Current.Get<Pointer>().SetStatus(false);             // Останавливаем указатель
-        ServiceLocator.Current.Get<SwitchBoxManager>().HideSwitchBoxs();    // Скрываем РК
+        // Останавливаем секундомер
+        // Останавливаем указатель
+        // Скрываем РК
+        _eventBus.Invoke(new TrainingModeStopSignal());
+
         PauseDialog dialog = DialogManager.ShowDialog<PauseDialog>();                            // Отображаем окно "Пауза"
         dialog.Init();
     }
@@ -238,9 +249,10 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void TaskResumeSwitching(TaskResumeSignal signal) {
-        ServiceLocator.Current.Get<Stopwatch>().SetStatus(true);            // Включаем секундомер
-        ServiceLocator.Current.Get<Pointer>().SetStatus(true);              // Включаем указатель
-        ServiceLocator.Current.Get<SwitchBoxManager>().ShowSwitchBoxs();    // Показываем РК
+        // Включаем секундомер
+        // Включаем указатель
+        // Показываем РК
+        _eventBus.Invoke(new TrainingModeStartSignal());
     }
 
     public void Dispose() {

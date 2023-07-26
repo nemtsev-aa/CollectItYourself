@@ -1,14 +1,20 @@
+using CustomEventBus.Signals;
+
 public class TrainingProgressView : ProgressView {
-    //public override void Init() {
-    //    base.Init();
-    //    _eventBus.Subscribe<TrainingProgressChangedSignal>(TrainingProgressChanged);
-    //}
 
-    //private void TrainingProgressChanged(TrainingProgressChangedSignal signal) {
-    //    ShowProgress(signal.TrainingProgressValue);
-    //}
+    public override void Init() {
+        base.Init();
+        TrainingModeProgressManager progressManager = ServiceLocator.Current.Get<TrainingModeProgressManager>();
+        ShowProgress(progressManager.CurrentExpValue, progressManager.FullExpAmount);
+        
+        _eventBus.Subscribe<TrainingProgressChangedSignal>(ShowTrainingProgress);
+    }
 
-    //private void OnDestroy() {
-    //    _eventBus.Unsubscribe<TrainingProgressChangedSignal>(TrainingProgressChanged);
-    //}
+    private void ShowTrainingProgress(TrainingProgressChangedSignal signal) {
+        ShowProgress(signal.CurrentExpValue, signal.FullExpValue);
+    }
+
+    public override void ShowProgress(int currentValue, int maxValue) {
+        base.ShowProgress(currentValue, maxValue);
+    }
 }

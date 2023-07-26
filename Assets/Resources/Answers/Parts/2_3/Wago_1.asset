@@ -16,6 +16,9 @@ MonoBehaviour:
   - CompanentType: 0
     CompanentName: Input
     ContactType: 0
+  - CompanentType: 1
+    CompanentName: Output
+    ContactType: 0
   - CompanentType: 4
     CompanentName: SA1
     ContactType: 0

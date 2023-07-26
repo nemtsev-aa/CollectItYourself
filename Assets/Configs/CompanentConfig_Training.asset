@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19167d7b80b2e6349951af8e90b4fb1e, type: 3}
+  m_Name: CompanentConfig_Training
+  m_EditorClassIdentifier: 
+  _companentPrefabsData:
+  - _taskMode: 0
+    _companentType: 0
+    _versionExecution: 2
+    _prefab: {fileID: 2486841509407197961, guid: 03bde88bf071c95458b518b75f76b7fd,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 0
+    _versionExecution: 3
+    _prefab: {fileID: 2486841509407197961, guid: 5fef48a53beb7894183dbd6e4ad90b2e,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 1
+    _versionExecution: 2
+    _prefab: {fileID: 2486841509407197961, guid: c2e36e76ada27954abeecc942769079d,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 1
+    _versionExecution: 3
+    _prefab: {fileID: 2486841509407197961, guid: b0609f9f2113c4741ad57b4a87ac8070,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 2
+    _versionExecution: 1
+    _prefab: {fileID: 3583119106728645194, guid: 4a9f642610fd0e04d8594981e96c8eae,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 2
+    _versionExecution: 0
+    _prefab: {fileID: 3583119106728645194, guid: 228bcc3567ea82741a23f0654b7a5790,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 3
+    _versionExecution: 1
+    _prefab: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 4
+    _versionExecution: 0
+    _prefab: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
+      type: 3}
+  - _taskMode: 0
+    _companentType: 5
+    _versionExecution: 3
+    _prefab: {fileID: 3075138961321192293, guid: 9563250a41aa999469294fb99117f5aa,
+      type: 3}

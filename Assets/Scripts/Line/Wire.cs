@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum WireType {
@@ -34,12 +32,15 @@ public class Wire : SelectableObject {
     }
 
     public override void Select() {
+        Debug.Log(gameObject.name);
         base.Select();
+        ObjectView.OnHover(IsSelected);
         ObjectView.Select();
     }
 
     public override void Unselect() {
         base.Unselect();
+        ObjectView.OnUnhover(IsSelected);
         ObjectView.Unselect();
     }
 

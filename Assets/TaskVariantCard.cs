@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,15 @@ public class TaskVariantCard : MonoBehaviour {
     }
 
     private void TaskStatusChenged() {
+        if (_taskData.TaskStatistics.Attempts.Count() > 0) {
+            foreach (GeneralSwitchingResult iAttempt in _taskData.TaskStatistics.Attempts) {
+                if (iAttempt.CheckStatus == true) {
+                    _taskData.SetStatus(TaskStatus.Complete);
+                    continue;
+                }
+            }
+        }
+
         if (_taskData.TaskStatus == TaskStatus.Lock) {
             _lockStatusToogle.isOn = true;
             _headerBackground.color = Color.gray;

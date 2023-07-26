@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56f5c3e5d475cd40b4a14b697fb5a58, type: 3}
+  m_Name: Result_T4_2_123330
+  m_EditorClassIdentifier: 
+  _currentDate: 25.07.2023 12:33:30
+  _taskData: {fileID: 11400000, guid: 4d30a41830c7ec44eba8262d768dbba1, type: 2}
+  _checkStatus: 1
+  _switchBoxNumber: 4
+  _singleSwichingResults:
+  - {fileID: 11400000, guid: b7b304bd616d33847881619466b1ec88, type: 2}
+  _errorsCountText: '-'
+  _switchingTimesValue: 89.7365
+  _errorsList: []

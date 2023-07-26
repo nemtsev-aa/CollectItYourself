@@ -122,11 +122,9 @@ public class ElectricFieldMovingView : MonoBehaviour
         Transform[] PathElements = ObjectView.PathElements;
         if (PathElements == null || PathElements.Length < 2) return;
 
-        ObjectView.LineRenderer.positionCount = PathElements.Length;
+        _lineRenderer.positionCount = PathElements.Length;
         for (int i = 0; i < PathElements.Length; i++) {
-            Vector3 iVector3 = PathElements[i].position;
-            _lineRenderer.SetPosition(i, iVector3);
-
+            _lineRenderer.SetPosition(i, PathElements[i].position);
         }
     }
 

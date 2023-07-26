@@ -14,7 +14,7 @@ public class GoldController : IService, IDisposable
     private EventBus _eventBus;
 
     public void Init() {
-        PlayerPrefs.SetInt(StringConstants.GOLD, 100);
+        //PlayerPrefs.SetInt(StringConstants.GOLD, 100);
         _gold = PlayerPrefs.GetInt(StringConstants.GOLD);
         
         _eventBus = ServiceLocator.Current.Get<EventBus>();
@@ -50,8 +50,14 @@ public class GoldController : IService, IDisposable
     }
 
     private void TaskFinished(TaskFinishedSignal signal) {
-        OnAddGold(signal.GeneralSwitchingResult.TaskData.CoinsCount);
+        if (signal.GeneralSwitchingResult.CheckStatus) {
+            OnAddGold(signal.GeneralSwitchingResult.TaskData.CoinsCount);
+        } else {
+            OnAddGold(0);
+        }
     }
+
+    public void ShowCurrentGoldValue() => OnAddGold(_gold);
 
     public void Dispose() {
         _eventBus.Unsubscribe<AddGoldSignal>(OnAddGold);

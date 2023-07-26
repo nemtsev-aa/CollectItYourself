@@ -16,11 +16,10 @@ public class DialogManager {
             {typeof(PauseDialog),"MenuDialog/PauseDialog"},
             {typeof(SettingsDialog),"MenuDialog/SettingsDialog"},
 
-
             {typeof(CountdownDialog), "CountdownDialog"},
             {typeof(TrainingSwitchingDialog),"TrainingSwitchingDialog"},
-            {typeof(CorrectSwitchingDialog),"CorrectSwitchingDialog"},
-            {typeof(IncorrectSwitchingDialog),"IncorrectSwitchingDialog"},
+            {typeof(CorrectSwitchingResultDialog),"CorrectSwitchingResultDialog"},
+            {typeof(IncorrectSwitchingResultDialog),"IncorrectSwitchingResultDialog"},
             {typeof(LoadingDialog),"LoadingDialog"},
             {typeof(TaskDescriptionDialog),"TaskDescriptionDialog"},
             {typeof(TaskUnlockedDialog),"TaskUnlockedDialog"},

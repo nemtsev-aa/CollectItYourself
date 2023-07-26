@@ -1,25 +1,76 @@
 using CustomEventBus;
 using CustomEventBus.Signals;
-
+using System.Collections.Generic;
+using System.Linq;
 /// <summary>
 /// Отображает прогресс в модуле "Тренировка"
-/// Уведомляет о старте/конце игры
 /// </summary>
-public class TrainingModeProgressManager : ProgressManager, IService, IDisposable {
+public class TrainingModeProgressManager : ProgressManager {
+    
+    private ProgressView _progressView;
+    private IEnumerable<TaskData> _taskList;
+        
+    public override void Init() {
+        base.Init();
+        _progressView = ServiceLocator.Current.Get<TrainingProgressView>();
+        _taskList = ServiceLocator.Current.Get<TaskController>().TasksConfig.Tasks;
+    }
+
+    public override void TaskFinished(TaskFinishedSignal signal) {
+        if (signal.GeneralSwitchingResult.CheckStatus && signal.GeneralSwitchingResult.TaskData.TaskStatus == TaskStatus.Unlock) {
+            _currentExpValue += signal.GeneralSwitchingResult.TaskData.ExpValue;
+        }
+        _eventBus.Invoke(new TrainingProgressChangedSignal(_currentExpValue, _fullExpAmount));
+    }
+
+
+    public override void ShowProgressValue(TaskListCreatedSignal signal) {
+        GetCurrentProgressValue();
+    }
     /// <summary>
-    /// Задание выполнено
+    /// Получение текущего показателя прогресса 
     /// </summary>
-    /// <param name="taskData"></param>
-    private void TaskComplite(TaskData taskData) {
-        //CurrentExpValue += taskData.ExpAmountToComplete;
-        int _currentProgress = (CurrentExpValue / _fullExpAmount) * 100;
-        _eventBus.Invoke(new TrainingProgressChangedSignal(_currentProgress));
+    public void GetCurrentProgressValue() {
+        GetCurrentExpValue();
+        GetFillExpAmount();
+
+        _eventBus.Invoke(new TrainingProgressChangedSignal(_currentExpValue, _fullExpAmount));
     }
 
     /// <summary>
-    /// Модуль "Тренировка" завершён
+    /// Демонстрация текущего значения прогресса
     /// </summary>
-    private void TrainingComplite(TrainingCompliteSignal signal) {
-        _eventBus.Invoke(new TrainingCompliteSignal());
+    public void ShowCurrentProgressValue() {
+        _eventBus.Invoke(new TrainingProgressChangedSignal(_currentExpValue, _fullExpAmount));
     }
+
+    /// <summary>
+    /// Полученный опыт
+    /// </summary>
+    private void GetCurrentExpValue() {
+        if (_taskList.Count() > 0) {
+            foreach (var iTask in _taskList) {
+                if (iTask.TaskStatus == TaskStatus.Complete) {
+                    _currentExpValue += iTask.ExpValue;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Количество доступного опыта
+    /// </summary>
+    private void GetFillExpAmount() {
+        if (_taskList.Count() > 0) {
+            foreach (var iTask in _taskList) {
+                _fullExpAmount += iTask.ExpValue;
+            }
+        }
+    }
+
+    public override void Dispose() {
+        _eventBus.Unsubscribe<TaskListCreatedSignal>(ShowProgressValue);
+        //OnProgressChanged -= _progressView.ShowProgress;
+    }
+
 }

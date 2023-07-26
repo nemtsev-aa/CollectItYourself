@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using CustomEventBus.Signals;
+using CustomEventBus;
 
 public class Pointer : MonoBehaviour, IService {
     [Tooltip("Статус")]
@@ -16,9 +18,12 @@ public class Pointer : MonoBehaviour, IService {
     [SerializeField] private SpriteRenderer _ring;
 
     private bool _status;
-    
-    public void Init() {
-        
+    private EventBus _eventBus;
+
+    public void Init(EventBus eventBus) {
+        _eventBus = eventBus;
+        _eventBus.Subscribe((TrainingModeStopSignal signal) => SetStatus(false));
+        _eventBus.Subscribe((TrainingModeStartSignal signal) => SetStatus(true));
     }
 
     public void SetStatus(bool status) {

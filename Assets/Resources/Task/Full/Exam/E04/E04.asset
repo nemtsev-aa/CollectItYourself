@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747b4be336c0ee8448aaa58e586d72c1, type: 3}
+  m_Name: E04
+  m_EditorClassIdentifier: 
+  _id: E04
+  _status: 0
+  _expValue: 200
+  _coinsCount: 200
+  _mode: 1
+  _type: 4
+  _variant: 4
+  _wiringShema: {fileID: 21300000, guid: 0d2e2f89f91db844c9fd7da708b3fb7b, type: 3}
+  _principalShema:
+  - {fileID: 21300000, guid: 143a2803d0464ec40b3a0a7523aeeb34, type: 3}
+  - {fileID: 21300000, guid: 1519b647053430047a4b20bb67b3b5fe, type: 3}
+  - {fileID: 21300000, guid: 0297c8c8c8e244643880ca4db85718f9, type: 3}
+  - {fileID: 21300000, guid: 8622263afef0975468c3038b62b59c52, type: 3}
+  - {fileID: 21300000, guid: 197740d8a746ce94b8e6d5f3bccf88d1, type: 3}
+  _switchBoxsData:
+  - {fileID: 11400000, guid: 3f34567cf8c73e1409a6794466f86501, type: 2}
+  - {fileID: 11400000, guid: 8f42674ddc076e2429cf81e59d2344a7, type: 2}
+  - {fileID: 11400000, guid: e8a30a41e6728da4a9770243f7496d06, type: 2}
+  - {fileID: 11400000, guid: 94c824997b6f4ee45a32d0dd296b7a92, type: 2}
+  _answer:
+  - {fileID: 11400000, guid: b69365a7e172bcd49a2481981645562f, type: 2}
+  - {fileID: 11400000, guid: 2b219bc77f0d59a4eb1a12374677b37d, type: 2}
+  - {fileID: 11400000, guid: d68f516f07454cb4bb422eb12e8a58e1, type: 2}
+  - {fileID: 11400000, guid: e2061578056c48f48a1379c3180bd887, type: 2}
+  _nextTaskData: []
+  _taskStatistics: {fileID: 11400000, guid: 67e14fbfcd84f5c489c935fd11844691, type: 2}

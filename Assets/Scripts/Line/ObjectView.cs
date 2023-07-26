@@ -2,11 +2,11 @@ using EPOOutline;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class ObjectView : MonoBehaviour
-{
+public class ObjectView : MonoBehaviour {
     public SelectableObject Object;
 
     [SerializeField] private TextMeshProUGUI _nameText;
@@ -34,18 +34,30 @@ public class ObjectView : MonoBehaviour
         _material = new List<Material>(); // Создаем список материалов для LineRenderer
         _material.Add(_defaultMaterial);
         LineRenderer.materials = _material.ToArray();
-        
+
         if (!_outlinable) _outlinable = Object.gameObject.transform.GetComponent<Outlinable>();
         _hoverColor = _outlinable.FrontParameters.Color;
-        
+
         UpdatePoints();
 
-        if (Object is Wire) {
+        if (Object is PolyWire) {
             Wire wire = Object.GetComponent<Wire>();
             PathChanged += wire.GenerateMeshCollider;
-            foreach (Transform iPoint in PathElements) {
-                WirePoint iWirePoint = iPoint.GetComponent<WirePoint>();
-                iWirePoint.Initialize(wire);
+            if (PathElements.Length > 0) {
+                foreach (Transform iPoint in PathElements) {
+                    WirePoint iWirePoint = iPoint.GetComponent<WirePoint>();
+                    iWirePoint.Initialize(wire);
+                }
+            }
+        }
+        else if (Object is BezierWire) {
+            BezierWire wire = Object.GetComponent<BezierWire>();
+            PathChanged += wire.GenerateMeshCollider;
+            if (wire.BezierPointCreator.BezierPoints.Count() > 0) {
+                foreach (Transform iPoint in wire.BezierPointCreator.BezierPoints) {
+                    WirePoint iWirePoint = iPoint.GetComponent<WirePoint>();
+                    iWirePoint.Initialize(wire);
+                }
             }
         }
     }
@@ -77,7 +89,7 @@ public class ObjectView : MonoBehaviour
     }
 
     public void Select() {
-       _outlinable.OutlineParameters.Color = _selectColor;
+        _outlinable.OutlineParameters.Color = _selectColor;
     }
 
     public void Unselect() {
@@ -97,7 +109,13 @@ public class ObjectView : MonoBehaviour
         LineRenderer.materials = _material.ToArray(); // Присваиваем новый массив материалов к LineRenderer
     }
 
-     public void UpdatePoints() {
+    public void UpdatePoints() {
+        if (Object is BezierWire) {
+            BezierWire wire = Object.GetComponent<BezierWire>();
+            wire.BezierPointCreator.UpdatePointsPosition();
+            PathElements = (Transform[])wire.BezierPointCreator.Points;
+        }
+
         if (PathElements == null || PathElements.Length < 2) return;
 
         LineRenderer.positionCount = PathElements.Length;
@@ -109,7 +127,7 @@ public class ObjectView : MonoBehaviour
 
     private void OnDrawGizmosSelected() {
         Debug.Log("ObjectWiew: OnDrawGizmosSelected");
-        UpdatePoints();
+        //UpdatePoints();
         for (int i = 1; i < PathElements.Length; i++) {
             Gizmos.color = _defaultColor;
             Gizmos.DrawLine(PathElements[i - 1].position, PathElements[i].position);

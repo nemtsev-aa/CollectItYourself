@@ -161,6 +161,15 @@ public class SwitchBox : MonoBehaviour {
     #endregion
 
     #region СheckingСonnections
+    //[ContextMenu("Сheck")]
+    //public void Сheck() {
+    //    if (СheckingСonnections() != null) {
+    //        Debug.Log(TaskName + " True");
+    //    } else {
+    //        Debug.Log(TaskName + " False");
+    //    }
+    //}
+
     /// <summary>
     /// Проверка сборки отдельной распределительной коробки 
     /// </summary>
@@ -170,10 +179,7 @@ public class SwitchBox : MonoBehaviour {
             Debug.Log("Схема не собрана!");
             return null;
         }
-
-        //_stopwatch.SetStatus(false);
-
-        //float errorsProcentage = 0; // Процент ошибок в сборке
+                
         int allContactsCount = 0; // Общее количество контактов в коробке
         int allErrorsCount; // Количество контактов подключенных с ошибкой
 
@@ -181,18 +187,22 @@ public class SwitchBox : MonoBehaviour {
         foreach (WagoClip iWagoClip in WagoClips) {
             List<ConnectionData> connectionsResult = iWagoClip.Connections; // Данные о подключенных компанентах и их контактах
             if (iWagoClip.Connections.Count > 0) {
-                List<ConnectionData> connectionsAnswer = FindConnectionInAnswer(iWagoClip.Connections[0]); // Осуществляем поиск Wago-зажима в ответе по первому подключенному контакту 
+                List<ConnectionData> connectionsAnswer = FindConnectionInAnswer(iWagoClip.Connections[0]); // Осуществляем поиск Wago-зажима в ответе по первому подключенному контакту
                 if (connectionsAnswer != null) {
                     allContactsCount += connectionsAnswer.Count; // Количество контактов в проверяемом Wago-зажимe
                     List<ConnectionData> errorConnectsList = CompareLists(connectionsResult, connectionsAnswer); // Список ошибочных подключений
-                    int errorCount = errorConnectsList.Count; // Количество ошибок в проверяемом Wago-зажимe
-                    if (ErrorConnects.Count >= 0) { // Словарь с найденными ошибками не пуст
-                        foreach (ConnectionData iError in errorConnectsList) {
-                            string newError = iError.CompanentName.ToString() + "_" + iError.ContactType.ToString();
-                            if (!ErrorConnects.ContainsKey(newError)) {
-                                ErrorConnects.Add(newError, iError); // Пополняем словарь ошибочных подключений новой записью
+                    if (errorConnectsList != null) {
+                        int errorCount = errorConnectsList.Count; // Количество ошибок в проверяемом Wago-зажимe
+                        if (ErrorConnects.Count >= 0) { // Словарь с найденными ошибками не пуст
+                            foreach (ConnectionData iError in errorConnectsList) {
+                                string newError = iError.CompanentName.ToString() + "_" + iError.ContactType.ToString();
+                                if (!ErrorConnects.ContainsKey(newError)) {
+                                    ErrorConnects.Add(newError, iError); // Пополняем словарь ошибочных подключений новой записью
+                                }
                             }
                         }
+                    } else {
+                        return null;
                     }
                 }
             }
@@ -235,10 +245,11 @@ public class SwitchBox : MonoBehaviour {
     }
 
     private List<ConnectionData> FindConnectionInAnswer(ConnectionData connectionData) {
+       
         TaskData taskData = ServiceLocator.Current.Get<TaskController>().CurrentTaskData;
         Answer answer;                                                                      // Данные верного подключения
         if (taskData.Type == TaskType.Full) {
-            answer = taskData.Answers[SwitchBoxData.PartNumber]; 
+            answer = taskData.Answers[SwitchBoxData.PartNumber - 1]; 
         } else {
             answer = taskData.Answers[0]; 
         }
@@ -256,7 +267,8 @@ public class SwitchBox : MonoBehaviour {
 
     private List<ConnectionData> CompareLists(List<ConnectionData> connectionsResult, List<ConnectionData> connectionsAnswer) {
         if (connectionsResult.Count != connectionsAnswer.Count) {
-            Debug.Log("Списки имеют различную длину");
+            Debug.Log(gameObject.name + " cписки имеют различную длину: " + connectionsResult.Count + "|" + connectionsAnswer.Count);
+            return null;
         }
 
         connectionsResult.Sort((x, y) => x.CompanentName.CompareTo(y.CompanentName));

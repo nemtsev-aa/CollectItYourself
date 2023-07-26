@@ -27,7 +27,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
     [SerializeField] private WireCreator _wireCreator;                       // Генератор проводов
     [SerializeField] private Pointer _pointer;                               // Указатель
     [SerializeField] private Stopwatch _stopwatch;                           // Секундомер
-    [SerializeField] private ProgressView _progressView;                     // Виджет прогресса
+    [SerializeField] private TrainingProgressView _progressView;             // Виджет прогресса
     [SerializeField] private GoldCountView _goldView;                        // Виджет золота
     [SerializeField] private ScriptableObjectTaskLoader _scriptableObjectTaskLoader;
     
@@ -88,8 +88,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _goldController.Init();
         _trainingModeController.Init();
         _taskController.Init();
-        _progressView.Init();
-        _trainingModeProgressManager.Init(_progressView);
+        _trainingModeProgressManager.Init();
 
         var loaders = new List<ILoader> {
             _taskLoader
@@ -104,7 +103,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
 
     private void AddDisposables() {
         _disposables.Add(_taskController);
-        _disposables.Add(_progressView);
+
 
     }
 

@@ -78,8 +78,7 @@ public class Management : MonoBehaviour, IService {
                 
                 if (_hovered is Companent) {
                     Select(_hovered);
-                }
-                else if (_hovered is WagoContact) {
+                } else if (_hovered is WagoContact) {
                     WagoContact wagoContact = _hovered.GetComponent<WagoContact>();
                     if (wagoContact.ConnectionWire == null) {
                         _wireCreator.EndContact = wagoContact;
@@ -92,8 +91,7 @@ public class Management : MonoBehaviour, IService {
                             Debug.Log("Wago-контакт занят!");
                         }
                     }
-                }
-                else if (_hovered is Contact) {
+                } else if (_hovered is Contact) {
                     Contact contact = _hovered.GetComponent<Contact>();
                     if (contact.ConnectionWire == null) {
                         _wireCreator.StartContact = contact;
@@ -101,25 +99,20 @@ public class Management : MonoBehaviour, IService {
                     } else {
                         Debug.Log("Контакт занят!");
                     }
-                }
-                else if (_hovered is WagoClip) {
+                } else if (_hovered is WagoClip) {
                     Select(_hovered);
-                }
-                else if (_hovered is WirePoint) {
+                } else if (_hovered is WirePoint) {
                     Select(_hovered);
-                }
-                else if (_hovered is PrincipalSchemeCompanent) {
+                } else if (_hovered is PrincipalSchemeCompanent) {
                     if (_hovered.GetComponent<PrincipalSchemeCompanent>().IsSelected) {
                         Unselect(_hovered);
-                    }
-                    else {
+                    } else {
                         Select(_hovered);
                     }
                 } else {
                     Select(_hovered);
                 }
-            }
-            else {
+            } else {
                 UnselectAll();
             }
         }

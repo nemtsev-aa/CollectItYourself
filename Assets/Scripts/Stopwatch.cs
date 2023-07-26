@@ -1,3 +1,5 @@
+using CustomEventBus;
+using CustomEventBus.Signals;
 using System;
 using UnityEngine;
 
@@ -9,10 +11,15 @@ public class Stopwatch : MonoBehaviour, IService {
 
     public event Action<string> TimeChanged;
     public event Action<bool> StatusChanged;
- 
-    public void Init(TimeView timeView) {
+    
+    private EventBus _eventBus;
+
+    public void Init(TimeView timeView, EventBus eventBus) {
+        _eventBus = eventBus;
         _timeView = timeView;
         _timeView.Init(this);
+        _eventBus.Subscribe((TrainingModeStopSignal signal) => SetStatus(false));
+        _eventBus.Subscribe((TrainingModeStartSignal signal) => SetStatus(true));
     }
 
     private void Update() {

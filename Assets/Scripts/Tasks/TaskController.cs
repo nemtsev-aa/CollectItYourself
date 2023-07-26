@@ -35,7 +35,8 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
         _eventBus.Subscribe<TaskStartedSignal>(TaskSelect);              // Задание выбрано
         _eventBus.Subscribe<TaskTimePassedSignal>(TaskTimePassed);
-        _eventBus.Subscribe<TaskNextSignal>(NextTask);
+        _eventBus.Subscribe<TaskFinishedSignal>(NextTaskUnlocked);
+        _eventBus.Subscribe<TaskNextSignal>(SetNextTask);
         _eventBus.Subscribe<RestartTaskSignal>(RestartTask);
     }
 
@@ -133,9 +134,50 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         return null;
     }
 
-    private void NextTask(TaskNextSignal signal) {
-        //_currentTaskId++;
-        //SelectTask(_currentTaskId);
+    public int FindTaskNumber(string id) {
+        for (int i = 0; i < _tasksConfig.Tasks.Count(); i++) {
+            string idTask = _tasksConfig.Tasks.ElementAt(i).ID;
+            if (idTask == id) {
+                return i;
+            }
+        }
+        return 999;
+    }
+
+    /// <summary>
+    /// Разблокирование следующих заданий
+    /// </summary>
+    /// <param name="signal"></param>
+    private void NextTaskUnlocked(TaskFinishedSignal signal) {
+        if (signal.GeneralSwitchingResult.CheckStatus) {
+            signal.GeneralSwitchingResult.TaskData.SetStatus(TaskStatus.Complete);
+
+            List<TaskData> nextTasks = signal.GeneralSwitchingResult.TaskData.NextTaskData;
+            foreach (TaskData iTask in nextTasks) {
+                if (iTask.TaskStatus == TaskStatus.Lock) {
+                    iTask.SetStatus(TaskStatus.Unlock);
+                }
+            }
+        }
+    }
+
+    private void SetNextTask(TaskNextSignal signal) {
+        if (_currentTaskData.NextTaskData.Count > 0) {
+            TaskData nextTaskData = _currentTaskData.NextTaskData[0];
+            if (nextTaskData != null) {
+                _currentTaskData = nextTaskData;
+            }        
+        } else {
+            int newTaskNumber = FindTaskNumber(_currentTaskData.ID) + 1;
+            if (newTaskNumber == _tasksConfig.Tasks.Count()) {
+                _eventBus.Invoke(new TrainingCompliteSignal());
+            } else {
+                _currentTaskData = _tasksConfig.Tasks.ElementAt(newTaskNumber);
+            }
+        }
+
+        _currentTaskId = _currentTaskData.ID.ToString();
+        _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
     }
 
     private void RestartTask(RestartTaskSignal signal) {
@@ -165,7 +207,7 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     }
 
     public void Dispose() {
-        _eventBus.Unsubscribe<TaskNextSignal>(NextTask);
+        _eventBus.Unsubscribe<TaskNextSignal>(SetNextTask);
         _eventBus.Unsubscribe<TaskTimePassedSignal>(TaskTimePassed);
     }
 

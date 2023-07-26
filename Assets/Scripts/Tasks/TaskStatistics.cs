@@ -19,8 +19,6 @@ public class TaskStatistics : ScriptableObject {
     /// </summary>
     [SerializeField] private List<GeneralSwitchingResult> _attempts;
 
-
-
     public string GetCorrectSwitchingCount() {
         string correctSwitchingCount = "";
         string attemptsCount = _attempts.Count.ToString();
@@ -28,7 +26,7 @@ public class TaskStatistics : ScriptableObject {
         if (_attempts.Count > 0) {
             int correctCount = 0;
             foreach (GeneralSwitchingResult iResult in _attempts) {
-                if (iResult.CheckResult) {
+                if (iResult.CheckStatus) {
                     correctCount++;
                 }
             }
@@ -52,8 +50,7 @@ public class TaskStatistics : ScriptableObject {
                 }
             }
             bestTime = bestResult.GetSwitchingTimesText();
-        }
-        else {
+        } else {
             return "-";
         }
         return $"{bestTime}";

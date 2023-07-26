@@ -4,24 +4,23 @@ using System.Linq;
 using UnityEngine;
 
 public class ResultsView : MonoBehaviour {
+    [Tooltip("Общие данные для отображения")]
+    [SerializeField] private GeneralSwitchingResult _generalResult;
+    [Tooltip("Локальные данные для отображения")]
+    [SerializeField] private List<SingleSwitchingResult> _singleResults = new List<SingleSwitchingResult>();
     [Tooltip("Префаб - общие результаты")]
     [SerializeField] private ResultPanel _genetalResultView;
     [Tooltip("Префаб - отдельные результаты")]
     [SerializeField] private ResultPanel _singleResultView;
     [Tooltip("Контейнер")]
     [SerializeField] private Transform _content;
-
     [Tooltip("Список панелей с результатами")]
     [SerializeField] private List<ResultPanel> _resultPanels = new List<ResultPanel>();
-    [Tooltip("Общие данные для отображения")]
-    [SerializeField] GeneralSwitchingResult _generalResult;
-    [Tooltip("Локальные данные для отображения")]
-    [SerializeField] private List<SingleSwitchingResult> _singleResults = new List<SingleSwitchingResult>();
 
     public void Initialize(GeneralSwitchingResult switchingResult) {
         _generalResult = switchingResult;
         // Если в результате содержатся данные о сборке отдельных РК
-        if (_generalResult.SingleSwichingResults.Count() != 0) {
+        if (_generalResult.SingleSwichingResults.Count() > 1) {
             foreach (SingleSwitchingResult iSingleResult in _generalResult.SingleSwichingResults) {
                 if (!_singleResults.Contains(iSingleResult)) {
                     _singleResults.Add(iSingleResult);

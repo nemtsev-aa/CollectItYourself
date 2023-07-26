@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Wago_6
   m_EditorClassIdentifier: 
   Connections:
-  - CompanentType: 4
-    CompanentName: SA2
-    ContactType: 0
   - CompanentType: 3
     CompanentName: EL1
     ContactType: 0
   - CompanentType: 3
     CompanentName: EL2
+    ContactType: 0
+  - CompanentType: 4
+    CompanentName: SA1
     ContactType: 0

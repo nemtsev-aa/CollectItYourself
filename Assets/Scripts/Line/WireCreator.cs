@@ -127,7 +127,11 @@ public class WireCreator : MonoBehaviour, IService {
     public void CreateWire() {
         Vector3 centerPosition = Vector3.Lerp(StartContact.transform.position, EndContact.transform.position, 0.5f);
         Wire newWire = Instantiate(WirePrefab, centerPosition, Quaternion.identity); // Создан новый проводник
-
+        newWire.StartContact = StartContact;
+        newWire.StartContact.ContactPositionChanged += newWire.SetNewPositionStartContact;
+        newWire.EndContact = EndContact;
+        newWire.EndContact.ContactPositionChanged += newWire.SetNewPositionEndContact;
+        
         switch (WirePrefab.Type) {
             case WireType.Straight:
                 CreateStraightWire(newWire);
@@ -136,7 +140,7 @@ public class WireCreator : MonoBehaviour, IService {
                 CreatePolyWire(newWire);
                 break;
             case WireType.Bezier:
-                CreateBezierWire(newWire);
+                CreateBezierWire((BezierWire)newWire);
                 break;
         }
 
@@ -147,10 +151,7 @@ public class WireCreator : MonoBehaviour, IService {
         newWire.ObjectView.ShowName();
         newWire.ObjectView.SetColor(StartContact.Material.color);
         newWire.ObjectView.LineRenderer.numCapVertices = 50;
-        newWire.StartContact = StartContact;
-        newWire.StartContact.ContactPositionChanged += newWire.SetNewPositionStartContact;
-        newWire.EndContact = EndContact;
-        newWire.EndContact.ContactPositionChanged += newWire.SetNewPositionEndContact;
+        
 
         StartContact.ConnectionWire = newWire;
         EndContact.ConnectionWire = newWire;
@@ -188,8 +189,56 @@ public class WireCreator : MonoBehaviour, IService {
         }
     }
 
-    private void CreateBezierWire(Wire newWire) {
+    private void CreateBezierWire(BezierWire newWire) {
+        if (StartContact != null && EndContact != null) {
+            newWire.Init();
 
+
+            //int _pointsCount = 20;
+            //Transform pointsParent = gameObject.transform;
+            //foreach (Transform child in newWire.ObjectView.transform) {
+            //    if (child.name == "Points") pointsParent = child;
+            //}
+
+            //Transform[] points = new Transform[_pointsCount];
+            //for (int i = 0; i < _pointsCount; i++) {
+            //    Transform newPoint = new GameObject().transform;
+            //    newPoint.gameObject.name = "Point" + i;
+            //    newPoint.parent = pointsParent;
+            //    points[i] = newPoint; 
+            //}
+
+            //Transform _startPoint = StartContact.transform;
+            //Transform _endPoint = EndContact.transform;
+
+            //Vector3[] _points = new Vector3[_pointsCount];
+            //_points[0] = new Vector3(_startPoint.position.x, _startPoint.position.y, 0f);
+            //_points[_pointsCount - 1] = new Vector3(_endPoint.position.x, _endPoint.position.y, 0f);
+
+            //float _distance = Vector3.Distance(_startPoint.position, _endPoint.position);
+
+            //Vector3 _point1 = _startPoint.position + _startPoint.right * (_distance / 2f);
+            ////_point1 = new Vector3(_point1.x, _point1.y, 0f);
+            ////Debug.Log($"_point1 {_point1}");
+            //GameObject point1 = new GameObject();
+            //point1.transform.position = _point1;
+
+            //Vector3 _point2 = _endPoint.position + _endPoint.right * (_distance / 2f);
+            ////_point2 = new Vector3(_point2.x, _point2.y, 0f);
+            ////Debug.Log($"_point2 {_point2}");
+            //GameObject point2 = new GameObject();
+            //point2.transform.position = _point2;
+
+            //for (int i = 1; i < _pointsCount - 1; i++) {
+            //    _points[i] = Bezier.GetPoint(_points[0], _point1, _point2, _points[_pointsCount - 1], (float)i / _pointsCount);
+            //}
+
+            //for (int i = 0; i < _pointsCount; i++) {
+            //    //Debug.Log($"{i} {_points[i]}");
+            //    points[i].position = _points[i];
+            //}
+            //newWire.ObjectView.PathElements = points;
+        }
     }
 
     private int LineVariant(Transform start, Transform end) {
