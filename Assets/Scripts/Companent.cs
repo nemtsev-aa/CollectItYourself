@@ -2,6 +2,7 @@ using EPOOutline;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -101,5 +102,10 @@ public class Companent : SelectableObject {
 
     public void RemoveCompanent() {
         SwitchBox.RemoveCompanent(this);
+    }
+
+    public void GetCompanentConnectedToContact(ConnectionData connectionData) {
+        //Companent companent = Contacts.FirstOrDefault(companent => companent.T == searchId);
+        
     }
 }

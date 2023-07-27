@@ -47,7 +47,11 @@ public class Stopwatch : MonoBehaviour, IService {
         if (minutes < 1) {
             return $"{seconds}.{milliseconds}";
         } else {
-            return $"{minutes}:{seconds}.{milliseconds}";
+            if (minutes < 10) {
+                return $"0{minutes}:{seconds}.{milliseconds}";
+            } else {
+                return $"{minutes}:{seconds}.{milliseconds}";
+            }
         }
         
         //return string.Format("{0:00}:{1:00}.{2:0}", minutes, seconds, milliseconds);

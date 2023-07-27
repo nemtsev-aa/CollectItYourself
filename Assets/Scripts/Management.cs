@@ -197,4 +197,12 @@ public class Management : MonoBehaviour, IService {
             _hovered = null;
         }
     }
+
+    public WagoClip GetSelectionWagoClip() {
+        if (_listOfSelected.Count > 0 && _listOfSelected[0] is WagoClip) {
+            return (WagoClip)_listOfSelected[0];
+        } else {
+            return null;
+        }
+    }
 }

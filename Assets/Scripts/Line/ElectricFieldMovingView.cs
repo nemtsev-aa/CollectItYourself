@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricFieldMovingView : MonoBehaviour
-{
+public class ElectricFieldMovingView : MonoBehaviour {
     public SelectableObject Object;
     public ObjectView ObjectView;
 
@@ -57,7 +56,7 @@ public class ElectricFieldMovingView : MonoBehaviour
         }
 
         UpdatePoints();
-
+        SetDirection(CurrentDirection);
         _lineRenderer.enabled = false;
     }
 
@@ -67,18 +66,18 @@ public class ElectricFieldMovingView : MonoBehaviour
 
     public void SetObject(SelectableObject selectableObject) {
         Object = selectableObject;
-
     }
 
-    private void Update() {
-        UpdatePoints();
-        SetStatus(Status);
-        _time += Time.deltaTime;
-        if (_time > 2f) {
-            _time = 0f;
-            SwichDirection();
-        }
-    }
+    //private void Update() {
+    //    UpdatePoints();
+    //    SetStatus(Status);
+    //    SetDirection(CurrentDirection);
+    //    //_time += Time.deltaTime;
+    //    //if (_time > 2f) {
+    //    //    _time = 0f;
+    //    //    SwichDirection();
+    //    //}
+    //}
 
     public void SetStatus(bool status) {
         Status = status;
@@ -99,13 +98,15 @@ public class ElectricFieldMovingView : MonoBehaviour
 
     public void SetDirection(DirectionType direction) {
         CurrentDirection = direction;
+        if (CurrentDirection == DirectionType.Negative) {
+            _defaulMoveSpeed = (-1) * _defaulMoveSpeed;
+        } 
     }
 
     [ContextMenu("SwichDirection")]
     public void SwichDirection() {
         _defaulMoveSpeed = (-1) * _defaulMoveSpeed;
         CurrentDirection = (CurrentDirection == DirectionType.Positive) ? (CurrentDirection = DirectionType.Negative) : (CurrentDirection = DirectionType.Positive);
-        
         ShowCurrentFlow(_defaulMoveSpeed);
     }
 

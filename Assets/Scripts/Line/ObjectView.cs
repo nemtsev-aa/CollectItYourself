@@ -49,8 +49,7 @@ public class ObjectView : MonoBehaviour {
                     iWirePoint.Initialize(wire);
                 }
             }
-        }
-        else if (Object is BezierWire) {
+        } else if (Object is BezierWire) {
             BezierWire wire = Object.GetComponent<BezierWire>();
             PathChanged += wire.GenerateMeshCollider;
             if (wire.BezierPointCreator.BezierPoints.Count() > 0) {
@@ -77,8 +76,7 @@ public class ObjectView : MonoBehaviour {
         if (isSelected) {
             _outlinable.FrontParameters.Color = _selectColor;
             _outlinable.enabled = true;
-        }
-        else {
+        } else {
             _outlinable.FrontParameters.Color = _hoverColor;
             _outlinable.enabled = false;
         }
@@ -93,8 +91,10 @@ public class ObjectView : MonoBehaviour {
     }
 
     public void Unselect() {
-        _outlinable.enabled = false;
-        _outlinable.OutlineParameters.Color = _hoverColor;
+        if (Object != null) {
+            _outlinable.enabled = false;
+            _outlinable.OutlineParameters.Color = _hoverColor;
+        }
     }
 
     [ContextMenu("SetColor")]
@@ -109,9 +109,11 @@ public class ObjectView : MonoBehaviour {
         LineRenderer.materials = _material.ToArray(); // ѕрисваиваем новый массив материалов к LineRenderer
     }
 
+    [ContextMenu("UpdatePoints")]
     public void UpdatePoints() {
         if (Object is BezierWire) {
             BezierWire wire = Object.GetComponent<BezierWire>();
+            wire.BezierPointCreator.SetWirePoints(wire.StartContact.transform, wire.EndContact.transform);
             wire.BezierPointCreator.UpdatePointsPosition();
             PathElements = (Transform[])wire.BezierPointCreator.Points;
         }
@@ -127,7 +129,7 @@ public class ObjectView : MonoBehaviour {
 
     private void OnDrawGizmosSelected() {
         Debug.Log("ObjectWiew: OnDrawGizmosSelected");
-        //UpdatePoints();
+        UpdatePoints();
         for (int i = 1; i < PathElements.Length; i++) {
             Gizmos.color = _defaultColor;
             Gizmos.DrawLine(PathElements[i - 1].position, PathElements[i].position);

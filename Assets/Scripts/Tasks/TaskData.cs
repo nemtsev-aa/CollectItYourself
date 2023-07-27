@@ -4,7 +4,7 @@ using UnityEngine;
 public enum TaskStatus {
     Lock,
     Unlock,
-    Complete
+    Complite
 }
 
 public enum TaskMode {

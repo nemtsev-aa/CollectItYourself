@@ -23,6 +23,7 @@ public class WagoClip : Clips {
     public List<ElectricFieldMovingView> ElectricFieldMovingViews = new List<ElectricFieldMovingView>();
 
     // Инициализация элемента в момент создания
+    [ContextMenu("Initialization")]
     public void Initialization() {
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Initialization(this);

@@ -2745,8 +2745,7 @@ LineRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3086,10 +3085,10 @@ MonoBehaviour:
   ObjectView: {fileID: 6774197995210728576}
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
-  _electicFieldColor: {r: 0, g: 0.25958085, b: 1, a: 1}
-  CurrentDirection: 0
+  _electicFieldColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
+  CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: 90d00458cdce0d24c9304ca81b9fa74b,
+  _electicFieldMaterial: {fileID: 2100000, guid: 69a8b30ef6b387d459faea15422aeb12,
     type: 2}
   _lineRenderer: {fileID: 7692597153002483589}
 --- !u!1 &4983431669799612890
@@ -3405,10 +3404,10 @@ MonoBehaviour:
   ObjectView: {fileID: 7017049466243431363}
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
-  _electicFieldColor: {r: 0, g: 0.25958085, b: 1, a: 1}
-  CurrentDirection: 0
+  _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
+  CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: 90d00458cdce0d24c9304ca81b9fa74b,
+  _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
   _lineRenderer: {fileID: 8875493862775489328}
 --- !u!1 &6156849252699247147
@@ -3910,10 +3909,10 @@ MonoBehaviour:
   ObjectView: {fileID: 6461426720533146289}
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
-  _electicFieldColor: {r: 0, g: 0.25958085, b: 1, a: 1}
+  _electicFieldColor: {r: 1, g: 0.42352945, b: 0.058823533, a: 1}
   CurrentDirection: 0
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: 90d00458cdce0d24c9304ca81b9fa74b,
+  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
   _lineRenderer: {fileID: 3033067761501723277}
 --- !u!1 &8848821946937390498

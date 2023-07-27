@@ -50,7 +50,7 @@ public class TrainingModeProgressManager : ProgressManager {
     private void GetCurrentExpValue() {
         if (_taskList.Count() > 0) {
             foreach (var iTask in _taskList) {
-                if (iTask.TaskStatus == TaskStatus.Complete) {
+                if (iTask.TaskStatus == TaskStatus.Complite) {
                     _currentExpValue += iTask.ExpValue;
                 }
             }

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class BacklitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public Button Button;
+    public bool Status;
+
     [SerializeField] private Image _icon;
     [SerializeField] private Image _outline;
 
@@ -12,7 +14,9 @@ public class BacklitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        HideOutline();
+        if (!Status) {
+            HideOutline();
+        }
     }
 
     public void ShowOutline() {

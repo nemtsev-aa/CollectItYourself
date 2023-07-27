@@ -14,11 +14,12 @@ public class TaskVariantCard : MonoBehaviour {
     [SerializeField] private Button _clickerButton;
     [SerializeField] private Image _headerBackground;
     [SerializeField] private TextMeshProUGUI _taskNameText;
-    [SerializeField] private Toggle _lockStatusToogle;
+    [SerializeField] private StatusIconSelector _lockStatus;
     [SerializeField] private TextMeshProUGUI _statusValueText;
     [SerializeField] private GameObject _parameters;
     [SerializeField] private TextMeshProUGUI _expCountText;
     [SerializeField] private TextMeshProUGUI _coinsCountText;
+    [SerializeField] private Color _headerBackgroundLockColor;
     
     [Space(5)]
     [SerializeField] private List<RectTransform> _points;
@@ -54,28 +55,28 @@ public class TaskVariantCard : MonoBehaviour {
         if (_taskData.TaskStatistics.Attempts.Count() > 0) {
             foreach (GeneralSwitchingResult iAttempt in _taskData.TaskStatistics.Attempts) {
                 if (iAttempt.CheckStatus == true) {
-                    _taskData.SetStatus(TaskStatus.Complete);
+                    _taskData.SetStatus(TaskStatus.Complite);
                     continue;
                 }
             }
         }
 
         if (_taskData.TaskStatus == TaskStatus.Lock) {
-            _lockStatusToogle.isOn = true;
-            _headerBackground.color = Color.gray;
-            _statusValueText.color = Color.gray;
+            _lockStatus.SetStatus(TaskStatus.Lock);
+            _headerBackground.color = _headerBackgroundLockColor;
+            _statusValueText.color = _headerBackgroundLockColor;
             _statusValueText.text = "Закрыто";
             _parameters.SetActive(false);
         }
         else if (_taskData.TaskStatus == TaskStatus.Unlock) {
-            _lockStatusToogle.isOn = false;
+            _lockStatus.SetStatus(TaskStatus.Unlock);
             _headerBackground.color = _defaultColor;
             _statusValueText.color = _defaultColor;
             _statusValueText.text = "";
             _parameters.SetActive(true);
         }
-        else if (_taskData.TaskStatus == TaskStatus.Complete) {
-            _lockStatusToogle.isOn = false;
+        else if (_taskData.TaskStatus == TaskStatus.Complite) {
+            _lockStatus.SetStatus(TaskStatus.Complite);
             _headerBackground.color = _defaultColor;
             _statusValueText.color = _defaultColor;
             _statusValueText.text = "Завершено";

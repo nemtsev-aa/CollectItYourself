@@ -150,7 +150,7 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     /// <param name="signal"></param>
     private void NextTaskUnlocked(TaskFinishedSignal signal) {
         if (signal.GeneralSwitchingResult.CheckStatus) {
-            signal.GeneralSwitchingResult.TaskData.SetStatus(TaskStatus.Complete);
+            signal.GeneralSwitchingResult.TaskData.SetStatus(TaskStatus.Complite);
 
             List<TaskData> nextTasks = signal.GeneralSwitchingResult.TaskData.NextTaskData;
             foreach (TaskData iTask in nextTasks) {

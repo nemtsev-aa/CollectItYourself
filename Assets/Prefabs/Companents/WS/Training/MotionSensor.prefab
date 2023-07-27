@@ -808,10 +808,10 @@ MonoBehaviour:
   ObjectView: {fileID: 3350061853763689361}
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
-  _electicFieldColor: {r: 0, g: 0.25958085, b: 1, a: 1}
+  _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
   CurrentDirection: 0
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: 90d00458cdce0d24c9304ca81b9fa74b,
+  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
   _lineRenderer: {fileID: 5522216246056137966}
 --- !u!1 &3075138960603904517
@@ -3036,10 +3036,10 @@ MonoBehaviour:
   ObjectView: {fileID: 6126291571004090657}
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
-  _electicFieldColor: {r: 0, g: 0.25958085, b: 1, a: 1}
+  _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
   CurrentDirection: 0
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: 90d00458cdce0d24c9304ca81b9fa74b,
+  _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
   _lineRenderer: {fileID: 6733960469446697466}
 --- !u!1 &4065117457686867435
@@ -3646,10 +3646,10 @@ MonoBehaviour:
   ObjectView: {fileID: 287118636257534649}
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
-  _electicFieldColor: {r: 0, g: 0.25958085, b: 1, a: 1}
+  _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
   CurrentDirection: 0
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: 90d00458cdce0d24c9304ca81b9fa74b,
+  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
   _lineRenderer: {fileID: 2573362700428618789}
 --- !u!1 &7133528574995400559

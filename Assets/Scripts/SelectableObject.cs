@@ -12,14 +12,13 @@ public class SelectableObject : MonoBehaviour
     public event Action<SelectableObject, bool> OnUnselect;
 
     private Vector3 _defaultScale;
-    private Plane _dragPlane;
     private Vector3 offset;
-    private Camera _myMainCamera;
+    private Pointer _pointer;
 
     public virtual void Start() {
         SelectIndicator.SetActive(false);
         _defaultScale = transform.localScale;
-        _myMainCamera = Camera.main;
+        _pointer = ServiceLocator.Current.Get<Pointer>();
     }
 
     public virtual void OnHover() {
@@ -56,20 +55,13 @@ public class SelectableObject : MonoBehaviour
 
     public virtual void OnMouseDown() {
         if (Movable) {
-            _dragPlane = new Plane(_myMainCamera.transform.forward, transform.position);
-            Ray camRay = _myMainCamera.ScreenPointToRay(Input.mousePosition);
-
-            _dragPlane.Raycast(camRay, out float planeDistance);
-            offset = transform.position - camRay.GetPoint(planeDistance);
+            offset = transform.position - _pointer.GetPosition();
         }
     }
 
     public virtual void OnMouseDrag() {
         if (Movable) {
-            Ray camRay = _myMainCamera.ScreenPointToRay(Input.mousePosition);
-
-            _dragPlane.Raycast(camRay, out float planeDistance);
-            transform.position = camRay.GetPoint(planeDistance) + offset;
+             transform.position = _pointer.GetPosition() + offset;
         }
     }
 

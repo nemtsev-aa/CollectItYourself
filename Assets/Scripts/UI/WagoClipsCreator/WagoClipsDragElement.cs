@@ -1,4 +1,5 @@
 using EPOOutline;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
     [SerializeField] private Image _mainRenderer;
     //[SerializeField] private SpriteRenderer _mainRenderer;
     [SerializeField] private Image _outlinable;
+    public bool CreationZone;
 
     private Sprite _mainSprite;
     private Transform _defaultParentTransform;
@@ -16,6 +18,9 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
     private WagoCreator _wagoCreator;
     private WagoClip _newWagoClip;
     private Vector3 _defaultPosition;
+
+    private Vector3 _startDragPosition;
+    private float _distantion;
 
     public Sprite MainSprite {
         get { return _mainSprite; }
@@ -53,7 +58,7 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
     public WagoClipData CurrentData {
         get { return _currentData; }
         set {
-              _currentData = value;
+            _currentData = value;
         }
     }
     public WagoCreator WagoCreator {
@@ -63,6 +68,8 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
         }
     }
 
+    private bool This_is_UI;
+
     private void Start() {
         _defaultPosition = transform.position;
     }
@@ -70,10 +77,12 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
     public void OnBeginDrag(PointerEventData eventData) {
         transform.SetParent(DragParentTransform);
         _outlinable.enabled = false;
+        _startDragPosition = transform.position;
     }
 
     public void OnDrag(PointerEventData eventData) {
-        transform.position = Input.mousePosition;;
+        transform.position = Input.mousePosition;
+        _distantion = Vector3.Distance(_startDragPosition, transform.position);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
@@ -81,8 +90,25 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
         transform.SetSiblingIndex(SiblingIndex);
 
         transform.position = _defaultPosition;
+        if (CheckEndDragPoint(eventData)) {
+            _newWagoClip = _wagoCreator.CreateWago(_currentData);
+        }
+    }
 
-        _newWagoClip = _wagoCreator.CreateWago(CurrentData);
+    private bool CheckEndDragPoint(PointerEventData eventData) {
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+
+        if (raycastResults.Count > 0) {
+            foreach (var go in raycastResults) {
+                Debug.Log(go.gameObject.name);
+                if (go.gameObject.GetComponent<WagoClipsDragPanel>() != null) {
+                    Debug.Log("Не покинул зону создания");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
