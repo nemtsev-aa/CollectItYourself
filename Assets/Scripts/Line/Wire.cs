@@ -78,11 +78,24 @@ public class Wire : SelectableObject {
 
     public void SetNewPositionStartContact() {
         ObjectView.PathElements[0].position = StartContact.transform.position;
-        ObjectView.UpdatePoints(); 
+        ObjectView.UpdatePoints();
+        ElectricFieldMovingView.UpdatePoints();
     }
 
     public void SetNewPositionEndContact() {
         ObjectView.PathElements[ObjectView.PathElements.Length-1].position = EndContact.transform.position;
         ObjectView.UpdatePoints();
+        ElectricFieldMovingView.UpdatePoints();
+    }
+
+    public void SetElectricFieldSettings(ElectricFieldSettings settings) {
+        ElectricFieldMovingView.SetMaterial(settings.Material);
+        ElectricFieldMovingView.SetColor(settings.Color);
+    }
+
+    public void SetElectricFieldLineSettings(ElectricFieldSettings settings) {
+        ElectricFieldMovingView.SetMaterial(settings.Material);
+        ElectricFieldMovingView.SetColor(settings.Color);
+        ElectricFieldMovingView.SwichDirection();
     }
 }

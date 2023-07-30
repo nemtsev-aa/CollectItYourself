@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 3583119105118806784}
   - component: {fileID: 3583119105118806785}
   m_Layer: 0
-  m_Name: Line
+  m_Name: Contact_Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -767,10 +767,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106677750845}
   Name: 
   Movable: 0
-  ContactType: 0
   Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
   _renderer: {fileID: 3583119106285157740}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
 --- !u!114 &3583119105118806785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 3583119105528351447}
   - component: {fileID: 3583119105528351440}
   m_Layer: 0
-  m_Name: Close
+  m_Name: Contact_Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1081,10 +1081,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119105451441947}
   Name: 
   Movable: 0
-  ContactType: 3
   Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   _renderer: {fileID: 3583119105081795106}
   ConnectionWire: {fileID: 0}
+  _contactType: 3
 --- !u!114 &3583119105528351440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1478,7 +1478,7 @@ GameObject:
   - component: {fileID: 3583119105846968594}
   - component: {fileID: 3583119105846968595}
   m_Layer: 0
-  m_Name: Open
+  m_Name: Contact_Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1530,10 +1530,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106709757791}
   Name: 
   Movable: 0
-  ContactType: 4
   Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   _renderer: {fileID: 3583119105829276819}
   ConnectionWire: {fileID: 0}
+  _contactType: 4
 --- !u!114 &3583119105846968595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,7 +3387,7 @@ GameObject:
   - component: {fileID: 4294718662543889252}
   - component: {fileID: 4470079368311658509}
   m_Layer: 0
-  m_Name: Line
+  m_Name: View_Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3423,10 +3423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 3583119106728645194}
-  _nameText: {fileID: 3583119105194523026}
-  _defaultColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  _contact: {fileID: 3583119105118806784}
   PathElements:
   - {fileID: 3121166225607480534}
   - {fileID: 6999608698595901530}
@@ -3434,6 +3431,9 @@ MonoBehaviour:
   - {fileID: 6624087918096238997}
   - {fileID: 8695903146205845613}
   LineRenderer: {fileID: 5529793433557946482}
+  _nameText: {fileID: 3583119105194523026}
+  _defaultColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
   _outlinable: {fileID: 7461901783333675063}
   _selectColor: {r: 0, g: 0.9607843, b: 0.13333334, a: 1}
 --- !u!114 &4470079368311658509
@@ -3453,7 +3453,7 @@ MonoBehaviour:
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  CurrentDirection: 0
+  CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
@@ -3614,7 +3614,7 @@ GameObject:
   - component: {fileID: 6957935434243408404}
   - component: {fileID: 1760384430149292818}
   m_Layer: 0
-  m_Name: Close
+  m_Name: View_Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3650,15 +3650,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 3583119106728645194}
-  _nameText: {fileID: 3583119105844769012}
-  _defaultColor: {r: 0.28235295, g: 0.17254902, b: 0.42352945, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  _contact: {fileID: 3583119105528351447}
   PathElements:
   - {fileID: 5088540607742525204}
   - {fileID: 5989280950084356603}
   - {fileID: 6510275390893304939}
   LineRenderer: {fileID: 2092553318526832747}
+  _nameText: {fileID: 3583119105844769012}
+  _defaultColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   _outlinable: {fileID: 7461901783333675063}
   _selectColor: {r: 0, g: 0.9607843, b: 0.13333334, a: 1}
 --- !u!114 &1760384430149292818
@@ -3841,7 +3841,7 @@ GameObject:
   - component: {fileID: 3025339940081204057}
   - component: {fileID: 1334837700245759162}
   m_Layer: 0
-  m_Name: Open
+  m_Name: View_Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3877,14 +3877,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 3583119106728645194}
-  _nameText: {fileID: 3583119105659732975}
-  _defaultColor: {r: 0.03137255, g: 0.9607844, b: 0.17254902, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  _contact: {fileID: 3583119105846968594}
   PathElements:
   - {fileID: 1753880401786998721}
   - {fileID: 2576039690256560684}
   LineRenderer: {fileID: 2706913523145308903}
+  _nameText: {fileID: 3583119105659732975}
+  _defaultColor: {r: 0.03137255, g: 0.9607844, b: 0.17254902, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   _outlinable: {fileID: 7461901783333675063}
   _selectColor: {r: 0, g: 0.9607843, b: 0.13333334, a: 1}
 --- !u!114 &1334837700245759162
@@ -4280,12 +4280,12 @@ PrefabInstance:
     - target: {fileID: -9209775574952497204, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0021195412
+      value: 0.0021190643
       objectReference: {fileID: 0}
     - target: {fileID: -9209775574952497204, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Center.z
-      value: 0.000000583295
+      value: 0.0000005832952
       objectReference: {fileID: 0}
     - target: {fileID: -9209775574952497204, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
@@ -4295,12 +4295,12 @@ PrefabInstance:
     - target: {fileID: -9209775574952497204, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 1.4428807
+      value: 1.4428811
       objectReference: {fileID: 0}
     - target: {fileID: -9209775574952497204, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Extent.z
-      value: 0.0000003440095
+      value: 0.0000003440096
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
@@ -4390,12 +4390,12 @@ PrefabInstance:
     - target: {fileID: -2013075255738363117, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: -0.00000023841858
+      value: 0.00000023841858
       objectReference: {fileID: 0}
     - target: {fileID: -2013075255738363117, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Center.z
-      value: -0.00000015887343
+      value: -0.00000015887349
       objectReference: {fileID: 0}
     - target: {fileID: -2013075255738363117, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
@@ -4405,12 +4405,12 @@ PrefabInstance:
     - target: {fileID: -2013075255738363117, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 2.3400002
+      value: 2.340001
       objectReference: {fileID: 0}
     - target: {fileID: -2013075255738363117, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Extent.z
-      value: 0.0000005578995
+      value: 0.0000005578997
       objectReference: {fileID: 0}
     - target: {fileID: 6854079424572287011, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
@@ -4420,7 +4420,7 @@ PrefabInstance:
     - target: {fileID: 6854079424572287011, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0013199449
+      value: 0.0013200045
       objectReference: {fileID: 0}
     - target: {fileID: 6854079424572287011, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
@@ -4435,12 +4435,12 @@ PrefabInstance:
     - target: {fileID: 6854079424572287011, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.6924302
+      value: 0.6924304
       objectReference: {fileID: 0}
     - target: {fileID: 6854079424572287011, guid: 4584f0214f481f948a72b1744bbdbff4,
         type: 3}
       propertyPath: m_Bounds.m_Extent.z
-      value: 0.0000001650882
+      value: 0.00000016508824
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 4584f0214f481f948a72b1744bbdbff4,

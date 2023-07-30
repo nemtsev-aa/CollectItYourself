@@ -1,14 +1,14 @@
-using EPOOutline;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricFieldMovingView : MonoBehaviour {
     public SelectableObject Object;
     public ObjectView ObjectView;
-
     public bool Status;
-    
+    public Material ElecticFieldMaterial => _electicFieldMaterial;
+
+
     [SerializeField] private Color _backColor;
     [SerializeField] private Color _electicFieldColor;
     public DirectionType CurrentDirection = DirectionType.Positive;
@@ -23,11 +23,15 @@ public class ElectricFieldMovingView : MonoBehaviour {
     private float _time;
 
     // Инициализация элемента в момент создания
-    public void Initialization(Material backMaterial, Material electicalFieldMaterial) {
-        _backMaterial = Instantiate(backMaterial);
-        _electicFieldMaterial = Instantiate(electicalFieldMaterial);
+    public void Initialization() {
+        _backMaterial = Instantiate(_backMaterial);
+        _electicFieldMaterial = Instantiate(_electicFieldMaterial);
 
         _defaulMoveSpeed = _electicFieldMaterial.GetFloat("_Speed");
+        if (_defaulMoveSpeed == 0f) {
+            Debug.Log($"{Object.name} скорость электрического поля 0!");
+        }
+
         _backMaterial.SetColor("_BaseColor", _backColor);
         _electicFieldMaterial.SetColor("_Color", _electicFieldColor);
 
@@ -39,6 +43,8 @@ public class ElectricFieldMovingView : MonoBehaviour {
             _backMaterial,
             _electicFieldMaterial
         }; // Создаем новый массив материалов
+
+        //_lineRenderer.materials = _material.ToArray();
 
         SwitchBox switchBox = null;
         if (Object is WagoClip) {
@@ -60,12 +66,14 @@ public class ElectricFieldMovingView : MonoBehaviour {
         _lineRenderer.enabled = false;
     }
 
-    private void Start() {
-        Initialization(_backMaterial, _electicFieldMaterial);
-    }
-
     public void SetObject(SelectableObject selectableObject) {
         Object = selectableObject;
+        Initialization();
+    }
+
+    public void SetMaterial(Material material) {
+        _electicFieldMaterial = material;
+        _lineRenderer.material = _electicFieldMaterial;
     }
 
     //private void Update() {
@@ -90,17 +98,23 @@ public class ElectricFieldMovingView : MonoBehaviour {
     }
 
     [ContextMenu("SetColor")]
-    public void SetColor() {
-        _materials[0].SetColor("_BaseColor", _backColor);
-        _materials[1].SetColor("_Color", _electicFieldColor);
-        _lineRenderer.materials = _materials.ToArray(); // Присваиваем новый массив материалов к LineRenderer
+    public void SetColor(Color electicFieldColor) {
+        _electicFieldColor = electicFieldColor;
+        _electicFieldMaterial.SetColor("_Color", _electicFieldColor);
+        _lineRenderer.material = _electicFieldMaterial;
+        //Debug.Log($"Цвет установлен! {_lineRenderer.materials[0].color}");
     }
 
     public void SetDirection(DirectionType direction) {
-        CurrentDirection = direction;
+        //Debug.Log($"{CurrentDirection}  скорость {_defaulMoveSpeed}");
+        //CurrentDirection = direction;
+        //float newSpeed = CurrentDirection == DirectionType.Negative ? newSpeed = -_defaulMoveSpeed : _defaulMoveSpeed;
+        //Debug.Log($"{direction}  скорость {newSpeed}");
+        //ShowCurrentFlow(newSpeed);
+       
         if (CurrentDirection == DirectionType.Negative) {
-            _defaulMoveSpeed = (-1) * _defaulMoveSpeed;
-        } 
+            SwichDirection();
+        }
     }
 
     [ContextMenu("SwichDirection")]
@@ -110,9 +124,9 @@ public class ElectricFieldMovingView : MonoBehaviour {
         ShowCurrentFlow(_defaulMoveSpeed);
     }
 
-    private void ShowCurrentFlow(float newSpeed) {
-        _materials[1].SetFloat("_Speed", newSpeed);
-        _lineRenderer.materials = _materials.ToArray(); // Присваиваем новый массив материалов к LineRenderer
+    public void ShowCurrentFlow(float newSpeed) {
+        _electicFieldMaterial.SetFloat("_Speed", newSpeed);
+        _lineRenderer.material = _electicFieldMaterial;
     }
 
     private void HideCurrentFlow() {

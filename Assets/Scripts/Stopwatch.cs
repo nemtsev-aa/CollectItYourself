@@ -3,23 +3,29 @@ using CustomEventBus.Signals;
 using System;
 using UnityEngine;
 
-public class Stopwatch : MonoBehaviour, IService {
+public class Stopwatch : MonoBehaviour, IService, CustomEventBus.IDisposable {
     [field: SerializeField] public bool Status { get; private set; }
 
     [SerializeField] private TimeView _timeView;
     [SerializeField] private float _timeValue;
 
-    public event Action<string> TimeChanged;
-    public event Action<bool> StatusChanged;
+    public Action<string> TimeChanged;
+    public Action<bool> StatusChanged;
     
     private EventBus _eventBus;
 
-    public void Init(TimeView timeView, EventBus eventBus) {
+    public void Init(EventBus eventBus) {
         _eventBus = eventBus;
-        _timeView = timeView;
-        _timeView.Init(this);
         _eventBus.Subscribe((TrainingModeStopSignal signal) => SetStatus(false));
         _eventBus.Subscribe((TrainingModeStartSignal signal) => SetStatus(true));
+    }
+
+    public void SetTimeView(TimeView timeView) {
+        _timeView = timeView;
+        _timeView.Init(this);
+
+        TimeChanged += _timeView.ShowTimeValue;
+        StatusChanged += _timeView.ShowStatus;
     }
 
     private void Update() {
@@ -38,6 +44,16 @@ public class Stopwatch : MonoBehaviour, IService {
         _timeValue = 0;
         StatusChanged?.Invoke(Status);
         TimeChanged?.Invoke(GetFormattedTime());
+    }
+
+    public void ResetTimer() {
+        _timeValue = 0f;
+
+        if (_timeView != null) {
+            TimeChanged -= _timeView.ShowTimeValue;
+            StatusChanged -= _timeView.ShowStatus;
+            _timeView = null;
+        }
     }
 
     private string GetFormattedTime() {
@@ -59,7 +75,6 @@ public class Stopwatch : MonoBehaviour, IService {
 
     public void SetTimeValue(float timeValue) {
         _timeValue = timeValue;
-
     }
 
     public float GetTimeValue() {
@@ -68,5 +83,11 @@ public class Stopwatch : MonoBehaviour, IService {
 
     public string GetTimeText() {
         return GetFormattedTime();
+    }
+
+    public void Dispose() {
+        _timeView = null;
+        _eventBus.Unsubscribe((TrainingModeStopSignal signal) => SetStatus(false));
+        _eventBus.Unsubscribe((TrainingModeStartSignal signal) => SetStatus(true));
     }
 }

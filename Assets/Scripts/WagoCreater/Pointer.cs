@@ -3,7 +3,7 @@ using DG.Tweening;
 using CustomEventBus.Signals;
 using CustomEventBus;
 
-public class Pointer : MonoBehaviour, IService {
+public class Pointer : MonoBehaviour, IService, IDisposable {
     [Tooltip("Статус")]
     public bool Status => _status;
    
@@ -68,5 +68,10 @@ public class Pointer : MonoBehaviour, IService {
                 // По завершению изменения размера, плавно возвращаем объект в исходное состояние
                 transform.DOScale(originalScale, duration);
             });
+    }
+
+    public void Dispose() {
+        _eventBus.Unsubscribe((TrainingModeStopSignal signal) => SetStatus(false));
+        _eventBus.Unsubscribe((TrainingModeStartSignal signal) => SetStatus(true));
     }
 }

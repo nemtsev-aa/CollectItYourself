@@ -259,10 +259,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2290780962414726680}
   Name: 
   Movable: 0
-  ContactType: 6
   Material: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _renderer: {fileID: 7296277556040662659}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
   ParentWagoClip: {fileID: 2826529140206058825}
   Number: 4
   ConnectedContact: {fileID: 0}
@@ -455,10 +455,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 5673846863536691272}
   Name: 
   Movable: 0
-  ContactType: 6
   Material: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _renderer: {fileID: 365607412232744896}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
   ParentWagoClip: {fileID: 2826529140206058825}
   Number: 3
   ConnectedContact: {fileID: 0}
@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 345813566495261496}
   - component: {fileID: 3410696354902621949}
   m_Layer: 0
-  m_Name: MagneticField (LineRenderer)
+  m_Name: ElectricField (LineRenderer)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -841,15 +841,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2826529140206058825}
-  _nameText: {fileID: 5360978242455534192}
-  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
+  _contact: {fileID: 0}
   PathElements:
   - {fileID: 8369659564109035661}
   - {fileID: 7734752090720452348}
   - {fileID: 7658003040178511706}
   LineRenderer: {fileID: 7949059859455104125}
+  _nameText: {fileID: 5360978242455534192}
+  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _outlinable: {fileID: 4593955682442815020}
   _selectColor: {r: 0, g: 0.9607844, b: 0.13333334, a: 1}
 --- !u!114 &2579037526413671895
@@ -871,7 +871,7 @@ MonoBehaviour:
   _electicFieldColor: {r: 0, g: 0.37647063, b: 1, a: 0}
   CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
+  _electicFieldMaterial: {fileID: 2100000, guid: 605c35a9b188d594d822b896ef450b70,
     type: 2}
   _lineRenderer: {fileID: 571717285787408720}
 --- !u!1 &1942512086151530547
@@ -1280,15 +1280,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2826529140206058825}
-  _nameText: {fileID: 5360978242455534192}
-  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
+  _contact: {fileID: 0}
   PathElements:
   - {fileID: 1375095817302090705}
   - {fileID: 6570257094156839579}
   - {fileID: 421476817063883132}
   LineRenderer: {fileID: 8139914825016935251}
+  _nameText: {fileID: 5360978242455534192}
+  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _outlinable: {fileID: 4593955682442815020}
   _selectColor: {r: 0, g: 0.9607844, b: 0.13333334, a: 1}
 --- !u!114 &7016310328248534981
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   _electicFieldColor: {r: 0, g: 0.37647063, b: 1, a: 0}
   CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
+  _electicFieldMaterial: {fileID: 2100000, guid: 605c35a9b188d594d822b896ef450b70,
     type: 2}
   _lineRenderer: {fileID: 4658895988384407077}
 --- !u!1 &3052615192975390930
@@ -1325,7 +1325,7 @@ GameObject:
   - component: {fileID: 571717285787408720}
   - component: {fileID: 8170620666778937434}
   m_Layer: 0
-  m_Name: MagneticField (LineRenderer)
+  m_Name: ElectricField (LineRenderer)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1522,10 +1522,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 7250917848179136021}
   Name: 
   Movable: 0
-  ContactType: 6
   Material: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _renderer: {fileID: 7554695622150466696}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
   ParentWagoClip: {fileID: 2826529140206058825}
   Number: 2
   ConnectedContact: {fileID: 0}
@@ -2042,7 +2042,7 @@ GameObject:
   - component: {fileID: 4658895988384407077}
   - component: {fileID: 4091070023251440889}
   m_Layer: 0
-  m_Name: MagneticField (LineRenderer)
+  m_Name: ElectricField (LineRenderer)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2380,7 +2380,11 @@ MonoBehaviour:
   - {fileID: 4697977664110985174}
   - {fileID: 3431097827113241742}
   - {fileID: 7546758532422542607}
-  ElectricFieldMovingViews: []
+  ElectricFieldMovingViews:
+  - {fileID: 7144774729980173672}
+  - {fileID: 7016310328248534981}
+  - {fileID: 8845750830938559556}
+  - {fileID: 2579037526413671895}
 --- !u!114 &4593955682442815020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3061,10 +3065,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 5161995371411633336}
   Name: 
   Movable: 0
-  ContactType: 6
   Material: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _renderer: {fileID: 657383071465864088}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
   ParentWagoClip: {fileID: 2826529140206058825}
   Number: 5
   ConnectedContact: {fileID: 0}
@@ -3188,10 +3192,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 95339076}
   Name: 
   Movable: 0
-  ContactType: 6
   Material: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _renderer: {fileID: 3583858488352837670}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
   ParentWagoClip: {fileID: 2826529140206058825}
   Number: 1
   ConnectedContact: {fileID: 0}
@@ -4263,16 +4267,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2826529140206058825}
-  _nameText: {fileID: 5360978242455534192}
-  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
+  _contact: {fileID: 0}
   PathElements:
   - {fileID: 7551862585844901099}
   - {fileID: 5658690540471555999}
   - {fileID: 7154408748385706367}
   - {fileID: 3737565514478772610}
   LineRenderer: {fileID: 4843622892909830156}
+  _nameText: {fileID: 5360978242455534192}
+  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _outlinable: {fileID: 4593955682442815020}
   _selectColor: {r: 0, g: 0.9622642, b: 0.1323825, a: 1}
 --- !u!114 &7144774729980173672
@@ -4294,7 +4298,7 @@ MonoBehaviour:
   _electicFieldColor: {r: 0, g: 0.37551737, b: 1, a: 1}
   CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
+  _electicFieldMaterial: {fileID: 2100000, guid: 605c35a9b188d594d822b896ef450b70,
     type: 2}
   _lineRenderer: {fileID: 345813566495261496}
 --- !u!1 &7038935202988245917
@@ -4350,15 +4354,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2826529140206058825}
-  _nameText: {fileID: 5360978242455534192}
-  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
+  _contact: {fileID: 0}
   PathElements:
   - {fileID: 7645049978290669862}
   - {fileID: 2206867187111248921}
   - {fileID: 3973662788928587825}
   LineRenderer: {fileID: 8864228716569572981}
+  _nameText: {fileID: 5360978242455534192}
+  _defaultColor: {r: 0.8980393, g: 0.03529412, b: 0.49803925, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
   _outlinable: {fileID: 4593955682442815020}
   _selectColor: {r: 0, g: 0.9607844, b: 0.13333334, a: 1}
 --- !u!114 &8845750830938559556
@@ -4380,7 +4384,7 @@ MonoBehaviour:
   _electicFieldColor: {r: 0, g: 0.37647063, b: 1, a: 0}
   CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
+  _electicFieldMaterial: {fileID: 2100000, guid: 605c35a9b188d594d822b896ef450b70,
     type: 2}
   _lineRenderer: {fileID: 1700670151502170550}
 --- !u!1 &7222737364005585457
@@ -4395,7 +4399,7 @@ GameObject:
   - component: {fileID: 1700670151502170550}
   - component: {fileID: 252369007123506962}
   m_Layer: 0
-  m_Name: MagneticField (LineRenderer)
+  m_Name: ElectricField (LineRenderer)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

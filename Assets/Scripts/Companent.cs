@@ -1,8 +1,4 @@
-using EPOOutline;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -48,6 +44,7 @@ public class Companent : SelectableObject {
         Initialization();
     }
 
+    #region Managment
     [ContextMenu("ShowName")]
     public void ShowName() {
         _nameText.text = Name;
@@ -75,6 +72,13 @@ public class Companent : SelectableObject {
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Select();
         }
+
+        foreach (Contact iContact in Contacts) {
+            Wire wire = iContact.ConnectionWire;
+            if (wire != null) {
+                wire.Select();
+            }
+        }
     }
 
     public override void Unselect() {
@@ -83,8 +87,16 @@ public class Companent : SelectableObject {
             _animator.ResetTrigger("Show");
             _animator.SetTrigger("Hide");
         }
+
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Unselect();
+        }
+
+        foreach (Contact iContact in Contacts) {
+            Wire wire = iContact.ConnectionWire;
+            if (wire != null) {
+                wire.Unselect();
+            }
         }
     }
 
@@ -92,7 +104,8 @@ public class Companent : SelectableObject {
         base.OnMouseDrag();
         UpdateLocationWires();
     }
-
+    #endregion
+    
     public void UpdateLocationWires() {
         for (int i = 0; i < Contacts.Count; i++) {
             Contact iContact = Contacts[i];

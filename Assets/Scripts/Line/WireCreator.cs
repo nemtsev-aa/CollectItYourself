@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public enum CreateType {
     DragDrop,
@@ -10,26 +6,34 @@ public enum CreateType {
     OneClick
 }
 
+public struct ElectricFieldSettings {
+    public Material Material;
+    public Color Color;
+    public DirectionType DirectionType;
+}
+
 public class WireCreator : MonoBehaviour, IService {
     public CreateType CurrentType = CreateType.OneClick;
-    public SwitchBoxManager SwitchBoxManager;
+    
     public Wire WirePrefab;
     public Contact StartContact;
     public WagoContact EndContact;
 
+    private SwitchBoxesManager _switchBoxesManager;
     private Management _management;
     private Vector3 _mousePosition;
     private LineRenderer _lineRender;
     private Pointer _pointer;
  
-    public void Init(Management management) {
+    public void Init(Management management, SwitchBoxesManager switchBoxesManager, Pointer pointer) {
         _management = management;
+        _switchBoxesManager = switchBoxesManager;
+        _pointer = pointer;
         _lineRender = GetComponent<LineRenderer>();
-        _pointer = ServiceLocator.Current.Get<Pointer>();
     }
 
     private void Update() {
-        if (SwitchBoxManager.ActiveSwichBox != null) {
+        if (_switchBoxesManager != null) {
             switch (CurrentType) {
                 case CreateType.DragDrop:
                     DragDropCreation();
@@ -76,7 +80,7 @@ public class WireCreator : MonoBehaviour, IService {
                     ResetWireCreator();
                 } else {
                     //Debug.Log("StartContact != null, EndContact == null");
-                    SwitchBox activeSB = SwitchBoxManager.ActiveSwichBox;
+                    SwitchBox activeSB = _switchBoxesManager.ActiveSwichBox;
                     int freeWagoClipCount = activeSB.FindFreeWagoContacts();
                     if (freeWagoClipCount == 0) {
                         Debug.Log("Нет свободных Wago - зажимов!");
@@ -99,7 +103,7 @@ public class WireCreator : MonoBehaviour, IService {
             if (StartContact != null) {
                 if (EndContact == null) {
                     //Debug.Log("StartContact != null, EndContact == null");
-                    SwitchBox activeSB = SwitchBoxManager.ActiveSwichBox;
+                    SwitchBox activeSB = _switchBoxesManager.ActiveSwichBox;
                     int freeWagoClipCount = activeSB.FindFreeWagoContacts();
                     if (freeWagoClipCount == 0) {
                         //Debug.Log("Нет свободных Wago-зажимов!");
@@ -143,13 +147,34 @@ public class WireCreator : MonoBehaviour, IService {
                 CreateBezierWire((BezierWire)newWire);
                 break;
         }
-
-        newWire.SwitchBox = SwitchBoxManager.ActiveSwichBox;
-        newWire.transform.parent = SwitchBoxManager.ActiveSwichBox.WiresTransform.transform;
-        newWire.GetComponent<SelectableObject>().Name = (SwitchBoxManager.ActiveSwichBox.Wires.Count + 1).ToString();
+        SwitchBox activeSwichBox = _switchBoxesManager.ActiveSwichBox;
+        newWire.SwitchBox = activeSwichBox;
+        newWire.transform.parent = activeSwichBox.WiresTransform.transform;
+        newWire.GetComponent<SelectableObject>().Name = (activeSwichBox.Wires.Count + 1).ToString();
         newWire.ObjectView.Initialization(newWire);
         newWire.ObjectView.ShowName();
         newWire.ObjectView.SetColor(StartContact.Material.color);
+
+        ElectricFieldSettings settings = StartContact.GetElectricFieldSettings(StartContact);
+        if (settings.Color != null) {
+            if (newWire.ElectricFieldMovingView != null) {
+                // Настраиваем внешний вид электрическго поля на проводе
+                newWire.SetElectricFieldSettings(settings);
+                Companent startCompanent = StartContact.GetParentCompanent();
+                if (startCompanent.Type == CompanentType.Input || startCompanent.Type == CompanentType.Selector) {
+                    // Настраиваем внешний вид электрическго поля на Wago-зажиме
+                    EndContact.ParentWagoClip.SetElectricFieldSettings(settings);
+                } else if (startCompanent.Type == CompanentType.Output) {
+                    // Настраиваем внешний вид электрическго поля на проводе
+                    newWire.ElectricFieldMovingView.ShowCurrentFlow(settings.Material.GetFloat("_Speed") * (-1));
+                }
+            } else {
+                Debug.Log($"{newWire.Name} ElectricFieldMovingView не найден!");
+            }
+        } else {
+            Debug.Log("WireCreator: CreateWire ошибка при получении настроек електрического поля");
+        }
+        
         newWire.ObjectView.LineRenderer.numCapVertices = 50;
         
 
@@ -159,10 +184,13 @@ public class WireCreator : MonoBehaviour, IService {
         EndContact.Material = StartContact.Material;
         EndContact.SetMaterial();
         EndContact.AddNewConnectToList();
-        EndContact.Unselect();
-        SwitchBoxManager.ActiveSwichBox.RemoveWagoContactFromFreeList(EndContact);
 
-        SwitchBoxManager.ActiveSwichBox.AddNewLineFromList(newWire);
+
+
+        EndContact.Unselect();
+        activeSwichBox.RemoveWagoContactFromFreeList(EndContact);
+
+        activeSwichBox.AddNewLineFromList(newWire);
         newWire.GenerateMeshCollider();
         newWire.GenerateMeshCollider();
 
@@ -192,52 +220,6 @@ public class WireCreator : MonoBehaviour, IService {
     private void CreateBezierWire(BezierWire newWire) {
         if (StartContact != null && EndContact != null) {
             newWire.Init();
-
-
-            //int _pointsCount = 20;
-            //Transform pointsParent = gameObject.transform;
-            //foreach (Transform child in newWire.ObjectView.transform) {
-            //    if (child.name == "Points") pointsParent = child;
-            //}
-
-            //Transform[] points = new Transform[_pointsCount];
-            //for (int i = 0; i < _pointsCount; i++) {
-            //    Transform newPoint = new GameObject().transform;
-            //    newPoint.gameObject.name = "Point" + i;
-            //    newPoint.parent = pointsParent;
-            //    points[i] = newPoint; 
-            //}
-
-            //Transform _startPoint = StartContact.transform;
-            //Transform _endPoint = EndContact.transform;
-
-            //Vector3[] _points = new Vector3[_pointsCount];
-            //_points[0] = new Vector3(_startPoint.position.x, _startPoint.position.y, 0f);
-            //_points[_pointsCount - 1] = new Vector3(_endPoint.position.x, _endPoint.position.y, 0f);
-
-            //float _distance = Vector3.Distance(_startPoint.position, _endPoint.position);
-
-            //Vector3 _point1 = _startPoint.position + _startPoint.right * (_distance / 2f);
-            ////_point1 = new Vector3(_point1.x, _point1.y, 0f);
-            ////Debug.Log($"_point1 {_point1}");
-            //GameObject point1 = new GameObject();
-            //point1.transform.position = _point1;
-
-            //Vector3 _point2 = _endPoint.position + _endPoint.right * (_distance / 2f);
-            ////_point2 = new Vector3(_point2.x, _point2.y, 0f);
-            ////Debug.Log($"_point2 {_point2}");
-            //GameObject point2 = new GameObject();
-            //point2.transform.position = _point2;
-
-            //for (int i = 1; i < _pointsCount - 1; i++) {
-            //    _points[i] = Bezier.GetPoint(_points[0], _point1, _point2, _points[_pointsCount - 1], (float)i / _pointsCount);
-            //}
-
-            //for (int i = 0; i < _pointsCount; i++) {
-            //    //Debug.Log($"{i} {_points[i]}");
-            //    points[i].position = _points[i];
-            //}
-            //newWire.ObjectView.PathElements = points;
         }
     }
 
@@ -257,7 +239,7 @@ public class WireCreator : MonoBehaviour, IService {
         if (StartContact == null) return;
 
         StartContact.Unselect();
-        SwitchBoxManager.ActiveSwichBox.SelectFreeWagoContacts(false);
+        _switchBoxesManager.ActiveSwichBox.SelectFreeWagoContacts(false);
 
         StartContact = null;
         EndContact = null;

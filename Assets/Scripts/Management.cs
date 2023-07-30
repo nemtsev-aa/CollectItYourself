@@ -85,7 +85,7 @@ public class Management : MonoBehaviour, IService {
                     } else {
                         if (_wireCreator.StartContact == null) {
                             Wire wire = wagoContact.ConnectionWire;
-                            ServiceLocator.Current.Get<SwitchBoxManager>().ActiveSwichBox.RemoveLineToList(wire);
+                            ServiceLocator.Current.Get<SwitchBoxesManager>().ActiveSwichBox.RemoveLineToList(wire);
                             _pointer.Disconnect();
                         } else {
                             Debug.Log("Wago-контакт занят!");

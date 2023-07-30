@@ -36,6 +36,7 @@ public class WagoContact : Contact {
         if (!ParentWagoClip.Connections.Contains(newConnect)) {
             ParentWagoClip.Connections.Add(newConnect);
         }
+
     }
 
     public void RemoveConnectFromList() {
@@ -74,4 +75,6 @@ public class WagoContact : Contact {
         ConnectedContact = null;
         ResetMaterial();
     }
+
+
 }

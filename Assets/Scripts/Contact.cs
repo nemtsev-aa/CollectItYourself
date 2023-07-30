@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 public enum ContactType {
     Line,
@@ -12,13 +13,14 @@ public enum ContactType {
 }
 
 public class Contact : SelectableObject {
-    public ContactType ContactType;
+    public ContactType ContactType => _contactType;
+    
     public Material Material;
     [SerializeField] private Renderer _renderer;
     public Wire ConnectionWire;
 
     public Action ContactPositionChanged;
-
+    public ContactType _contactType;
     private Color _defaultColor;
     private float _duration = 2f;
     private Companent _parentCompanent;
@@ -60,6 +62,29 @@ public class Contact : SelectableObject {
 
     public override Companent GetParentCompanent() {
         return _parentCompanent;
+    }
+
+    ///Написать метод/скрипт/свойство для контакта, которое будет хранить данные о цвете и направлении магнитного поля 
+    ///которые будет получать следующий подключенный компанент
+    public ElectricFieldSettings GetElectricFieldSettings(Contact contact) {
+        ElectricFieldSettings electricFieldSettings = new ElectricFieldSettings();
+
+        ObjectView objectView = _parentCompanent.ObjectViews.Find(x => x.Contact.ContactType == contact.ContactType);
+        if (objectView != null) {
+            //Debug.Log($"Искали {contact.gameObject.name} {contact.ContactType} ; Нашли {objectView.gameObject.name} {objectView.Contact.ContactType}");
+            ElectricFieldMovingView electricFieldMovingView = _parentCompanent.ElectricFieldMovingViews.Find(x => x.ObjectView == objectView);
+            if (electricFieldMovingView != null) {
+                electricFieldSettings.Color = electricFieldMovingView.ElecticFieldMaterial.color;
+                electricFieldSettings.DirectionType = electricFieldMovingView.CurrentDirection;
+                electricFieldSettings.Material = electricFieldMovingView.ElecticFieldMaterial;
+                return electricFieldSettings;
+            } else {
+                Debug.LogError("GetElectricFieldSettings: electricFieldMovingView не найден!");
+            }
+        } else {
+            Debug.LogError("GetElectricFieldSettings: objectView не найден!");
+        }
+        return electricFieldSettings;
     }
 
     public virtual void ResetContact() {

@@ -21,6 +21,7 @@ public class SelectableObject : MonoBehaviour
         _pointer = ServiceLocator.Current.Get<Pointer>();
     }
 
+    #region Managment
     public virtual void OnHover() {
         transform.localScale = _defaultScale * 1.05f;
     }
@@ -40,6 +41,8 @@ public class SelectableObject : MonoBehaviour
         if (SelectIndicator != null) SelectIndicator.SetActive(false);
         OnUnselect?.Invoke(this, false);
     }
+    #endregion
+
 
     public virtual Companent GetParentCompanent() {
         return GetComponent<Companent>();

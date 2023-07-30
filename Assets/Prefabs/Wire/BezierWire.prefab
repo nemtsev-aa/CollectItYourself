@@ -353,12 +353,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 6179178325031451828}
+  _contact: {fileID: 0}
+  PathElements: []
+  LineRenderer: {fileID: 1786928650179838591}
   _nameText: {fileID: 4611208076630482549}
   _defaultColor: {r: 0.14509805, g: 0.9254902, b: 0.7882353, a: 1}
   _defaultMaterial: {fileID: 2100000, guid: 4a234a31885ee1947bf72cf2dbed749d, type: 2}
-  PathElements: []
-  LineRenderer: {fileID: 1786928650179838591}
   _outlinable: {fileID: 4940117186821662109}
   _selectColor: {r: 0.17515779, g: 1, b: 0, a: 1}
 --- !u!114 &631656075750557460
@@ -380,7 +380,7 @@ MonoBehaviour:
   _electicFieldColor: {r: 0, g: 0.52242804, b: 1, a: 1}
   CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
-  _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
+  _electicFieldMaterial: {fileID: 2100000, guid: 605c35a9b188d594d822b896ef450b70,
     type: 2}
   _lineRenderer: {fileID: 542912545708057743}
 --- !u!1 &3096781112888478556
@@ -476,8 +476,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

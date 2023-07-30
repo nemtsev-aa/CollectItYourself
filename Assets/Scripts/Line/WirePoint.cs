@@ -11,6 +11,7 @@ public class WirePoint : SelectableObject {
         base.OnMouseDrag();
         //Debug.Log("WirePoint: OnMouseDrag");
         _parentWire.ObjectView.UpdatePoints();
+        _parentWire.ElectricFieldMovingView.UpdatePoints();
     }
 
     public override void OnMouseUp() {

@@ -23,4 +23,11 @@ public class TaskConnectorsManager : MonoBehaviour {
         newConnect.GetComponent<UILineConnector>().transforms = newPoints;
         _taskConnects.Add(newConnect);
     }
+
+    public void Reset() {
+        foreach (var item in _taskConnects) {
+            Destroy(item.gameObject);
+        }
+        _taskConnects.Clear();
+    }
 }

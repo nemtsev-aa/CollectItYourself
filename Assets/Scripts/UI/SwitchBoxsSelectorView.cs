@@ -1,9 +1,5 @@
-using CustomEventBus;
-using CustomEventBus.Signals;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SwitchBoxsSelectorView : MonoBehaviour {
     public SwitchBox CurrentSwitchBox => _currentSwitchBox;
@@ -12,17 +8,16 @@ public class SwitchBoxsSelectorView : MonoBehaviour {
     private List<SwitchBoxSelector> _switchBoxSelectors;
     private SwitchBox _currentSwitchBox;
     private SwitchBoxSelector _currentSelector;
-    private SwitchBoxManager _switchBoxManager;
+    private SwitchBoxesManager _switchBoxManager;
 
-    public void Init(SwitchBoxManager switchBoxManager) {
+    public void Init(SwitchBoxesManager switchBoxManager) {
         _switchBoxSelectors = new List<SwitchBoxSelector>();
         _switchBoxManager = switchBoxManager;
     }
  
     public void CreateSwitchBoxsSelector(SwitchBox switchBox) {
         SwitchBoxSelector newSelector = Instantiate(_switchBoxSelectorPrefab, transform);
-        newSelector.Init(switchBox);
-        newSelector.ActiveSwitchBoxSelectorChanged += SetActiveSwitchBoxSelector;
+        newSelector.Init(switchBox, this);
         _switchBoxSelectors.Add(newSelector);
     }
 

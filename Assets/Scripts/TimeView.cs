@@ -14,17 +14,10 @@ public class TimeView : MonoBehaviour {
         _startButton.Button.onClick.AddListener(StartTimer);
         _pauseButton.Button.onClick.AddListener(PauseTimer);
         _stopButton.Button.onClick.AddListener(StopTimer);
-        _stopwatch.TimeChanged += ShowTimeValue;
-        _stopwatch.StatusChanged += ShowStatus;
     }
 
-    private void ShowTimeValue(string time) {
+    public void ShowTimeValue(string time) {
         _timeText.text = time;
-    }
-
-    private void OnDisable() {
-        _stopwatch.TimeChanged -= ShowTimeValue;
-        _stopwatch.StatusChanged -= ShowStatus;
     }
 
     private void StartTimer() {
@@ -60,5 +53,10 @@ public class TimeView : MonoBehaviour {
                 _pauseButton.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void OnDisable() {
+        _stopwatch.TimeChanged -= ShowTimeValue;
+        _stopwatch.StatusChanged -= ShowStatus;
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,12 +9,13 @@ public struct WagoClipData {
     public GameObject Prefab;
 }
 
-public class WagoClipsDragPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class WagoClipsDragPanel : MonoBehaviour, IPointerEnterHandler {
     [SerializeField] private GameObject _dragWagoClipPrefab;
     [SerializeField] private List<WagoClipData> _dragWago = new ();
     [SerializeField] private Transform _scrollViewContent;
     [SerializeField] private WagoCreator _wagoCreator;
     [SerializeField] private Management _management;
+    
     public void Init(WagoCreator wagoCreator) {
         _wagoCreator = wagoCreator;
         _management = ServiceLocator.Current.Get<Management>();
@@ -39,9 +39,5 @@ public class WagoClipsDragPanel : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (Input.GetMouseButton(0) && wagoClip != null) {
             wagoClip.DeleteClip();
         } 
-    }
-
-    public void OnPointerExit(PointerEventData eventData) {
-        
     }
 }

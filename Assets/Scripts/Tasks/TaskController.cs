@@ -20,12 +20,11 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     public TasksConfig TasksConfig => _tasksConfig;
 
     [SerializeField] private TasksConfig _tasksConfig;
+    [SerializeField] private TaskVariantCard _taskVariantCardPrefab;               // Префаб карточки с заданием
 
-    [SerializeField] private SelectTrainingTaskDialog _selectTrainingTaskDialog;                    // Окно выбора заданий
-    [SerializeField] private TaskConnectorsManager _taskConnectorsManager;                          // Менеджер связей между заданиями
-    [SerializeField] private TaskVariantCard _taskVariantCardPrefab;                                // Префаб карточки с заданием
-    [SerializeField] private List<TaskVariantCard> _taskVariantCards = new List<TaskVariantCard>(); // Список карточек с заданиями
-
+    private TaskConnectorsManager _taskConnectorsManager;                          // Менеджер связей между заданиями
+    private List<TaskVariantCard> _taskVariantCards = new List<TaskVariantCard>(); // Список карточек с заданиями
+    private SelectTrainingTaskDialog _selectTrainingTaskDialog;                    // Окно выбора заданий
     private ITaskLoader _taskLoader;
     private string _currentTaskId;
     private TaskData _currentTaskData;
@@ -33,7 +32,7 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
    
     public void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
-        _eventBus.Subscribe<TaskStartedSignal>(TaskSelect);              // Задание выбрано
+        _eventBus.Subscribe<TaskStartedSignal>(TaskSelect);              
         _eventBus.Subscribe<TaskTimePassedSignal>(TaskTimePassed);
         _eventBus.Subscribe<TaskFinishedSignal>(NextTaskUnlocked);
         _eventBus.Subscribe<TaskNextSignal>(SetNextTask);
@@ -68,9 +67,9 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     /// <summary>
     /// Создание карты заданий
     /// </summary>
-    public void CreateTaskMap(SelectTrainingTaskDialog selectTrainingTaskDialog, TaskConnectorsManager taskConnectorsManager) {
+    public void CreateTaskMap(SelectTrainingTaskDialog selectTrainingTaskDialog) {
         _selectTrainingTaskDialog = selectTrainingTaskDialog;
-        _taskConnectorsManager = taskConnectorsManager;
+        
         if (_tasksConfig != null && _tasksConfig.Tasks.Count() > 0) {
             int taskNumber = 1;
             foreach (TaskData iTaskData in _tasksConfig.Tasks) {
@@ -109,7 +108,8 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     /// Создание связи между отдельными заданиями
     /// </summary>
     [ContextMenu("CreateConnects")]
-    public void CreateConnects() {
+    public void CreateConnects(TaskConnectorsManager taskConnectorsManager) {
+        _taskConnectorsManager = taskConnectorsManager;
         if (_taskVariantCards.Count < 1) Debug.LogError("TaskController: карточки с заданиями не добавлены в список");
         foreach (TaskVariantCard iTaskCard in _taskVariantCards) {
             if (iTaskCard.TaskData.NextTaskData.Count > 0) {
@@ -184,7 +184,7 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
     }
 
-    private void SelectTask(string taskId) {
+    private void TaskSelect(string taskId) {
         _currentTaskId = taskId;
         _currentTaskData = _taskLoader.GetTasks().FirstOrDefault(x => x.ID == _currentTaskId);
         _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
@@ -206,9 +206,21 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         _eventBus.Invoke(new TaskFinishedSignal(signal.GeneralSwitchingResult));
     }
 
-    public void Dispose() {
-        _eventBus.Unsubscribe<TaskNextSignal>(SetNextTask);
-        _eventBus.Unsubscribe<TaskTimePassedSignal>(TaskTimePassed);
+    public void Reset() {
+        foreach (var item in _taskVariantCards) {
+            Destroy(item.gameObject);
+        }
+        _taskVariantCards.Clear();
+
+        _taskConnectorsManager.Reset();
     }
 
+
+    public void Dispose() {
+        _eventBus.Unsubscribe<TaskStartedSignal>(TaskSelect);
+        _eventBus.Unsubscribe<TaskTimePassedSignal>(TaskTimePassed);
+        _eventBus.Unsubscribe<TaskFinishedSignal>(NextTaskUnlocked);
+        _eventBus.Unsubscribe<TaskNextSignal>(SetNextTask);
+        _eventBus.Unsubscribe<RestartTaskSignal>(RestartTask);
+    }
 }

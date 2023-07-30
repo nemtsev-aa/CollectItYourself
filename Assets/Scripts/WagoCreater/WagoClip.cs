@@ -28,20 +28,21 @@ public class WagoClip : Clips {
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Initialization(this);
         }
+
         foreach (ElectricFieldMovingView electricView in ElectricFieldMovingViews) {
             electricView.SetObject(this);
         }
     }
 
+    #region Managment
     public override void Start() {
         base.Start();
-        Initialization();
     }
 
     public override void OnHover() {
         foreach (ObjectView objectView in ObjectViews) {
             objectView.OnHover(IsSelected);
-        } 
+        }
     }
 
     public override void OnUnhover() {
@@ -85,6 +86,7 @@ public class WagoClip : Clips {
         foreach (var iObjView in ObjectViews) {
             iObjView.UpdatePoints();
         }
+
         UpdateLocationEndContact();
     }
 
@@ -97,11 +99,16 @@ public class WagoClip : Clips {
             }
         }
     }
+    #endregion
 
     public void UpdateLocationEndContact() {
         for (int i = 0; i < WagoContacts.Count; i++) {
             WagoContact iWagoContact = WagoContacts[i];
             iWagoContact.ContactPositionChanged?.Invoke();
+        }
+
+        foreach (var iView in ElectricFieldMovingViews) {
+            iView.UpdatePoints();
         }
     }
 
@@ -116,5 +123,13 @@ public class WagoClip : Clips {
         Debug.Log("DeleteClip");
         ParentSwitchBox.RemoveWagoClipFromList(this);
         Destroy(gameObject);
+    }
+
+    public void SetElectricFieldSettings(ElectricFieldSettings settings) {
+        foreach (var iField in ElectricFieldMovingViews) {
+            iField.SetMaterial(Instantiate(settings.Material));
+            iField.SetColor(settings.Color);
+            //iField.SwichDirection();
+        }
     }
 }

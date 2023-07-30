@@ -1,19 +1,23 @@
 using EPOOutline;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class ObjectView : MonoBehaviour {
-    public SelectableObject Object;
+    public SelectableObject Object => _object;
+    public Contact Contact => _contact;
 
+    [SerializeField] private Contact _contact;
+    public Transform[] PathElements;
+    public LineRenderer LineRenderer;
+    
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private Color _defaultColor;
     [SerializeField] private Material _defaultMaterial;
-    public Transform[] PathElements;
-    public LineRenderer LineRenderer;
+
+    private SelectableObject _object;
 
     [Header("Outline")]
     [SerializeField] private Outlinable _outlinable;
@@ -27,7 +31,7 @@ public class ObjectView : MonoBehaviour {
 
     // Инициализация элемента в момент создания
     public void Initialization(SelectableObject selectableObject) {
-        Object = selectableObject;
+        _object = selectableObject;
         _defaultMaterial = Instantiate(_defaultMaterial);
         //_defaultMaterial.SetColor("_BaseColor", _defaultColor);
 
@@ -35,13 +39,13 @@ public class ObjectView : MonoBehaviour {
         _material.Add(_defaultMaterial);
         LineRenderer.materials = _material.ToArray();
 
-        if (!_outlinable) _outlinable = Object.gameObject.transform.GetComponent<Outlinable>();
+        if (!_outlinable) _outlinable = _object.gameObject.transform.GetComponent<Outlinable>();
         _hoverColor = _outlinable.FrontParameters.Color;
 
         UpdatePoints();
 
-        if (Object is PolyWire) {
-            Wire wire = Object.GetComponent<Wire>();
+        if (_object is PolyWire) {
+            Wire wire = _object.GetComponent<Wire>();
             PathChanged += wire.GenerateMeshCollider;
             if (PathElements.Length > 0) {
                 foreach (Transform iPoint in PathElements) {
@@ -49,8 +53,8 @@ public class ObjectView : MonoBehaviour {
                     iWirePoint.Initialize(wire);
                 }
             }
-        } else if (Object is BezierWire) {
-            BezierWire wire = Object.GetComponent<BezierWire>();
+        } else if (_object is BezierWire) {
+            BezierWire wire = _object.GetComponent<BezierWire>();
             PathChanged += wire.GenerateMeshCollider;
             if (wire.BezierPointCreator.BezierPoints.Count() > 0) {
                 foreach (Transform iPoint in wire.BezierPointCreator.BezierPoints) {
@@ -60,7 +64,8 @@ public class ObjectView : MonoBehaviour {
             }
         }
     }
-
+    
+    #region Managment
     public void OnHover(bool isSelected) {
         if (!isSelected) {
             _outlinable.enabled = true;
@@ -83,7 +88,11 @@ public class ObjectView : MonoBehaviour {
     }
 
     public void ShowName() {
-        _nameText.text += " " + Object.Name;
+        if (_object != null) {
+            _nameText.text += " " + _object.Name;
+        } else {
+            Debug.LogError("ShowName: Object не установлен" );
+        }
     }
 
     public void Select() {
@@ -91,11 +100,12 @@ public class ObjectView : MonoBehaviour {
     }
 
     public void Unselect() {
-        if (Object != null) {
+        if (_object != null) {
             _outlinable.enabled = false;
             _outlinable.OutlineParameters.Color = _hoverColor;
         }
     }
+    #endregion
 
     [ContextMenu("SetColor")]
     public void SetColor(Color newColor) {
@@ -111,8 +121,8 @@ public class ObjectView : MonoBehaviour {
 
     [ContextMenu("UpdatePoints")]
     public void UpdatePoints() {
-        if (Object is BezierWire) {
-            BezierWire wire = Object.GetComponent<BezierWire>();
+        if (_object is BezierWire) {
+            BezierWire wire = _object.GetComponent<BezierWire>();
             wire.BezierPointCreator.SetWirePoints(wire.StartContact.transform, wire.EndContact.transform);
             wire.BezierPointCreator.UpdatePointsPosition();
             PathElements = (Transform[])wire.BezierPointCreator.Points;
@@ -137,8 +147,8 @@ public class ObjectView : MonoBehaviour {
     }
 
     private void OnDisable() {
-        if (Object is Wire) {
-            Wire wire = Object.GetComponent<Wire>();
+        if (_object is Wire) {
+            Wire wire = _object.GetComponent<Wire>();
             PathChanged -= wire.GenerateMeshCollider;
         }
     }

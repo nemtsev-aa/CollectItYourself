@@ -1,5 +1,4 @@
 using CustomEventBus;
-using System.Collections;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
@@ -17,22 +16,22 @@ public enum DataSource {
 public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
     [SerializeField] private DataSource _currentDataSource;
     [SerializeField] private GUIHolder _guiHolder;
-    [SerializeField] private TrainingModeController _trainingModeController; // Контроль состояния приложения
-    [SerializeField] private TaskController _taskController;                 // Менеджер заданий
-    [SerializeField] private TrainingModeProgressManager _trainingModeProgressManager;   // Прогресс в модуле "Тренировка"
-    [SerializeField] private Management _management;                         // Менеджер игрового процесса
-    [SerializeField] private SwitchBoxManager _switchBoxManager;             // Менеджер Распределительных коробок
-    [SerializeField] private GoldController _goldController;                 // Менеджер золота
-    [SerializeField] private WagoCreator _wagoCreator;                       // Генератор Wago-зажимов
-    [SerializeField] private WireCreator _wireCreator;                       // Генератор проводов
-    [SerializeField] private Pointer _pointer;                               // Указатель
-    [SerializeField] private Stopwatch _stopwatch;                           // Секундомер
-    [SerializeField] private TrainingProgressView _progressView;             // Виджет прогресса
-    [SerializeField] private GoldCountView _goldView;                        // Виджет золота
+    [SerializeField] private TrainingModeController _trainingModeController;                // Менеджер состояния приложения в режиме "Тренировка"
+    [SerializeField] private TaskController _taskController;                                // Менеджер заданий
+    [SerializeField] private TrainingModeProgressManager _trainingModeProgressManager;      // Прогресс в модуле "Тренировка"
+    [SerializeField] private Management _management;                                        // Менеджер игрового процесса
+    [SerializeField] private SwitchBoxesManager _switchBoxesManager;                            // Менеджер Распределительных коробок
+    [SerializeField] private GoldController _goldController;                                // Менеджер золота
+    [SerializeField] private WagoCreator _wagoCreator;                                      // Генератор Wago-зажимов
+    [SerializeField] private WireCreator _wireCreator;                                      // Генератор проводов
+    [SerializeField] private Pointer _pointer;                                              // Указатель
+    [SerializeField] private Stopwatch _stopwatch;                                          // Секундомер
+    [SerializeField] private TrainingProgressView _progressView;                            // Виджет прогресса
+    [SerializeField] private GoldCountView _goldView;                                       // Виджет золота
     [SerializeField] private ScriptableObjectTaskLoader _scriptableObjectTaskLoader;
     
-    private ITaskLoader _taskLoader;                                         // Загрузчик заданий из различных источников
-    private List<IDisposable> _disposables = new List<IDisposable>();        // Интерфейс для отписки от сигнальной шины
+    private ITaskLoader _taskLoader;                                                        // Загрузчик заданий из различных источников
+    private List<IDisposable> _disposables = new List<IDisposable>();                       // Интерфейс для отписки от сигнальной шины
     private ConfigDataLoader _configDataLoader;
     private EventBus _eventBus;
 
@@ -72,7 +71,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         ServiceLocator.Current.Register(_taskController);
         ServiceLocator.Current.Register(_taskLoader);
         ServiceLocator.Current.Register(_management);
-        ServiceLocator.Current.Register(_switchBoxManager);
+        ServiceLocator.Current.Register(_switchBoxesManager);
         ServiceLocator.Current.Register(_goldController);
         ServiceLocator.Current.Register(_progressView);
         ServiceLocator.Current.Register(_goldView);
@@ -89,6 +88,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _trainingModeController.Init();
         _taskController.Init();
         _trainingModeProgressManager.Init();
+        _stopwatch.Init(_eventBus);
 
         var loaders = new List<ILoader> {
             _taskLoader
@@ -103,8 +103,13 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
 
     private void AddDisposables() {
         _disposables.Add(_taskController);
-
-
+        _disposables.Add(_trainingModeProgressManager);
+        _disposables.Add(_trainingModeController);
+        _disposables.Add(_switchBoxesManager);
+        _disposables.Add(_goldController);
+        _disposables.Add(_progressView);
+        _disposables.Add(_pointer);
+        _disposables.Add(_stopwatch);
     }
 
     private void OnDestroy() {

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PrincipalSchemaView : MonoBehaviour {
+public class PrincipalSchemaView : MonoBehaviour, IDisposable {
     public TimeView TimeView => _timeView;
 
     [Tooltip("Надпись - название задания")]
@@ -19,8 +19,8 @@ public class PrincipalSchemaView : MonoBehaviour {
 
     public void Init(Stopwatch stopwatch, EventBus eventBus) {
         _eventBus = eventBus;
-        _timeView.Init(stopwatch);
         _eventBus.Subscribe<ActiveSwitchBoxChangedSignal>(UpdateView);
+        _timeView.Init(stopwatch);
     }
 
     public void Show(string name, Sprite sprite) {
@@ -44,5 +44,12 @@ public class PrincipalSchemaView : MonoBehaviour {
         }
 
         Show(currentSwitchBoxName, principalSchema);
+    }
+
+    public void Dispose() {
+        _name.text = "";
+        _image.sprite = null;
+        _timeView = null;
+        _eventBus.Unsubscribe<ActiveSwitchBoxChangedSignal>(UpdateView);
     }
 }

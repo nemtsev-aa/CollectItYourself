@@ -44,6 +44,7 @@ public class GeneralSwitchingResult : ScriptableObject {
                                                         List<SingleSwitchingResult> singleSwichingResults,
                                                         string errorsCountText, float switchingTimesValue,
                                                         List<ConnectionData> errorsList) {
+        
         GeneralSwitchingResult instance = CreateInstance<GeneralSwitchingResult>();
         instance.CurrentDate = currentDate;
         instance.TaskData = taskData;

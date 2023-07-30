@@ -30,7 +30,9 @@ public class TrainingModeController : IService, IDisposable {
     private TrainingSwitchingDialog _trainingSwitchingDialog;
     private CorrectSwitchingResultDialog _correctSwitchingDialog;
     private IncorrectSwitchingResultDialog _incorrectSwitchingDialog;
-    private TaskConnectorsManager _taskConnectorsManager;
+    
+    private SwitchBoxesManager _switchBoxesManager;
+    private Stopwatch _stopwatch;
     private EventBus _eventBus;
     private TaskController _taskController;
     private TaskData _currentTaskData;
@@ -38,6 +40,8 @@ public class TrainingModeController : IService, IDisposable {
     public void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
         _taskController = ServiceLocator.Current.Get<TaskController>();
+        _switchBoxesManager = ServiceLocator.Current.Get<SwitchBoxesManager>();
+        _stopwatch = ServiceLocator.Current.Get<Stopwatch>();
 
         _eventBus.Subscribe<TaskListCreatedSignal>(TaskListReceived);            // Список заданий получен
         _eventBus.Subscribe<TaskSelectSignal>(TaskSelect);                       // Задание выбрано
@@ -46,7 +50,6 @@ public class TrainingModeController : IService, IDisposable {
         _eventBus.Subscribe<TaskFinishedSignal>(TaskFinished);                   // Задание завершено
         _eventBus.Subscribe<TaskPauseSignal>(TaskPause);                         // Пауза в сборке
         _eventBus.Subscribe<TaskResumeSignal>(TaskResumeSwitching);              // Продолжение сборки
-
     }
     
     public void SetTrainingModeStatus(TrainingModeStatus status) {
@@ -95,13 +98,15 @@ public class TrainingModeController : IService, IDisposable {
     /// <param name="signal"></param>
     public void TaskListReceived(TaskListCreatedSignal signal) {
         _currentStatus = TrainingModeStatus.TaskListReceived;
-
+        if (_trainingSwitchingDialog != null) {
+            ResetSwitchingZone();
+        }
+        
         _selectTrainingTaskDialog = DialogManager.ShowDialog<SelectTrainingTaskDialog>();
-        _taskConnectorsManager = _selectTrainingTaskDialog.TaskConnectorsManager;
         _selectTrainingTaskDialog.Init();
 
-        _taskController.CreateTaskMap(_selectTrainingTaskDialog, _taskConnectorsManager);
-        _taskController.CreateConnects();
+        _taskController.CreateTaskMap(_selectTrainingTaskDialog);
+        _taskController.CreateConnects(_selectTrainingTaskDialog.TaskConnectorsManager);
     }
 
     /// <summary>
@@ -110,14 +115,13 @@ public class TrainingModeController : IService, IDisposable {
     /// <param name="signal"></param>
     private void TaskSelect(TaskSelectSignal signal) {
         _currentTaskData = signal.TaskData;
-        //_taskController.
         CountdownDialog countdownDialog = DialogManager.ShowDialog<CountdownDialog>();
         countdownDialog.Init();
         countdownDialog.OnCountdownFinish += TaskStarted;
     }
-   
+
     /// <summary>
-    /// Задание запускается, но будет остановлено при отмене
+    /// Запуск задания, который может быть отменён
     /// </summary>
     /// <param name="status"></param>
     private void TaskStarted(bool status) {
@@ -133,35 +137,34 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="selectionTask"></param>
     public void ShowTask() {
-        if (_selectTrainingTaskDialog != null) _selectTrainingTaskDialog.Hide();
+        ResetSwitchingZone();
 
         Debug.Log("ShowTask" + _currentTaskData.ID.ToString());
         _eventBus.Invoke(new TaskStartedSignal(_currentTaskData));
 
         _trainingSwitchingDialog = DialogManager.ShowDialog<TrainingSwitchingDialog>();
-        SwitchBoxManager switchBoxManager = ServiceLocator.Current.Get<SwitchBoxManager>();
-        switchBoxManager.Init(_currentTaskData, _eventBus);
-        switchBoxManager.SetSwitchBoxsSelectorView(_trainingSwitchingDialog.SwitchBoxsSelectorView);
-        _trainingSwitchingDialog.SwitchBoxsSelectorView.Init(switchBoxManager);
+        
+        _switchBoxesManager.Init(_currentTaskData, _eventBus);
+        _switchBoxesManager.SetSwitchBoxsSelectorView(_trainingSwitchingDialog.SwitchBoxsSelectorView);
+        _trainingSwitchingDialog.SwitchBoxsSelectorView.Init(_switchBoxesManager);
 
-        Stopwatch stopwatch = ServiceLocator.Current.Get<Stopwatch>();
-        stopwatch.Init(_trainingSwitchingDialog.PrincipalSchemaView.TimeView, _eventBus);
+        _stopwatch.SetTimeView(_trainingSwitchingDialog.PrincipalSchemaView.TimeView);
 
         Pointer pointer = ServiceLocator.Current.Get<Pointer>();
         pointer.Init(_eventBus);
         pointer.SetStatus(true);
 
         WagoCreator wagoCreator = ServiceLocator.Current.Get<WagoCreator>();
-        wagoCreator.Init(switchBoxManager, pointer);
+        wagoCreator.Init(_switchBoxesManager, pointer);
         
         Management management = ServiceLocator.Current.Get<Management>();
         management.Init();
-        ServiceLocator.Current.Get<WireCreator>().Init(management);
+        ServiceLocator.Current.Get<WireCreator>().Init(management, _switchBoxesManager, pointer);
 
-        _trainingSwitchingDialog.Init(switchBoxManager, stopwatch, wagoCreator, _eventBus);
+        _trainingSwitchingDialog.Init(_switchBoxesManager, _stopwatch, wagoCreator, _eventBus);
         
-        switchBoxManager.CreateSwitchBoxs();
-        stopwatch.SetStatus(true);
+        _switchBoxesManager.CreateSwitchBoxs();
+        _stopwatch.SetStatus(true);
     }
     
     /// <summary>
@@ -171,7 +174,7 @@ public class TrainingModeController : IService, IDisposable {
     public void TaskChecking(TaskCheckingStartSignal signal) {
         TaskStop();
 
-        GeneralSwitchingResult newResult = ServiceLocator.Current.Get<SwitchBoxManager>().CheckSwichBoxes();
+        GeneralSwitchingResult newResult = _switchBoxesManager.CheckSwichBoxes();
         if (newResult != null) {
             if (_currentTaskData.TaskStatistics.AddAttempt(newResult)) {
                 Debug.Log("Результат добавлен в статистику задания!");
@@ -202,9 +205,6 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void TaskFinished(TaskFinishedSignal signal) {
-        if (_trainingSwitchingDialog != null) {
-            _trainingSwitchingDialog.Hide();
-        }
         if (signal.GeneralSwitchingResult.CheckStatus) {
             // Показываем окошко о победе
             _correctSwitchingDialog = DialogManager.ShowDialog<CorrectSwitchingResultDialog>();
@@ -226,8 +226,21 @@ public class TrainingModeController : IService, IDisposable {
         _eventBus.Invoke(new TrainingModeStopSignal());
     }
 
-    public void ClearTask(TaskData hideTask) {
-        //SwitchBoxManager.RemoveSwichBoxFromList(SwitchBoxManager.ActiveSwichBox);
+    /// <summary>
+    /// Перезагрузка зоны сборки
+    /// </summary>
+    /// <param name="signal"></param>
+    private void ResetSwitchingZone() {
+        if (_trainingSwitchingDialog != null) {
+            _trainingSwitchingDialog.Hide();
+        }
+        if (_selectTrainingTaskDialog != null) {
+            _taskController.Reset();
+            _selectTrainingTaskDialog.Hide();
+        }
+
+        _stopwatch.ResetTimer();
+        _switchBoxesManager.Reset();
     }
 
     /// <summary>
@@ -240,8 +253,7 @@ public class TrainingModeController : IService, IDisposable {
         // Скрываем РК
         _eventBus.Invoke(new TrainingModeStopSignal());
 
-        PauseDialog dialog = DialogManager.ShowDialog<PauseDialog>();                            // Отображаем окно "Пауза"
-        dialog.Init();
+        DialogManager.ShowDialog<PauseDialog>().Init();                            // Отображаем окно "Пауза"
     }
 
     /// <summary>
@@ -256,10 +268,12 @@ public class TrainingModeController : IService, IDisposable {
     }
 
     public void Dispose() {
-        _eventBus.Unsubscribe<TaskListCreatedSignal>(TaskListReceived);  // Список заданий получен
-        _eventBus.Unsubscribe<TaskSelectSignal>(TaskSelect);              // Задание выбрано
-        _eventBus.Unsubscribe<TaskFinishedSignal>(TaskFinished);          // Задание завершено
-        _eventBus.Unsubscribe<TaskPauseSignal>(TaskPause);                // Пауза в сборке
-        _eventBus.Unsubscribe<TaskResumeSignal>(TaskResumeSwitching);     // Продолжение сборки
+        _eventBus.Unsubscribe<TaskListCreatedSignal>(TaskListReceived);             // Список заданий получен
+        _eventBus.Unsubscribe<TaskSelectSignal>(TaskSelect);                        // Задание выбрано
+        _eventBus.Unsubscribe<TaskCheckingStartSignal>(TaskChecking);               // Запуск проверки
+        _eventBus.Unsubscribe<AnswerDemonstrationSignal>(AnswerDemonstration);      // Демонстрация результата
+        _eventBus.Unsubscribe<TaskFinishedSignal>(TaskFinished);                    // Задание завершено
+        _eventBus.Unsubscribe<TaskPauseSignal>(TaskPause);                          // Пауза в сборке
+        _eventBus.Unsubscribe<TaskResumeSignal>(TaskResumeSwitching);               // Продолжение сборки
     }
 }

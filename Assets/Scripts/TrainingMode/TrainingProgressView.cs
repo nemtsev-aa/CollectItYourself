@@ -1,6 +1,7 @@
+using CustomEventBus;
 using CustomEventBus.Signals;
 
-public class TrainingProgressView : ProgressView {
+public class TrainingProgressView : ProgressView, IDisposable {
 
     public override void Init() {
         base.Init();
@@ -16,5 +17,9 @@ public class TrainingProgressView : ProgressView {
 
     public override void ShowProgress(int currentValue, int maxValue) {
         base.ShowProgress(currentValue, maxValue);
+    }
+
+    public void Dispose() {
+        _eventBus.Unsubscribe<TrainingProgressChangedSignal>(ShowTrainingProgress);
     }
 }

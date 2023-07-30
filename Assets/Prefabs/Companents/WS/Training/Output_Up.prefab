@@ -1579,7 +1579,7 @@ GameObject:
   - component: {fileID: 2486841509512241274}
   - component: {fileID: 2486841509512241277}
   m_Layer: 0
-  m_Name: GroundConductor
+  m_Name: Contact_GroundConductor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1631,10 +1631,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841508395874009}
   Name: 
   Movable: 0
-  ContactType: 2
   Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   _renderer: {fileID: 2486841509779070453}
   ConnectionWire: {fileID: 0}
+  _contactType: 2
 --- !u!114 &2486841509512241277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,7 +1758,7 @@ GameObject:
   - component: {fileID: 2486841509855348254}
   - component: {fileID: 2486841509855348321}
   m_Layer: 0
-  m_Name: Line
+  m_Name: Contact_Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1810,10 +1810,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841510256598455}
   Name: 
   Movable: 0
-  ContactType: 0
   Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
   _renderer: {fileID: 2486841509295890577}
   ConnectionWire: {fileID: 0}
+  _contactType: 0
 --- !u!114 &2486841509855348321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2023,7 +2023,7 @@ GameObject:
   - component: {fileID: 2486841510249315993}
   - component: {fileID: 2486841510249315992}
   m_Layer: 0
-  m_Name: Neutral
+  m_Name: Contact_Neutral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2075,10 +2075,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841508604578575}
   Name: 
   Movable: 0
-  ContactType: 1
   Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   _renderer: {fileID: 2486841508957022817}
   ConnectionWire: {fileID: 0}
+  _contactType: 1
 --- !u!114 &2486841510249315992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2694,7 +2694,7 @@ GameObject:
   - component: {fileID: 6774197995210728576}
   - component: {fileID: 2174792930645737635}
   m_Layer: 0
-  m_Name: GroundConductor
+  m_Name: View_GroundConductor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2730,14 +2730,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2486841509407197961}
-  _nameText: {fileID: 2486841509930616731}
-  _defaultColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  _contact: {fileID: 2486841509512241274}
   PathElements:
   - {fileID: 1469720433543659106}
   - {fileID: 2112910929874913201}
   LineRenderer: {fileID: 6271422112618065757}
+  _nameText: {fileID: 2486841509930616731}
+  _defaultColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
   _outlinable: {fileID: 7318942264618858234}
   _selectColor: {r: 0, g: 0.9607843, b: 0.13333334, a: 1}
 --- !u!114 &2174792930645737635
@@ -2757,7 +2757,7 @@ MonoBehaviour:
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
-  CurrentDirection: 0
+  CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: 69a8b30ef6b387d459faea15422aeb12,
     type: 2}
@@ -3342,7 +3342,7 @@ GameObject:
   - component: {fileID: 7017049466243431363}
   - component: {fileID: 229664985866583347}
   m_Layer: 0
-  m_Name: Neutral
+  m_Name: View_Neutral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3378,14 +3378,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2486841509407197961}
-  _nameText: {fileID: 2486841508715461146}
-  _defaultColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  _contact: {fileID: 2486841510249315993}
   PathElements:
   - {fileID: 1169238288206723527}
   - {fileID: 5443518587900222645}
   LineRenderer: {fileID: 8532974467243189729}
+  _nameText: {fileID: 2486841508715461146}
+  _defaultColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
   _outlinable: {fileID: 7318942264618858234}
   _selectColor: {r: 0, g: 0.9607843, b: 0.13333334, a: 1}
 --- !u!114 &229664985866583347
@@ -3405,7 +3405,7 @@ MonoBehaviour:
   Status: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  CurrentDirection: 0
+  CurrentDirection: 1
   _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
@@ -3847,7 +3847,7 @@ GameObject:
   - component: {fileID: 6461426720533146289}
   - component: {fileID: 2547741305162747660}
   m_Layer: 0
-  m_Name: Line
+  m_Name: View_Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3883,14 +3883,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119f15bba215694db0c811af964cdec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 2486841509407197961}
-  _nameText: {fileID: 2486841508294416379}
-  _defaultColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  _defaultMaterial: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  _contact: {fileID: 2486841509855348254}
   PathElements:
   - {fileID: 8544140450011180770}
   - {fileID: 146580777126468384}
   LineRenderer: {fileID: 5633594281004649703}
+  _nameText: {fileID: 2486841508294416379}
+  _defaultColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
+  _defaultMaterial: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
   _outlinable: {fileID: 7318942264618858234}
   _selectColor: {r: 0, g: 0.9607843, b: 0.13333334, a: 1}
 --- !u!114 &2547741305162747660

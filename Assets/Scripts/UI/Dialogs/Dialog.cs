@@ -15,7 +15,7 @@ namespace UI {
             Destroy(gameObject);
         }
 
-        public void OnDestroy() {
+        public virtual void OnDestroy() {
             if (_outsideClickArea != null) {
                 _outsideClickArea.onClick.RemoveAllListeners();
             }
