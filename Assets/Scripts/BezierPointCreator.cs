@@ -22,14 +22,50 @@ public class BezierPointCreator : MonoBehaviour {
             _points[i] = newPoint;
         }
 
-        _points[0].position = _bezierPoints[0].position;
-        _points[_pointsCount-1].position = _bezierPoints[3].position;
+        Transform startPoint = _bezierPoints[0];
+        Transform endPoint = _bezierPoints[3];
+
+        float _distance = Vector3.Distance(startPoint.position, endPoint.position);
+
+        _bezierPoints[1].position = startPoint.position + startPoint.forward * (_distance / 2f);
+        _bezierPoints[2].position = endPoint.position + endPoint.forward * (_distance / 2f);
+
+        //Debug.Log($"{startPoint.position} | {endPoint.position} | {_distance}");
+        //if (startPoint.position.x < endPoint.position.x) {
+        //    if (startPoint.position.y < endPoint.position.y) {
+        //        Debug.Log("1");
+        //        _bezierPoints[1].position = startPoint.position + startPoint.right * (_distance / 2f);
+        //        _bezierPoints[2].position = endPoint.position - endPoint.forward * (_distance / 2f);
+        //    }
+        //    else if (startPoint.position.y > endPoint.position.y) {
+        //        Debug.Log("4");
+        //        _bezierPoints[1].position = startPoint.position + startPoint.right * (_distance / 2f);
+        //        _bezierPoints[2].position = endPoint.position + endPoint.forward * (_distance / 2f);
+        //    }
+        //}
+        //else if (startPoint.position.x > endPoint.position.x) {
+        //    if (startPoint.position.y > endPoint.position.y) {
+        //        Debug.Log("3");
+        //        _bezierPoints[1].position = startPoint.position + startPoint.right * (_distance / 2f);
+        //        _bezierPoints[2].position = endPoint.position + endPoint.forward * (_distance / 2f);
+        //    }
+        //    else if (startPoint.position.y < endPoint.position.y) {
+        //        Debug.Log("2");
+        //        _bezierPoints[1].position = startPoint.position + startPoint.forward * (_distance / 2f);
+        //        _bezierPoints[2].position = endPoint.position - endPoint.forward * (_distance / 2f);
+        //    }
+        //}
+
+        _points[0].position = startPoint.position;
+        _points[_pointsCount-1].position = endPoint.position;
 
     }
 
     public void SetWirePoints(Transform startPoint, Transform endPoint) {
         _bezierPoints[0].position = startPoint.position;
+        _bezierPoints[0].rotation = startPoint.rotation;
         _bezierPoints[3].position = endPoint.position;
+        _bezierPoints[3].rotation = endPoint.rotation;
     }
 
     public void UpdatePointsPosition() {

@@ -30,7 +30,7 @@ public class ObjectView : MonoBehaviour {
     private List<Material> _material = new List<Material>(); // Создаем новый массив материалов
 
     // Инициализация элемента в момент создания
-    public void Initialization(SelectableObject selectableObject) {
+    public void Init(SelectableObject selectableObject) {
         _object = selectableObject;
         _defaultMaterial = Instantiate(_defaultMaterial);
         //_defaultMaterial.SetColor("_BaseColor", _defaultColor);

@@ -25,7 +25,7 @@ MonoBehaviour:
     CompanentType: 4
     VersionExecution: 0
   - SlotNumber: 2
-    Name: Output
+    Name: Output3
     TaskMode: 0
     CompanentType: 1
     VersionExecution: 3
@@ -40,7 +40,7 @@ MonoBehaviour:
     CompanentType: 3
     VersionExecution: 1
   - SlotNumber: 5
-    Name: Input
+    Name: Input3
     TaskMode: 0
     CompanentType: 0
     VersionExecution: 2

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,18 +21,17 @@ public class Companent : SelectableObject {
 
     [Header("View")]
     [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private Animator _animator;
     public List<ObjectView> ObjectViews = new List<ObjectView>();
     public List<ElectricFieldMovingView> ElectricFieldMovingViews = new List<ElectricFieldMovingView>();
 
     // »нициализаци€ элемента в момент создани€
-    public void Initialization() {
+    public virtual void Init() {
         foreach (Contact iContact in Contacts) {
-            iContact.Initialize(this);
+            iContact.Init(this);
         }
         
         foreach (ObjectView objectView in ObjectViews) {
-            objectView.Initialization(this);
+            objectView.Init(this);
         }
 
         foreach (ElectricFieldMovingView electricView in ElectricFieldMovingViews) {
@@ -41,7 +41,7 @@ public class Companent : SelectableObject {
 
     public override void Start() {
         base.Start();
-        Initialization();
+        Init();
     }
 
     #region Managment
@@ -64,11 +64,6 @@ public class Companent : SelectableObject {
 
     public override void Select() {
         base.Select();
-        if (_animator) {
-            _animator.enabled = true;
-            _animator.SetTrigger("Show");
-            _animator.ResetTrigger("Hide");
-        }
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Select();
         }
@@ -81,13 +76,30 @@ public class Companent : SelectableObject {
         }
     }
 
+    /// <summary>
+    /// »зменени€, возникающие с объектом при правильном подключении (возникновение светового потока в лампе, активизаци€ индикатора)
+    /// </summary>
+    public virtual void Activate() {
+
+    }
+
+    /// <summary>
+    /// »зменени€, возникающие с объектом при неправильном подключении (отсутствие светового потока в лампе, деактивизаци€ индикатора)
+    /// </summary>
+    public virtual void Deactivate() {
+
+    }
+
+    /// <summary>
+    /// ”правл€ющее воздействие (переключение)
+    /// </summary>
+    public virtual void Action() {
+
+    }
+
     public override void Unselect() {
         base.Unselect();
-        if (_animator) {
-            _animator.ResetTrigger("Show");
-            _animator.SetTrigger("Hide");
-        }
-
+        
         foreach (ObjectView objectView in ObjectViews) {
             objectView.Unselect();
         }
@@ -117,8 +129,25 @@ public class Companent : SelectableObject {
         SwitchBox.RemoveCompanent(this);
     }
 
-    public void GetCompanentConnectedToContact(ConnectionData connectionData) {
-        //Companent companent = Contacts.FirstOrDefault(companent => companent.T == searchId);
+    //public void GetCompanentConnectedToContact(ConnectionData connectionData) {
+    //    //Companent companent = Contacts.FirstOrDefault(companent => companent.T == searchId);
+        
+    //}
+
+    public Contact GetContactByType(ContactType contactType) {
+        return Contacts.Find(x => x.ContactType == contactType);
+    }
+
+    public ElectricFieldMovingView GetElectricFieldMovingView(Contact contact) {
+        foreach (var iElectricFieldView in ElectricFieldMovingViews) {
+            if (iElectricFieldView.GetParentContact(contact.ContactType)) {
+                return iElectricFieldView;
+            }
+        }
+        return null;
+    }
+
+    public void ShowFirstCurrentFlowLine() {
         
     }
 }

@@ -1,13 +1,13 @@
 using CustomEventBus;
 using CustomEventBus.Signals;
 
-public class TrainingProgressView : ProgressView, IDisposable {
+public class TrainingProgressView : ProgressView {
 
     public override void Init() {
         base.Init();
         TrainingModeProgressManager progressManager = ServiceLocator.Current.Get<TrainingModeProgressManager>();
         ShowProgress(progressManager.CurrentExpValue, progressManager.FullExpAmount);
-        
+
         _eventBus.Subscribe<TrainingProgressChangedSignal>(ShowTrainingProgress);
     }
 
@@ -19,7 +19,7 @@ public class TrainingProgressView : ProgressView, IDisposable {
         base.ShowProgress(currentValue, maxValue);
     }
 
-    public void Dispose() {
+    private void OnDisable() {
         _eventBus.Unsubscribe<TrainingProgressChangedSignal>(ShowTrainingProgress);
     }
 }

@@ -15,6 +15,7 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
     
     private List<SwitchBox> _switchBoxes = new List<SwitchBox>();
     private SwitchBoxsSelectorView _switchBoxsSelectorView;
+    private SwitchingProgress _switchingProgress;
     private SwitchBox _activeSwichBox;
     private TaskData _taskData;
     private EventBus _eventBus;
@@ -22,7 +23,7 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
     public void Init(TaskData taskData, EventBus eventBus) {
         _taskData = taskData;
         _eventBus = eventBus;
-        _eventBus.Subscribe((TrainingModeStopSignal signal) => HideSwitchBoxs());
+        //_eventBus.Subscribe((TrainingModeStopSignal signal) => HideSwitchBoxs());
         _eventBus.Subscribe((TrainingModeStartSignal signal) => ShowSwitchBoxs());
     }
 
@@ -33,7 +34,14 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
     public void SetSwitchBoxsSelectorView(SwitchBoxsSelectorView switchBoxsSelectorView) {
         _switchBoxsSelectorView = switchBoxsSelectorView;
     }
-
+    /// <summary>
+    /// Установка менеджера прогресса сборки
+    /// </summary>
+    /// <param name="switchingProgress"></param>
+    public void SetSwitchBoxProgress(SwitchingProgress switchingProgress) {
+        _switchingProgress = switchingProgress;
+        _switchingProgress.Init(this, _eventBus);
+    }
     /// <summary>
     /// Активация распределительной коробки
     /// </summary>
@@ -125,6 +133,9 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
                 Debug.LogError("Префаб не найден!");
             }
         }
+
+        newSwitchBox.OnConnectionsCountChanged += _switchingProgress.ProgressChanged;
+
         return newSwitchBox;
     }
 
@@ -154,7 +165,7 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
     public GeneralSwitchingResult CheckSwichBoxes() {
         int errorsCount = 0;
         GeneralSwitchingResult generalResult;
-        string currentDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+        DateTime currentDate = DateTime.Now;
         string resultTaskName = _taskData.ID;
         bool resultCheckStatus;
         int resultSwitchBoxNumber;
@@ -173,7 +184,7 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
                     resultErrorList.AddRange(singleSwitchingResult.ErrorList);
 
                     errorsCount += singleSwitchingResult.ErrorList.Count;
-                    resultSwitchingTimeValue += singleSwitchingResult.SwitchingTimeValue;
+                    resultSwitchingTimeValue += singleSwitchingResult.BuldingTime;
                 } else {
                     Debug.Log("Ошибка в процедуре проверки РК: " + iSwichBox.SwitchBoxData.PartNumber);
                     return null;
@@ -195,6 +206,7 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
             }
 
             generalResult = GeneralSwitchingResult.CreateInstance(currentDate, _taskData, resultCheckStatus, resultSwitchBoxNumber, singleSwitchingResultList, resultErrorCountText, resultSwitchingTimeValue, resultErrorList);
+                        
             return generalResult;
         }
         return null;
@@ -233,7 +245,9 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
     /// </summary>
     /// <param name="status"></param>
     public void ShowCurrent(bool status) {
-        _activeSwichBox.ShowCurrent(status);
+        foreach (var item in _switchBoxes) {
+            item.StartCurrent();
+        } 
     }
 
     /// <summary>
@@ -272,6 +286,17 @@ public class SwitchBoxesManager : MonoBehaviour, IService, CustomEventBus.IDispo
             _activeSwichBox = null;
             _taskData = null;
         }
+    }
+
+    /// <summary>
+    /// Поиск компанента по названию
+    /// </summary>
+    public Companent GetCompanentByName(string name) {
+        foreach (var iSB in _switchBoxes) {
+            Companent companent = iSB.Companents.Find(x => x.Name == name);
+            return companent;
+        }
+        return null;
     }
 
     public void Dispose() {

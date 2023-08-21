@@ -35,7 +35,7 @@ MonoBehaviour:
     CompanentType: 3
     VersionExecution: 1
   - SlotNumber: 4
-    Name: Input
+    Name: Input4
     TaskMode: 0
     CompanentType: 0
     VersionExecution: 2

@@ -34,7 +34,7 @@ public class TaskVariantCard : MonoBehaviour {
         _taskNameText.text = $"Задание {taskNumber}";
         _defaultColor = _headerBackground.color;
 
-        TaskStatusChenged();
+        TaskStatusChanged();
 
         _clickerButton.onClick.AddListener(ShowTaskDescription);
     }
@@ -44,22 +44,22 @@ public class TaskVariantCard : MonoBehaviour {
         if (_taskData.TaskStatus == TaskStatus.Lock) {
             _taskUnlocked = DialogManager.ShowDialog<TaskUnlockedDialog>();
             _taskUnlocked.TaskUnlockedView.Init(_taskUnlocked, _taskData);
-            _taskUnlocked.OnTaskUnlocked += TaskStatusChenged;
+            _taskUnlocked.OnTaskUnlocked += TaskStatusChanged;
         } else {
             TaskDescriptionDialog taskDescription = DialogManager.ShowDialog<TaskDescriptionDialog>();
             taskDescription.TrainingTaskDescriptionView.Init(taskDescription, _taskData);
         }
     }
 
-    private void TaskStatusChenged() {
-        if (_taskData.TaskStatistics.Attempts.Count() > 0) {
-            foreach (GeneralSwitchingResult iAttempt in _taskData.TaskStatistics.Attempts) {
-                if (iAttempt.CheckStatus == true) {
-                    _taskData.SetStatus(TaskStatus.Complite);
-                    continue;
-                }
-            }
-        }
+    private void TaskStatusChanged() {
+        //if (_taskData.TaskStatistics.Attempts.Count() > 0) {
+        //    foreach (AttemptInfo iAttempt in _taskData.TaskStatistics.Attempts) {
+        //        if (iAttempt.CheckResult) {
+        //            _taskData.SetStatus(TaskStatus.Complite);
+        //            continue;
+        //        }
+        //    }
+        //}
 
         if (_taskData.TaskStatus == TaskStatus.Lock) {
             _lockStatus.SetStatus(TaskStatus.Lock);
@@ -86,7 +86,7 @@ public class TaskVariantCard : MonoBehaviour {
 
     private void OnDisable() {
         if (_taskUnlocked) {
-           _taskUnlocked.OnTaskUnlocked -= TaskStatusChenged;
+           _taskUnlocked.OnTaskUnlocked -= TaskStatusChanged;
         }
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Connections:
   - CompanentType: 0
-    CompanentName: Input
+    CompanentName: Input3
     ContactType: 2
   - CompanentType: 3
     CompanentName: EL3
@@ -23,5 +23,5 @@ MonoBehaviour:
     CompanentName: EL4
     ContactType: 2
   - CompanentType: 1
-    CompanentName: Output
+    CompanentName: Output3
     ContactType: 2

@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 263875964731696700}
-  _icon: {fileID: 754107872706165367}
+  Status: 0
   _outline: {fileID: 3170532701351323557}
 --- !u!1 &821914802013236275
 GameObject:
@@ -1943,11 +1943,11 @@ RectTransform:
   m_Father: {fileID: 7577626883721053122}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -90.6, y: -15}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 40.9, y: -15.4}
+  m_SizeDelta: {x: 130.8724, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7577626883375743307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4579,7 +4579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 1320286887421616241}
-  _icon: {fileID: 6451474962138039446}
+  Status: 0
   _outline: {fileID: 4263845479091110840}
 --- !u!1 &9057611127685515910
 GameObject:

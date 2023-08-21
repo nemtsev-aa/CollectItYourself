@@ -1,15 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum CreateType {
     DragDrop,
     DoubleClick,
     OneClick
-}
-
-public struct ElectricFieldSettings {
-    public Material Material;
-    public Color Color;
-    public DirectionType DirectionType;
 }
 
 public class WireCreator : MonoBehaviour, IService {
@@ -151,52 +146,51 @@ public class WireCreator : MonoBehaviour, IService {
         newWire.SwitchBox = activeSwichBox;
         newWire.transform.parent = activeSwichBox.WiresTransform.transform;
         newWire.GetComponent<SelectableObject>().Name = (activeSwichBox.Wires.Count + 1).ToString();
-        newWire.ObjectView.Initialization(newWire);
+        newWire.ObjectView.Init(newWire);
         newWire.ObjectView.ShowName();
         newWire.ObjectView.SetColor(StartContact.Material.color);
-
-        ElectricFieldSettings settings = StartContact.GetElectricFieldSettings(StartContact);
-        if (settings.Color != null) {
-            if (newWire.ElectricFieldMovingView != null) {
-                // Настраиваем внешний вид электрическго поля на проводе
-                newWire.SetElectricFieldSettings(settings);
-                Companent startCompanent = StartContact.GetParentCompanent();
-                if (startCompanent.Type == CompanentType.Input || startCompanent.Type == CompanentType.Selector) {
-                    // Настраиваем внешний вид электрическго поля на Wago-зажиме
-                    EndContact.ParentWagoClip.SetElectricFieldSettings(settings);
-                } else if (startCompanent.Type == CompanentType.Output) {
-                    // Настраиваем внешний вид электрическго поля на проводе
-                    newWire.ElectricFieldMovingView.ShowCurrentFlow(settings.Material.GetFloat("_Speed") * (-1));
-                }
-            } else {
-                Debug.Log($"{newWire.Name} ElectricFieldMovingView не найден!");
-            }
-        } else {
-            Debug.Log("WireCreator: CreateWire ошибка при получении настроек електрического поля");
-        }
-        
         newWire.ObjectView.LineRenderer.numCapVertices = 50;
-        
 
         StartContact.ConnectionWire = newWire;
         EndContact.ConnectionWire = newWire;
         EndContact.ConnectedContact = StartContact;
-        EndContact.Material = StartContact.Material;
+        EndContact.SetMaterial(StartContact.Material);
         EndContact.SetMaterial();
         EndContact.AddNewConnectToList();
-
-
-
         EndContact.Unselect();
+
         activeSwichBox.RemoveWagoContactFromFreeList(EndContact);
-
         activeSwichBox.AddNewLineFromList(newWire);
+
         newWire.GenerateMeshCollider();
         newWire.GenerateMeshCollider();
 
-        //StartContact = null;
-        //EndContact = null;
-        //_lineRender.enabled = false;
+        ElectricFieldSettings settings = StartContact.GetElectricFieldSettings();
+        if (settings.ElectricFieldMaterial != null) {
+            if (newWire.ElectricFieldMovingView != null) {
+                newWire.SetElectricFieldSettings(settings);                     // Настраиваем внешний вид электрическго поля на проводе
+
+                EndContact.ParentWagoClip.SetElectricFieldSettings(settings);   // Настраиваем внешний вид электрического поля на Wago-зажиме
+                if (StartContact.GetParentCompanent().Type == CompanentType.Input) {
+                    EndContact.ParentWagoClip.GetElectricFieldMovingView(EndContact).SwichDirection();
+                    EndContact.ParentWagoClip.GetCommomBusElectricFieldMovingView().SwichDirection();
+                }
+                else if (StartContact.GetParentCompanent().Type == CompanentType.Selector) {
+                    EndContact.ParentWagoClip.GetElectricFieldMovingView(EndContact).SwichDirection();
+                    EndContact.ParentWagoClip.GetCommomBusElectricFieldMovingView().SwichDirection();
+                    newWire.ElectricFieldMovingView.SwichDirection();
+                }
+                //else {
+                //    EndContact.SetElectricFieldMovingDirection(StartContact);
+                //}
+            }
+            else {
+                Debug.Log($"{newWire.Name} ElectricFieldMovingView не найден!");
+            }
+        }
+        else {
+            Debug.Log("WireCreator: CreateWire ошибка при получении настроек електрического поля");
+        }
     }
 
     private void CreateStraightWire(Wire newWire) {

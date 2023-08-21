@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6e15ee651c1abfd4dbe7bf1b71551f6f, type: 3}
   _switchBoxsData:
   - {fileID: 11400000, guid: 8f42674ddc076e2429cf81e59d2344a7, type: 2}
-  _answer:
+  _answers:
   - {fileID: 11400000, guid: 4394238a02cc24b4b9be8ca9f30df548, type: 2}
   _nextTaskData:
   - {fileID: 11400000, guid: bb1c934684075504a9ee63751ea85508, type: 2}

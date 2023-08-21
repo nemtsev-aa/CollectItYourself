@@ -46,15 +46,15 @@ MonoBehaviour:
   - _taskMode: 0
     _companentType: 3
     _versionExecution: 1
-    _prefab: {fileID: 1975740097159279651, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
+    _prefab: {fileID: 7226265653733360930, guid: 5d23f40ebcd1d1a48b70dc5381ebb896,
       type: 3}
   - _taskMode: 0
     _companentType: 4
     _versionExecution: 0
-    _prefab: {fileID: 3583119106728645194, guid: d08a5a97dad57614db8b378cf01fc72c,
+    _prefab: {fileID: 1815400679700990800, guid: d08a5a97dad57614db8b378cf01fc72c,
       type: 3}
   - _taskMode: 0
     _companentType: 5
     _versionExecution: 3
-    _prefab: {fileID: 3075138961321192293, guid: 9563250a41aa999469294fb99117f5aa,
+    _prefab: {fileID: 6631750693824312989, guid: 9563250a41aa999469294fb99117f5aa,
       type: 3}

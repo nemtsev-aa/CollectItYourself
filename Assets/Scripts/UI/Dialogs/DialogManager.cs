@@ -18,6 +18,7 @@ public class DialogManager {
 
             {typeof(CountdownDialog), "CountdownDialog"},
             {typeof(TrainingSwitchingDialog),"TrainingSwitchingDialog"},
+            {typeof(TrainingDemonstrationDialog), "TrainingDemonstrationDialog"},
             {typeof(CorrectSwitchingResultDialog),"CorrectSwitchingResultDialog"},
             {typeof(IncorrectSwitchingResultDialog),"IncorrectSwitchingResultDialog"},
             {typeof(LoadingDialog),"LoadingDialog"},

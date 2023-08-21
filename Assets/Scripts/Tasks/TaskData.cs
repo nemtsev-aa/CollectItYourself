@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 public enum TaskStatus {
     Lock,
@@ -25,82 +24,70 @@ public class TaskData : ScriptableObject {
     /// <summary>
     /// Уникальный ID задания
     /// </summary>
-    [XmlElement("ID")]
-    [SerializeField] private string _id;
+    public string ID => _id;
     /// <summary>
-    /// Уникальный ID задания
+    /// Статус задания
     /// </summary>
-    [XmlElement("TaskStatus")]
-    [SerializeField] private TaskStatus _status;
+    public TaskStatus TaskStatus => _status;
     /// <summary>
     /// Количество очков за выполнение
     /// </summary>
-    [XmlElement("ExpValue")]
-    [SerializeField] private int _expValue;
+    public int ExpValue => _expValue;
     /// <summary>
     /// Количество монет за выполнение
     /// </summary>
-    [XmlElement("CoinsCount")]
-    [SerializeField] private int _coinsCount;
+    public int CoinsCount => _coinsCount;
     /// <summary>
     /// Модификация задания
     /// </summary>
-    [XmlElement("TaskMode")]
-    [SerializeField] private TaskMode _mode;
+    public TaskMode Mode => _mode;
     /// <summary>
     /// Тип задания
     /// </summary>
-    [XmlElement("TaskType")]
-    [SerializeField] private TaskType _type;
+    public TaskType Type => _type;
     /// <summary>
     /// Вариант задания
     /// </summary>
-    [XmlElement("TaskVariant")]
-    [SerializeField] private int _variant;
+    public int Variant => _variant;
     /// <summary>
     /// Принципиальная схема
     /// </summary>
-    [XmlElement("WiringShema")]
-    [SerializeField] private Sprite _wiringShema;
+    public Sprite WiringShema => _wiringShema;
     /// <summary>
     /// Принципиальная схема
     /// </summary>
-    [XmlElement("PrincipalShema")]
-    [SerializeField] private List<Sprite> _principalShema;
+    public List<Sprite> PrincipalShemas => _principalShema;
     /// <summary>
     /// Комплектация распределительной коробки
     /// </summary>
-    [XmlElement("SwitchBoxsData")]
-    [SerializeField] private List<SwitchBoxData> _switchBoxsData;
+    public List<SwitchBoxData> SwitchBoxsData => _switchBoxsData;
     /// <summary>
     /// Верное подключение компанентов
     /// </summary>
-    [XmlElement("Answer")]
-    [SerializeField] private List<Answer> _answer;
+    public List<Answer> Answers => _answers;
     /// <summary>
     /// Верное подключение компанентов
     /// </summary>
-    [XmlElement("NextTask")]
-    [SerializeField] private List<TaskData> _nextTaskData;
+    public List<TaskData> NextTaskData => _nextTaskData;
     /// <summary>
     /// Статистика задания
     /// </summary>
-    [XmlElement("TaskStatistics")]
-    [SerializeField] private TaskStatistics _taskStatistics;
-
-    public string ID => _id;
-    public TaskStatus TaskStatus => _status;
-    public int ExpValue => _expValue;
-    public int CoinsCount => _coinsCount;
-    public TaskMode Mode => _mode;
-    public TaskType Type => _type;
-    public int Variant => _variant;
-    public Sprite WiringShema => _wiringShema;
-    public List<Sprite> PrincipalShemas => _principalShema;
-    public List<SwitchBoxData> SwitchBoxsData => _switchBoxsData;
-    public List<Answer> Answers => _answer;
-    public List<TaskData> NextTaskData => _nextTaskData;
     public TaskStatistics TaskStatistics => _taskStatistics;
+
+    
+    [SerializeField] private string _id;
+    [SerializeField] private TaskStatus _status;
+    [SerializeField] private int _expValue;
+    [SerializeField] private int _coinsCount;
+    [SerializeField] private TaskMode _mode;
+    [SerializeField] private TaskType _type;
+    [SerializeField] private int _variant;
+    [SerializeField] private Sprite _wiringShema;
+    [SerializeField] private List<Sprite> _principalShema;
+    [SerializeField] private List<SwitchBoxData> _switchBoxsData;
+    [SerializeField] private List<Answer> _answers;
+    [SerializeField] private List<TaskData> _nextTaskData;
+    [SerializeField] private TaskStatistics _taskStatistics;
 
     /// <summary>
     /// Общее количество подключений в ответе
@@ -116,7 +103,19 @@ public class TaskData : ScriptableObject {
         return connectionsCount;
     }
 
+    public int GetConnectionsCountInSwitchBox(int index = 0) {
+        int connectionsCount = 0;
+        foreach (var iAnswerData in Answers[index].AnswerDataList) {
+            connectionsCount += iAnswerData.Connections.Count;
+        }
+        return connectionsCount;
+    }
+
     public void SetStatus(TaskStatus status) {
         _status = status;
+    }
+
+    public void SetTaskStatistics(TaskStatistics value) {
+        _taskStatistics = value;
     }
 }

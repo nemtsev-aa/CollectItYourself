@@ -20,7 +20,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
     [SerializeField] private TaskController _taskController;                                // Менеджер заданий
     [SerializeField] private TrainingModeProgressManager _trainingModeProgressManager;      // Прогресс в модуле "Тренировка"
     [SerializeField] private Management _management;                                        // Менеджер игрового процесса
-    [SerializeField] private SwitchBoxesManager _switchBoxesManager;                            // Менеджер Распределительных коробок
+    [SerializeField] private SwitchBoxesManager _switchBoxesManager;                        // Менеджер Распределительных коробок
     [SerializeField] private GoldController _goldController;                                // Менеджер золота
     [SerializeField] private WagoCreator _wagoCreator;                                      // Генератор Wago-зажимов
     [SerializeField] private WireCreator _wireCreator;                                      // Генератор проводов
@@ -28,8 +28,10 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
     [SerializeField] private Stopwatch _stopwatch;                                          // Секундомер
     [SerializeField] private TrainingProgressView _progressView;                            // Виджет прогресса
     [SerializeField] private GoldCountView _goldView;                                       // Виджет золота
+    [SerializeField] private SavesManager _savesManager;                                    // Менеджер сохранений
     [SerializeField] private ScriptableObjectTaskLoader _scriptableObjectTaskLoader;
-    
+
+    private AttemptsLog _attemptsLog;                                                       // Журнал попыток
     private ITaskLoader _taskLoader;                                                        // Загрузчик заданий из различных источников
     private List<IDisposable> _disposables = new List<IDisposable>();                       // Интерфейс для отписки от сигнальной шины
     private ConfigDataLoader _configDataLoader;
@@ -40,6 +42,7 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _trainingModeController = new TrainingModeController();
         _trainingModeProgressManager = new TrainingModeProgressManager();
         _goldController = new GoldController();
+        _attemptsLog = new AttemptsLog();
 
         switch (_currentDataSource) {
             case DataSource.ScriptableObject:
@@ -48,14 +51,10 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
             case DataSource.Json:
                 _taskLoader = new JsonTasksLoader("TasksConfig.json");
                 break;
-            case DataSource.Xml:
-                //_taskLoader = new XmlTasksLoader("TasksConfig.json");
-                break;
             default:
                 break;
         }
 
-        //Debug.Log("Awake complite");
         RegisterServices();
         Init();
         AddDisposables();
@@ -79,14 +78,18 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         ServiceLocator.Current.Register(_wagoCreator);
         ServiceLocator.Current.Register(_pointer);
         ServiceLocator.Current.Register(_stopwatch);
+        ServiceLocator.Current.Register(_savesManager);
+        ServiceLocator.Current.Register(_attemptsLog);
 
         //Debug.Log("RegisterServices complite");
     }
 
     private void Init() {
+        _savesManager.Init();
+        _attemptsLog.Init(_savesManager, _eventBus);
         _goldController.Init();
         _trainingModeController.Init();
-        _taskController.Init();
+        _taskController.Init(_attemptsLog);
         _trainingModeProgressManager.Init();
         _stopwatch.Init(_eventBus);
 
@@ -107,9 +110,10 @@ public class ServiceLocatorLoader_TrainingMode : MonoBehaviour {
         _disposables.Add(_trainingModeController);
         _disposables.Add(_switchBoxesManager);
         _disposables.Add(_goldController);
-        _disposables.Add(_progressView);
         _disposables.Add(_pointer);
         _disposables.Add(_stopwatch);
+        _disposables.Add(_savesManager);
+        _disposables.Add(_attemptsLog);
     }
 
     private void OnDestroy() {

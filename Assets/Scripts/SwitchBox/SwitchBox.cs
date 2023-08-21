@@ -7,6 +7,7 @@ using UnityEngine;
 public class SwitchBox : MonoBehaviour {
     [Header("Switching Parametrs")]
     public Dictionary<string, ConnectionData> ErrorConnects = new();
+    public int Number { get { return SwitchBoxData.PartNumber; } private set { } }
     [field: SerializeField] public bool isOpen { get; private set; }
     [field: SerializeField] public SingleSwitchingResult Result;
 
@@ -16,7 +17,6 @@ public class SwitchBox : MonoBehaviour {
     [SerializeField] private Transform CompanentsTransform;
     public List<Companent> Companents = new List<Companent>();
     public string TaskName;
- 
     [Header("Clips")]
     public Transform WagoClipsTransform;
     public List<WagoClip> WagoClips = new List<WagoClip>();
@@ -30,7 +30,8 @@ public class SwitchBox : MonoBehaviour {
 
     public event Action<SingleSwitchingResult> SingleIncorrectChecked;
     public event Action<bool> OnShowCurrent;
-    
+    public Action<bool> OnConnectionsCountChanged;
+        
     private EventBus _eventBus;
 
     public void Init() {
@@ -73,7 +74,7 @@ public class SwitchBox : MonoBehaviour {
     #region WorkingWithTime
     public void SetTimeValue() {
         if (!Result) return;
-        _stopwatch.SetTimeValue(Result.SwitchingTimeValue);
+        _stopwatch.SetTimeValue(Result.BuldingTime);
     }
 
     public void GetTimeValue() {
@@ -117,7 +118,7 @@ public class SwitchBox : MonoBehaviour {
         //Debug.Log("Поиск свободных Wago-зажимов!");
         foreach (WagoClip iWagoClip in WagoClips) {
             foreach (WagoContact iContact in iWagoClip.WagoContacts) {
-                if (!iContact.GetConnectionStatus()) {
+                if (!iContact.ConnectionStatus) {
                     if (!_freeWagoContacts.Contains(iContact)) {
                         _freeWagoContacts.Add(iContact);
                     }
@@ -320,4 +321,13 @@ public class SwitchBox : MonoBehaviour {
         return connectionsCoint;
     }
     #endregion
+
+
+    public Companent GetComponentByConnectionData(ConnectionData connectionData) {
+        Companent companent = Companents.Find(x => x.Type == connectionData.CompanentType && x.Name == connectionData.CompanentName);
+
+        return companent;
+    }
+
+
 }

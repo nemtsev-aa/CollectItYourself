@@ -1592,7 +1592,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2486841509512241279}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0.7, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1601,7 +1601,7 @@ Transform:
   - {fileID: 2486841508395874006}
   m_Father: {fileID: 2486841510018416842}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
 --- !u!135 &2486841509512241275
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1631,10 +1631,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841508395874009}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
-  _renderer: {fileID: 2486841509779070453}
   ConnectionWire: {fileID: 0}
   _contactType: 2
+  _material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  _renderer: {fileID: 2486841509779070453}
 --- !u!114 &2486841509512241277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1771,7 +1771,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2486841509855348323}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.000000078405236, y: 0.7071067, z: 0.7071069, w: -0.00000007640474}
   m_LocalPosition: {x: -0.7, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1780,7 +1780,7 @@ Transform:
   - {fileID: 2486841510256598452}
   m_Father: {fileID: 2486841510018416842}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
 --- !u!135 &2486841509855348255
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1810,10 +1810,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841510256598455}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
-  _renderer: {fileID: 2486841509295890577}
   ConnectionWire: {fileID: 0}
   _contactType: 0
+  _material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  _renderer: {fileID: 2486841509295890577}
 --- !u!114 &2486841509855348321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,7 +2036,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2486841510249315994}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.000000056125657, y: 0.70710677, z: 0.7071068, w: -0.000000040441005}
   m_LocalPosition: {x: 0, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2045,7 +2045,7 @@ Transform:
   - {fileID: 2486841508604578572}
   m_Father: {fileID: 2486841510018416842}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
 --- !u!135 &2486841510249315990
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2075,10 +2075,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841508604578575}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
-  _renderer: {fileID: 2486841508957022817}
   ConnectionWire: {fileID: 0}
   _contactType: 1
+  _material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  _renderer: {fileID: 2486841508957022817}
 --- !u!114 &2486841510249315992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2490,7 +2490,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 1
-    textureMode: 1
+    textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -2754,14 +2754,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 2486841509407197961}
   ObjectView: {fileID: 6774197995210728576}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 7692597153002483589}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 2e62a08870806004cb0fc2f1b88b6786, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: 69a8b30ef6b387d459faea15422aeb12,
     type: 2}
-  _lineRenderer: {fileID: 7692597153002483589}
 --- !u!1 &4690481550268737161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3402,14 +3404,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 2486841509407197961}
   ObjectView: {fileID: 7017049466243431363}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 8875493862775489328}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 113962eba45763c419d7da9aec009a75, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
-  _lineRenderer: {fileID: 8875493862775489328}
 --- !u!1 &6114312804883180604
 GameObject:
   m_ObjectHideFlags: 0
@@ -3907,14 +3911,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 2486841509407197961}
   ObjectView: {fileID: 6461426720533146289}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 1
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  CurrentDirection: 1
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 3033067761501723277}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 7be793431ec5d524b96d86c6ae9d71a4, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
-  _lineRenderer: {fileID: 3033067761501723277}
 --- !u!1 &8848821946937390498
 GameObject:
   m_ObjectHideFlags: 0

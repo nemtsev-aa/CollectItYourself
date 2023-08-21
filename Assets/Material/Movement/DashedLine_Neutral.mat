@@ -99,7 +99,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Number_of_Dashes: 3
+    - _Number_of_Dashes: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0

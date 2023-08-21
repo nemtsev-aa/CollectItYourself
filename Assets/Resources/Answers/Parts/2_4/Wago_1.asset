@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Connections:
   - CompanentType: 0
-    CompanentName: Input
+    CompanentName: Input2
     ContactType: 0
   - CompanentType: 1
-    CompanentName: Output
+    CompanentName: Output2
     ContactType: 0
   - CompanentType: 4
     CompanentName: SA2

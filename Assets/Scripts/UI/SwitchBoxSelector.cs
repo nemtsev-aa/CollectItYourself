@@ -32,6 +32,6 @@ public class SwitchBoxSelector : MonoBehaviour {
     }
 
     private void OnDisable() {
-        ActiveSwitchBoxSelectorChanged += _switchBoxsSelectorView.SetActiveSwitchBoxSelector;
+        ActiveSwitchBoxSelectorChanged -= _switchBoxsSelectorView.SetActiveSwitchBoxSelector;
     }
 }

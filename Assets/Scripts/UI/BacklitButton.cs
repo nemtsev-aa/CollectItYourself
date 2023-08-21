@@ -6,7 +6,6 @@ public class BacklitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public Button Button;
     public bool Status;
 
-    [SerializeField] private Image _icon;
     [SerializeField] private Image _outline;
 
     public void OnPointerEnter(PointerEventData eventData) {

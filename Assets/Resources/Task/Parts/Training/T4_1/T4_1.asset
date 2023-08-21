@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: T4_1
   m_EditorClassIdentifier: 
   _id: T4_1
-  _status: 0
+  _status: 1
   _expValue: 40
   _coinsCount: 40
   _mode: 0
@@ -24,8 +24,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d126ff55af2090e429e74edc199ed672, type: 3}
   _switchBoxsData:
   - {fileID: 11400000, guid: fb04effe118149548810572146cf8cd5, type: 2}
-  _answer:
+  _answers:
   - {fileID: 11400000, guid: e16e82765a6174a47a563c7be6ea1bce, type: 2}
   _nextTaskData:
   - {fileID: 11400000, guid: 4d30a41830c7ec44eba8262d768dbba1, type: 2}
-  _taskStatistics: {fileID: 11400000, guid: dbd4a3c1732274d4a9035e4553a6d2e2, type: 2}
+  _taskStatistics: {fileID: 0}

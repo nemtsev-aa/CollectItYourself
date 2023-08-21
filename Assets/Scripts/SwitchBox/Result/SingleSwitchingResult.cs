@@ -10,7 +10,7 @@ public class SingleSwitchingResult : ScriptableObject {
     public bool CheckStatus { get { return _checkStatus; } private set { _checkStatus = value; } }
     public int SwitchBoxNumer { get { return _switchBoxNumer; } private set { _switchBoxNumer = value; } }
     public string ErrorCountText { get { return _errorCountText; } private set { _errorCountText = value; } }
-    public float SwitchingTimeValue { get { return _switchingTimeValue; } private set { _switchingTimeValue = value; } }
+    public float BuldingTime { get { return _switchingTimeValue; } private set { _switchingTimeValue = value; } }
     public List<ConnectionData> ErrorList { get { return _errorList; } private set { _errorList = value; } }
     
     [SerializeField] private string _taskName;
@@ -40,7 +40,7 @@ public class SingleSwitchingResult : ScriptableObject {
         instance.CheckStatus = checkStatus;
         instance.SwitchBoxNumer = switchBoxNumer;
         instance.ErrorCountText = errorCountText;
-        instance.SwitchingTimeValue = switchingTimeValue;
+        instance.BuldingTime = switchingTimeValue;
         instance.ErrorList = errorList;
 
 #if UNITY_EDITOR

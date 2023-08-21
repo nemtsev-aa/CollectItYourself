@@ -16,21 +16,23 @@ public class TrainingTaskDescriptionView : MonoBehaviour {
     private TaskDescriptionDialog _taskDescriptionDialog;
     private TaskData _taskData;
     private EventBus _eventBus;
+    private AttemptsLog _attemptsLog;
 
     public void Init(TaskDescriptionDialog taskDescriptionDialog, TaskData taskData) {
         _taskData = taskData;
         _taskDescriptionDialog = taskDescriptionDialog;
         _eventBus = ServiceLocator.Current.Get<EventBus>();
-        
+        _attemptsLog = ServiceLocator.Current.Get<AttemptsLog>();
+
         _closeButton.onClick.AddListener(HideDialog);
         _playButton.onClick.AddListener(PlayTask);
 
         _principialSchemeView.Init(_taskData.PrincipalShemas[0]);
         _wiringSchemeView.Init(_taskData.WiringShema);
-        _variantNumberValue.text = _taskData.Variant.ToString();
+        _variantNumberValue.text = _taskData.ID;
 
-        _correctSwitchingCountValue.text = _taskData.TaskStatistics.GetCorrectSwitchingCount();
-        _bestTimeValue.text = _taskData.TaskStatistics.GetBestTime();
+        _correctSwitchingCountValue.text = _attemptsLog.GetCorrectSwitchingCount(_taskData.ID);
+        _bestTimeValue.text = _attemptsLog.GetBestTime(_taskData.ID);
     }
 
     private void HideDialog() {

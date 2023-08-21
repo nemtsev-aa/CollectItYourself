@@ -895,8 +895,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000000029802322, y: 0.78}
-  m_SizeDelta: {x: 1.8468, y: 0.7737}
+  m_AnchoredPosition: {x: 0.0657, y: 0.78}
+  m_SizeDelta: {x: 2.6045, y: 0.7737}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2486841508701963709
 CanvasRenderer:
@@ -1851,10 +1851,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841508395874009}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
-  _renderer: {fileID: 2486841509779070453}
   ConnectionWire: {fileID: 0}
   _contactType: 2
+  _material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  _renderer: {fileID: 2486841509779070453}
 --- !u!114 &2486841509512241277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2030,10 +2030,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841510256598455}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
-  _renderer: {fileID: 2486841509295890577}
   ConnectionWire: {fileID: 0}
   _contactType: 0
+  _material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  _renderer: {fileID: 2486841509295890577}
 --- !u!114 &2486841509855348321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2295,10 +2295,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 2486841508604578575}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
-  _renderer: {fileID: 2486841508957022817}
   ConnectionWire: {fileID: 0}
   _contactType: 1
+  _material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  _renderer: {fileID: 2486841508957022817}
 --- !u!114 &2486841510249315992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3084,14 +3084,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 2486841509407197961}
   ObjectView: {fileID: 6774197995210728576}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 7692597153002483589}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 2e62a08870806004cb0fc2f1b88b6786, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: 69a8b30ef6b387d459faea15422aeb12,
     type: 2}
-  _lineRenderer: {fileID: 7692597153002483589}
 --- !u!1 &4983431669799612890
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,14 +3405,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 2486841509407197961}
   ObjectView: {fileID: 7017049466243431363}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 8875493862775489328}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 113962eba45763c419d7da9aec009a75, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
-  _lineRenderer: {fileID: 8875493862775489328}
 --- !u!1 &6156849252699247147
 GameObject:
   m_ObjectHideFlags: 0
@@ -3908,14 +3912,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 2486841509407197961}
   ObjectView: {fileID: 6461426720533146289}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 1
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  CurrentDirection: 1
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 3033067761501723277}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 7be793431ec5d524b96d86c6ae9d71a4, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
-  _lineRenderer: {fileID: 3033067761501723277}
 --- !u!1 &8848821946937390498
 GameObject:
   m_ObjectHideFlags: 0

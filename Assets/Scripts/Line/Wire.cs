@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum WireType {
@@ -19,7 +20,7 @@ public class Wire : SelectableObject {
 
     public override void Start() {
         base.Start();
-        ObjectView.Initialization(this);
+        ObjectView.Init(this);
         ElectricFieldMovingView.SetObject(this);
     }
 
@@ -32,8 +33,12 @@ public class Wire : SelectableObject {
     }
 
     public override void Select() {
-        Debug.Log(gameObject.name);
         base.Select();
+        ObjectView.OnHover(IsSelected);
+        ObjectView.Select();
+    }
+
+    public void LineSelect() {
         ObjectView.OnHover(IsSelected);
         ObjectView.Select();
     }
@@ -51,7 +56,7 @@ public class Wire : SelectableObject {
     [ContextMenu("GenerateMeshCollider")]
     public void GenerateMeshCollider() {
         // Получаем ссылки на LineRenderer и MeshCollider компоненты
-        MeshCollider meshCollider = GetComponent<MeshCollider>();     
+        MeshCollider meshCollider = GetComponent<MeshCollider>();
         if (meshCollider == null) {
             meshCollider = gameObject.AddComponent<MeshCollider>();
         }
@@ -83,19 +88,36 @@ public class Wire : SelectableObject {
     }
 
     public void SetNewPositionEndContact() {
-        ObjectView.PathElements[ObjectView.PathElements.Length-1].position = EndContact.transform.position;
+        ObjectView.PathElements[ObjectView.PathElements.Length - 1].position = EndContact.transform.position;
         ObjectView.UpdatePoints();
         ElectricFieldMovingView.UpdatePoints();
     }
 
+    //public void SetElectricFieldMaterials(List<Material> fieldMaterials) {
+    //    ElectricFieldMovingView.SetMaterials(fieldMaterials);
+    //}
+
     public void SetElectricFieldSettings(ElectricFieldSettings settings) {
-        ElectricFieldMovingView.SetMaterial(settings.Material);
-        ElectricFieldMovingView.SetColor(settings.Color);
+        ElectricFieldMovingView.SetMaterials(new List<Material>() { settings.BackFieldMaterial, settings.ElectricFieldMaterial });
+        if (settings.Contact.ConnectionWire != null) {
+            Companent startCompanent = settings.Contact.GetParentCompanent();
+            if (settings.Contact.ContactType == ContactType.Line) {
+                if (startCompanent.Type == CompanentType.Input || startCompanent.Type == CompanentType.Selector) {
+                    ElectricFieldMovingView.SetDirection(DirectionType.Negative);
+                }
+                else if (startCompanent.Type == CompanentType.Output) {
+                    // Настраиваем внешний вид электрическго поля на проводе
+                    ElectricFieldMovingView.SetCurrentFlow(settings.ElectricFieldMaterial.GetFloat("_Speed") * (-1));
+                }
+            }
+            else if (settings.Contact.ContactType == ContactType.Neutral || settings.Contact.ContactType == ContactType.GroundConductor) {
+                ElectricFieldMovingView.SetDirection(DirectionType.Positive);
+            }
+        } 
     }
 
-    public void SetElectricFieldLineSettings(ElectricFieldSettings settings) {
-        ElectricFieldMovingView.SetMaterial(settings.Material);
-        ElectricFieldMovingView.SetColor(settings.Color);
-        ElectricFieldMovingView.SwichDirection();
+    public WagoClip GetParentWagoClip() {
+        WagoClip wagoClip = EndContact.ParentWagoClip;
+        return wagoClip;
     }
 }

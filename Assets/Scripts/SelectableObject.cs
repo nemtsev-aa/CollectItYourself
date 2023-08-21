@@ -7,7 +7,7 @@ public class SelectableObject : MonoBehaviour
     public GameObject SelectIndicator;
     public string Name;
     public bool Movable;
-
+    
     public event Action<SelectableObject, bool> OnSelect;
     public event Action<SelectableObject, bool> OnUnselect;
 
@@ -16,7 +16,7 @@ public class SelectableObject : MonoBehaviour
     private Pointer _pointer;
 
     public virtual void Start() {
-        SelectIndicator.SetActive(false);
+        if (SelectIndicator != null) SelectIndicator.SetActive(false);
         _defaultScale = transform.localScale;
         _pointer = ServiceLocator.Current.Get<Pointer>();
     }
@@ -43,19 +43,6 @@ public class SelectableObject : MonoBehaviour
     }
     #endregion
 
-
-    public virtual Companent GetParentCompanent() {
-        return GetComponent<Companent>();
-    }
-
-    public WagoClip GetParentWagoClip() {
-        return GetComponent<WagoClip>();
-    }
-
-    public Wire GetParentWire() {
-        return GetComponent<Wire>();
-    }
-
     public virtual void OnMouseDown() {
         if (Movable) {
             offset = transform.position - _pointer.GetPosition();
@@ -70,6 +57,18 @@ public class SelectableObject : MonoBehaviour
 
     public virtual void OnMouseUp() {
         
+    }
+
+    public WagoClip GetParentWagoClip() {
+        return GetComponent<WagoClip>();
+    }
+
+    public Wire GetParentWire() {
+        return GetComponent<Wire>();
+    }
+
+    public virtual Companent GetParentCompanent() {
+        return GetComponent<Companent>();
     }
 }
 

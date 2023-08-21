@@ -17,5 +17,6 @@ public class WirePoint : SelectableObject {
     public override void OnMouseUp() {
         base.OnMouseUp();
         _parentWire.ObjectView.PathChanged?.Invoke();
+        Unselect();
     }
 }

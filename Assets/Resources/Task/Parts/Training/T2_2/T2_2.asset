@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: T2_2
   m_EditorClassIdentifier: 
   _id: T2_2
-  _status: 0
+  _status: 2
   _expValue: 20
   _coinsCount: 20
   _mode: 0
@@ -24,8 +24,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 850c2f71a43905f48b7235174bd7173f, type: 3}
   _switchBoxsData:
   - {fileID: 11400000, guid: 8af0e133b99d1614f96334b4d5c76b5d, type: 2}
-  _answer:
+  _answers:
   - {fileID: 11400000, guid: 6bf0736b0371e2d418aea2c966f82ec6, type: 2}
   _nextTaskData:
   - {fileID: 11400000, guid: f0d47c48ca99d164d8ee95a0eb416199, type: 2}
-  _taskStatistics: {fileID: 11400000, guid: 44ea8fdf2e2364745ac4884141542888, type: 2}
+  _taskStatistics: {fileID: 11400000, guid: 3a499b2b4c04be848858a4f517fe0c08, type: 2}

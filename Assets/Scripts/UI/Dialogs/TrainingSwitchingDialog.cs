@@ -10,9 +10,12 @@ namespace UI.Dialogs {
     public class TrainingSwitchingDialog : Dialog {
         public PrincipalSchemaView PrincipalSchemaView => _principalSchemaView;
         public SwitchBoxsSelectorView SwitchBoxsSelectorView => _switchBoxsSelectorView;
+        public SwitchingProgress SwitchingProgress => _switchingProgress;
+
         [SerializeField] private PrincipalSchemaView _principalSchemaView;
         [SerializeField] private SwitchBoxsSelectorView _switchBoxsSelectorView;
         [SerializeField] private WagoClipsDragPanel _wagoClipsDragPanel;
+        [SerializeField] private SwitchingProgress _switchingProgress;
 
         [SerializeField] private Button _pauseButton;
         [SerializeField] private Button _checkSwitching;

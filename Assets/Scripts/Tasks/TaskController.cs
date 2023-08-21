@@ -29,8 +29,10 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     private string _currentTaskId;
     private TaskData _currentTaskData;
     private EventBus _eventBus;
+    private AttemptsLog _attemptsLog;
    
-    public void Init() {
+    public void Init(AttemptsLog attemptsLog) {
+        _attemptsLog = attemptsLog;
         _eventBus = ServiceLocator.Current.Get<EventBus>();
         _eventBus.Subscribe<TaskStartedSignal>(TaskSelect);              
         _eventBus.Subscribe<TaskTimePassedSignal>(TaskTimePassed);
@@ -45,6 +47,9 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
         ///////////////////////////////////////////////////////////////////////////////////
 
         if (_tasksConfig.Tasks.Count() > 0) {
+            ImportStatisticsFromSaveFile();
+
+
             _eventBus.Invoke(new TaskListCreatedSignal());
             //_eventBus.Invoke(new TaskListCreatedSignal(_tasksConfig.Tasks));
         }
@@ -62,6 +67,36 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     //    }
     //    _eventBus.Invoke(new TaskSelectSignal(_currentTaskData));
     //}
+
+    /// <summary>
+    /// Загрузка статистики из файла сохранения
+    /// </summary>
+    private void ImportStatisticsFromSaveFile() {
+        int newTaskStatistics = 0;
+        foreach (TaskData iTask in _tasksConfig.Tasks) {
+            string iTaskID = iTask.ID;
+            List<AttemptInfo> iTaskAttemptInfo = _attemptsLog.ImportAttemptInfo().FindAll(x => x.TaskID == iTaskID);
+            if (iTaskAttemptInfo.Count > 0) {
+                iTask.SetStatus(_attemptsLog.GetStatus(iTaskID));
+                string correctSwitchingCount = _attemptsLog.GetCorrectSwitchingCount(iTaskID);
+                string bestBuildingTime = _attemptsLog.GetBestTime(iTaskID);
+
+                TaskStatistics taskStatistics = TaskStatistics.CreateInstance(iTaskID, iTaskAttemptInfo, correctSwitchingCount, bestBuildingTime);
+                iTask.SetTaskStatistics(taskStatistics);
+
+                if (iTask.TaskStatus == TaskStatus.Complite && iTask.NextTaskData.Count > 0) {
+                    foreach (TaskData iNextTask in iTask.NextTaskData) {
+                        if (iNextTask.TaskStatus == TaskStatus.Lock) iNextTask.SetStatus(TaskStatus.Unlock);
+                    }
+                }
+
+                newTaskStatistics++;
+            } else {
+                iTask.SetTaskStatistics(null);
+            }
+        }
+        Debug.Log($"Статистика добавлена к {newTaskStatistics} из {_tasksConfig.Tasks.Count()} заданий");
+    }
 
     #region CreateTaskMap
     /// <summary>
@@ -149,14 +184,20 @@ public class TaskController : MonoBehaviour, IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void NextTaskUnlocked(TaskFinishedSignal signal) {
-        if (signal.GeneralSwitchingResult.CheckStatus) {
-            signal.GeneralSwitchingResult.TaskData.SetStatus(TaskStatus.Complite);
+        GeneralSwitchingResult result = signal.GeneralSwitchingResult;
+        if (result.CheckStatus) {
+            result.TaskData.SetStatus(TaskStatus.Complite);
+
+            string iTaskID = result.TaskData.ID;
+            string correctSwitchingCount = _attemptsLog.GetCorrectSwitchingCount(iTaskID);
+            string bestBuildingTime = _attemptsLog.GetBestTime(iTaskID);
+            List<AttemptInfo> iTaskAttemptInfo = _attemptsLog.ImportAttemptInfo().FindAll(x => x.TaskID == iTaskID);
+            TaskStatistics taskStatistics = TaskStatistics.CreateInstance(iTaskID, iTaskAttemptInfo, correctSwitchingCount, bestBuildingTime);
+            result.TaskData.SetTaskStatistics(taskStatistics);
 
             List<TaskData> nextTasks = signal.GeneralSwitchingResult.TaskData.NextTaskData;
             foreach (TaskData iTask in nextTasks) {
-                if (iTask.TaskStatus == TaskStatus.Lock) {
-                    iTask.SetStatus(TaskStatus.Unlock);
-                }
+                if (iTask.TaskStatus == TaskStatus.Lock) iTask.SetStatus(TaskStatus.Unlock);
             }
         }
     }

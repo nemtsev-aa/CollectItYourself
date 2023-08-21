@@ -878,7 +878,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3583119105118806787}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 1.86, y: 0.65, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -887,7 +887,7 @@ Transform:
   - {fileID: 3583119106677750844}
   m_Father: {fileID: 3583119106574251569}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!135 &3583119105118806791
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -917,10 +917,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106677750845}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
-  _renderer: {fileID: 3583119106285157740}
   ConnectionWire: {fileID: 0}
   _contactType: 0
+  _material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  _renderer: {fileID: 3583119106285157740}
 --- !u!114 &3583119105118806785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,7 +1192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3583119105528351442}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 1.86, y: -0.65, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1201,7 +1201,7 @@ Transform:
   - {fileID: 3583119105451441946}
   m_Father: {fileID: 3583119106574251569}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!135 &3583119105528351446
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1231,10 +1231,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119105451441947}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
-  _renderer: {fileID: 3583119105081795106}
   ConnectionWire: {fileID: 0}
   _contactType: 2
+  _material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  _renderer: {fileID: 3583119105081795106}
 --- !u!114 &3583119105528351440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,7 +1641,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3583119105846968589}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 1.86, y: 0, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1650,7 +1650,7 @@ Transform:
   - {fileID: 3583119106709757790}
   m_Father: {fileID: 3583119106574251569}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!135 &3583119105846968593
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1680,10 +1680,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 3583119106709757791}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
-  _renderer: {fileID: 3583119105829276819}
   ConnectionWire: {fileID: 0}
   _contactType: 1
+  _material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  _renderer: {fileID: 3583119105829276819}
 --- !u!114 &3583119105846968595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3402,14 +3402,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 3583119106728645194}
   ObjectView: {fileID: 4294718662543889252}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 1
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  CurrentDirection: 1
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 474252731418591919}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 7be793431ec5d524b96d86c6ae9d71a4, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
-  _lineRenderer: {fileID: 474252731418591919}
 --- !u!1 &6765348093113766880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3625,14 +3627,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 3583119106728645194}
   ObjectView: {fileID: 6957935434243408404}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 7531763607876651899}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 2e62a08870806004cb0fc2f1b88b6786, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: 69a8b30ef6b387d459faea15422aeb12,
     type: 2}
-  _lineRenderer: {fileID: 7531763607876651899}
 --- !u!1 &7260391312539695811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3968,14 +3972,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Object: {fileID: 3583119106728645194}
   ObjectView: {fileID: 3025339940081204057}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 2245744953924477513}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 113962eba45763c419d7da9aec009a75, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
-  _lineRenderer: {fileID: 2245744953924477513}
 --- !u!1 &8216114180532167280
 GameObject:
   m_ObjectHideFlags: 0

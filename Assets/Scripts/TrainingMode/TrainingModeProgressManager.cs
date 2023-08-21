@@ -2,17 +2,16 @@ using CustomEventBus;
 using CustomEventBus.Signals;
 using System.Collections.Generic;
 using System.Linq;
+
 /// <summary>
 /// Отображает прогресс в модуле "Тренировка"
 /// </summary>
 public class TrainingModeProgressManager : ProgressManager {
-    
-    private ProgressView _progressView;
     private IEnumerable<TaskData> _taskList;
         
     public override void Init() {
         base.Init();
-        _progressView = ServiceLocator.Current.Get<TrainingProgressView>();
+
         _taskList = ServiceLocator.Current.Get<TaskController>().TasksConfig.Tasks;
     }
 
@@ -23,10 +22,10 @@ public class TrainingModeProgressManager : ProgressManager {
         _eventBus.Invoke(new TrainingProgressChangedSignal(_currentExpValue, _fullExpAmount));
     }
 
-
     public override void ShowProgressValue(TaskListCreatedSignal signal) {
         GetCurrentProgressValue();
     }
+
     /// <summary>
     /// Получение текущего показателя прогресса 
     /// </summary>
@@ -45,7 +44,7 @@ public class TrainingModeProgressManager : ProgressManager {
     }
 
     /// <summary>
-    /// Полученный опыт
+    /// Получение количества заработанного опыта
     /// </summary>
     private void GetCurrentExpValue() {
         if (_taskList.Count() > 0) {
@@ -70,7 +69,6 @@ public class TrainingModeProgressManager : ProgressManager {
 
     public override void Dispose() {
         _eventBus.Unsubscribe<TaskListCreatedSignal>(ShowProgressValue);
-        //OnProgressChanged -= _progressView.ShowProgress;
     }
 
 }

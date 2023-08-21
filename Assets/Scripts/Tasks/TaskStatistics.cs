@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -7,60 +9,49 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(TaskStatistics), menuName = "Tasks/ScriptableObjects/" + nameof(TaskStatistics))]
 [System.Serializable]
 public class TaskStatistics : ScriptableObject {
-    public string ID => _id;
-    public IEnumerable<GeneralSwitchingResult> Attempts => _attempts;
-    
     /// <summary>
     /// Уникальный ID задания
     /// </summary>
-    [SerializeField] private string _id;
+    public string ID { get { return _id; } private set { _id = value; } }
     /// <summary>
     /// Список попыток
     /// </summary>
-    [SerializeField] private List<GeneralSwitchingResult> _attempts;
+    public IEnumerable<AttemptInfo> Attempts { get { return _attempts; } private set { _attempts = (List<AttemptInfo>)value; } }
+    /// <summary>
+    /// Статистика сборки ("верно собрано" / "всего сборок")
+    /// </summary>
+    public string CorrectSwitchingCount { get { return _correctSwitchingCount; } private set { _correctSwitchingCount = value; } }
+    /// <summary>
+    /// Лучшее время сборки
+    /// </summary>
+    public string BestBuildingTime { get { return _bestBuildingTime; } private set { _bestBuildingTime = value; } }
 
-    public string GetCorrectSwitchingCount() {
-        string correctSwitchingCount = "";
-        string attemptsCount = _attempts.Count.ToString();
+    [SerializeField] private string _id;
+    [SerializeField] private List<AttemptInfo> _attempts;
+    [SerializeField] private string _correctSwitchingCount;
+    [SerializeField] private string _bestBuildingTime;
 
-        if (_attempts.Count > 0) {
-            int correctCount = 0;
-            foreach (GeneralSwitchingResult iResult in _attempts) {
-                if (iResult.CheckStatus) {
-                    correctCount++;
-                }
-            }
-            correctSwitchingCount = correctCount.ToString();
-        } else {
-            return "-/-";
+    // Метод создания экземпляра класса
+    public static TaskStatistics CreateInstance(string id, List<AttemptInfo> attempts, string correctSwitchingCount, string bestBuildingTime) {
+
+        TaskStatistics instance = CreateInstance<TaskStatistics>();
+        instance.ID = id;
+        instance.Attempts = attempts;
+        instance.CorrectSwitchingCount = correctSwitchingCount;
+        instance.BestBuildingTime = bestBuildingTime;
+
+
+#if UNITY_EDITOR
+        // Создаем путь для сохранения ScriptableObject
+        string path = $"Assets/Resources/TaskStatistics/Statistic_{id}.asset";
+
+        if (AssetDatabase.IsValidFolder(path)) {        // Проверяем, существует ли файл по указанному пути
+            AssetDatabase.DeleteAsset(path);            // Если файл уже существует, удаляем его
         }
-        return $"{correctSwitchingCount}/{attemptsCount}";
-    }
 
-    public string GetBestTime() {
-        string bestTime = "";
-        float bestTimeValue = 999f;
-        GeneralSwitchingResult bestResult = null;
-
-        if (_attempts.Count > 0) {
-            foreach (GeneralSwitchingResult iResult in _attempts) {
-                float iTime = iResult.GetSwitchingTimesValue();
-                if (iTime < bestTimeValue) {
-                    bestResult = iResult;
-                }
-            }
-            bestTime = bestResult.GetSwitchingTimesText();
-        } else {
-            return "-";
-        }
-        return $"{bestTime}";
-    }
-
-    public bool AddAttempt(GeneralSwitchingResult result) {
-        if (!_attempts.Contains(result)) { 
-            _attempts.Add(result);
-            return true;
-        }
-        return false;
+        AssetDatabase.CreateAsset(instance, path);      // Создаем ресурс по указанному пути
+        AssetDatabase.Refresh();                        // Обновляем активную базу данных ресурсов
+#endif
+        return instance;
     }
 }

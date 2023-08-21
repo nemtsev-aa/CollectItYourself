@@ -157,7 +157,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 1
-    textureMode: 1
+    textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -372,16 +372,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d338997567946414c805e6fe4e463564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 1975740097159279651}
+  Object: {fileID: 0}
   ObjectView: {fileID: 1782712280169495704}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.03137255, g: 0.9607844, b: 0.16862746, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 7187876100787602228}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 2e62a08870806004cb0fc2f1b88b6786, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: 69a8b30ef6b387d459faea15422aeb12,
     type: 2}
-  _lineRenderer: {fileID: 7187876100787602228}
 --- !u!1 &1382228806840089810
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +638,7 @@ GameObject:
   - component: {fileID: 1975740097159279653}
   - component: {fileID: 1975740097159279650}
   - component: {fileID: 2434616958813333509}
-  - component: {fileID: 1975740097159279651}
+  - component: {fileID: 7226265653733360930}
   - component: {fileID: 1169800819746838545}
   - component: {fileID: 8506520120338600267}
   m_Layer: 0
@@ -690,9 +692,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d1cf965577bed4481064b0e35e4d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectableObject: {fileID: 1975740097159279651}
+  SelectableObject: {fileID: 7226265653733360930}
   _target: {fileID: 0}
---- !u!114 &1975740097159279651
+--- !u!114 &7226265653733360930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -701,7 +703,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1975740097159279649}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3fb7b0b7cf426341a59b07ebd9ef254, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c5e772afa60a9f45bd2dd4ea5a19197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsSelected: 0
@@ -716,7 +718,6 @@ MonoBehaviour:
   - {fileID: 1975740097585478024}
   - {fileID: 1975740097178312607}
   _nameText: {fileID: 1975740098038399714}
-  _animator: {fileID: 3681629748715073875}
   ObjectViews:
   - {fileID: 4400826273648500702}
   - {fileID: 8520698478038986250}
@@ -725,6 +726,7 @@ MonoBehaviour:
   - {fileID: 3542686066913260865}
   - {fileID: 2129558973824964241}
   - {fileID: 2480052773592586794}
+  <LampState>k__BackingField: {fileID: 1169800819746838545}
 --- !u!114 &1169800819746838545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,7 +756,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -786,7 +788,7 @@ MonoBehaviour:
     cutoutTextureName: 
     DilateRenderingMode: 0
     cutoutTextureIndex: 0
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -818,7 +820,7 @@ MonoBehaviour:
     cutoutTextureName: 
     DilateRenderingMode: 0
     cutoutTextureIndex: 0
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
@@ -1125,7 +1127,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975740097178312604}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 1.8599999, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1134,7 +1136,7 @@ Transform:
   - {fileID: 1975740097682429564}
   m_Father: {fileID: 1975740099100485957}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!135 &1975740097178312592
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1164,10 +1166,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 1975740097682429563}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
-  _renderer: {fileID: 1975740098046752407}
   ConnectionWire: {fileID: 0}
   _contactType: 2
+  _material: {fileID: 2100000, guid: 79e0a34b94cf70d4ab2f35b8ba569eed, type: 2}
+  _renderer: {fileID: 1975740098046752407}
 --- !u!114 &1975740097178312593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1400,7 +1402,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975740097585478036}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 1.8599999, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1409,7 +1411,7 @@ Transform:
   - {fileID: 1975740097405906364}
   m_Father: {fileID: 1975740099100485957}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!135 &1975740097585478025
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1439,10 +1441,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 1975740097405906365}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
-  _renderer: {fileID: 1975740097952177273}
   ConnectionWire: {fileID: 0}
   _contactType: 1
+  _material: {fileID: 2100000, guid: 080da61399ad51f44a45923fc4fe3af9, type: 2}
+  _renderer: {fileID: 1975740097952177273}
 --- !u!114 &1975740097585478038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2492,7 +2494,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975740098897211319}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5000003, y: 0.49999973, z: 0.49999985, w: 0.50000024}
   m_LocalPosition: {x: 1.8599999, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2501,7 +2503,7 @@ Transform:
   - {fileID: 1975740098420484591}
   m_Father: {fileID: 1975740099100485957}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!135 &1975740098897211304
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2531,10 +2533,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 1975740098420484588}
   Name: 
   Movable: 0
-  Material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
-  _renderer: {fileID: 1975740097246274210}
   ConnectionWire: {fileID: 0}
   _contactType: 0
+  _material: {fileID: 2100000, guid: 11eca888aae1ade4cbb1c35e9520a2cb, type: 2}
+  _renderer: {fileID: 1975740097246274210}
 --- !u!114 &1975740098897211305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3511,16 +3513,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d338997567946414c805e6fe4e463564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 1975740097159279651}
+  Object: {fileID: 0}
   ObjectView: {fileID: 8520698478038986250}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 0
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.2784314, g: 0.16862746, b: 0.42352945, a: 1}
-  CurrentDirection: 0
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 726424614326224686}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 113962eba45763c419d7da9aec009a75, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: d93d3f7f025b76b4c88ca638daaec7a6,
     type: 2}
-  _lineRenderer: {fileID: 726424614326224686}
 --- !u!1 &4630571838311733563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,16 +3910,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d338997567946414c805e6fe4e463564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 1975740097159279651}
+  Object: {fileID: 0}
   ObjectView: {fileID: 4400826273648500702}
-  Status: 0
+  _currentState: 2
+  _currentDirection: 1
   _backColor: {r: 1, g: 1, b: 1, a: 1}
   _electicFieldColor: {r: 0.9960785, g: 0.36862746, b: 0, a: 1}
-  CurrentDirection: 1
-  _backMaterial: {fileID: 2100000, guid: cd5c0f8ac326e0946b4e3308b1acccc1, type: 2}
+  _fillingValue: 1
+  _lineRenderer: {fileID: 6103672112437213817}
+  _fieldMaterials: []
+  _backMaterial: {fileID: 2100000, guid: 7be793431ec5d524b96d86c6ae9d71a4, type: 2}
   _electicFieldMaterial: {fileID: 2100000, guid: bf329db649fe93a4187989943b76c088,
     type: 2}
-  _lineRenderer: {fileID: 6103672112437213817}
 --- !u!1 &6476605284767704202
 GameObject:
   m_ObjectHideFlags: 0

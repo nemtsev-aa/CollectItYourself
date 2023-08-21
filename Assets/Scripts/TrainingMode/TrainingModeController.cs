@@ -19,6 +19,7 @@ public enum TrainingModeStatus {
     SaveResults,
     OutputResult
 }
+
 /// <summary>
 /// Принимает решения о изменении состояния приложения в модуле "Тренировка"
 /// </summary>
@@ -28,8 +29,10 @@ public class TrainingModeController : IService, IDisposable {
     private TrainingModeStatus _currentStatus;
     private SelectTrainingTaskDialog _selectTrainingTaskDialog;
     private TrainingSwitchingDialog _trainingSwitchingDialog;
+    private TrainingDemonstrationDialog _demonstrationDialog;
     private CorrectSwitchingResultDialog _correctSwitchingDialog;
     private IncorrectSwitchingResultDialog _incorrectSwitchingDialog;
+    
     
     private SwitchBoxesManager _switchBoxesManager;
     private Stopwatch _stopwatch;
@@ -46,12 +49,13 @@ public class TrainingModeController : IService, IDisposable {
         _eventBus.Subscribe<TaskListCreatedSignal>(TaskListReceived);            // Список заданий получен
         _eventBus.Subscribe<TaskSelectSignal>(TaskSelect);                       // Задание выбрано
         _eventBus.Subscribe<TaskCheckingStartSignal>(TaskChecking);              // Запуск проверки
-        _eventBus.Subscribe<AnswerDemonstrationSignal>(AnswerDemonstration);     // Запуск проверки
+        _eventBus.Subscribe<TaskCheckingFinishedSignal>(PreparingDemonstration); // Завершение проверки, подготовка демонстрации
+        _eventBus.Subscribe<AnswerDemonstrationSignal>(AnswerDemonstration);     // Запуск демонстрации результата сборки
         _eventBus.Subscribe<TaskFinishedSignal>(TaskFinished);                   // Задание завершено
         _eventBus.Subscribe<TaskPauseSignal>(TaskPause);                         // Пауза в сборке
         _eventBus.Subscribe<TaskResumeSignal>(TaskResumeSwitching);              // Продолжение сборки
     }
-    
+
     public void SetTrainingModeStatus(TrainingModeStatus status) {
         switch (status) {
             case TrainingModeStatus.LoadTaskData:
@@ -90,6 +94,7 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     public void CreateTaskListFromSource() {
         _taskController.CreateTaskListFromSource();
+        _currentStatus = TrainingModeStatus.LoadTaskData;
     }
 
     /// <summary>
@@ -97,16 +102,15 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     public void TaskListReceived(TaskListCreatedSignal signal) {
-        _currentStatus = TrainingModeStatus.TaskListReceived;
-        if (_trainingSwitchingDialog != null) {
-            ResetSwitchingZone();
-        }
-        
+        if (_trainingSwitchingDialog != null) ResetSwitchingZone();
+             
         _selectTrainingTaskDialog = DialogManager.ShowDialog<SelectTrainingTaskDialog>();
         _selectTrainingTaskDialog.Init();
 
         _taskController.CreateTaskMap(_selectTrainingTaskDialog);
         _taskController.CreateConnects(_selectTrainingTaskDialog.TaskConnectorsManager);
+
+        _currentStatus = TrainingModeStatus.TaskListReceived;
     }
 
     /// <summary>
@@ -118,6 +122,8 @@ public class TrainingModeController : IService, IDisposable {
         CountdownDialog countdownDialog = DialogManager.ShowDialog<CountdownDialog>();
         countdownDialog.Init();
         countdownDialog.OnCountdownFinish += TaskStarted;
+
+        _currentStatus = TrainingModeStatus.SelectionTask;
     }
 
     /// <summary>
@@ -146,6 +152,7 @@ public class TrainingModeController : IService, IDisposable {
         
         _switchBoxesManager.Init(_currentTaskData, _eventBus);
         _switchBoxesManager.SetSwitchBoxsSelectorView(_trainingSwitchingDialog.SwitchBoxsSelectorView);
+        _switchBoxesManager.SetSwitchBoxProgress(_trainingSwitchingDialog.SwitchingProgress);
         _trainingSwitchingDialog.SwitchBoxsSelectorView.Init(_switchBoxesManager);
 
         _stopwatch.SetTimeView(_trainingSwitchingDialog.PrincipalSchemaView.TimeView);
@@ -162,9 +169,12 @@ public class TrainingModeController : IService, IDisposable {
         ServiceLocator.Current.Get<WireCreator>().Init(management, _switchBoxesManager, pointer);
 
         _trainingSwitchingDialog.Init(_switchBoxesManager, _stopwatch, wagoCreator, _eventBus);
-        
         _switchBoxesManager.CreateSwitchBoxs();
+
+
         _stopwatch.SetStatus(true);
+
+        _currentStatus = TrainingModeStatus.PreparingWorkspace;
     }
     
     /// <summary>
@@ -172,25 +182,36 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     public void TaskChecking(TaskCheckingStartSignal signal) {
+        _currentStatus = TrainingModeStatus.CheckResult;
+
         TaskStop();
 
+        _trainingSwitchingDialog.gameObject.SetActive(false);
         GeneralSwitchingResult newResult = _switchBoxesManager.CheckSwichBoxes();
         if (newResult != null) {
-            if (_currentTaskData.TaskStatistics.AddAttempt(newResult)) {
-                Debug.Log("Результат добавлен в статистику задания!");
-            } else {
-                Debug.LogError("Ошибка при добавлении результата в статистику задания!");
-            }
-
-            _eventBus.Invoke(new TaskFinishedSignal(newResult));
-            //if (newResult.CheckResult) { // Верная сборка
-
-            //} else {
-
-            //}
+            _eventBus.Invoke(new TaskCheckingFinishedSignal(newResult));
         } else {
             Debug.LogError("TrainingModeController: Ошибка в процедуре проверки сборки!");
         }
+    }
+
+    /// <summary>
+    /// Завершение проверки, подготовка демонстрации
+    /// </summary>
+    /// <param name="obj"></param>
+    private void PreparingDemonstration(TaskCheckingFinishedSignal signal) {
+        //if (signal.GeneralSwitchingResult.CheckStatus == true) {
+
+        //} else {
+
+        //}
+
+        _demonstrationDialog = DialogManager.ShowDialog<TrainingDemonstrationDialog>();
+        _demonstrationDialog.Init(signal.GeneralSwitchingResult, _eventBus);
+        _currentStatus = TrainingModeStatus.Demonstration;
+
+        //_switchBoxesManager.ShowSwitchBoxs();
+        //_switchBoxesManager.ShowCurrent(true);
     }
 
     /// <summary>
@@ -205,12 +226,13 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void TaskFinished(TaskFinishedSignal signal) {
+        _demonstrationDialog.Hide();
         if (signal.GeneralSwitchingResult.CheckStatus) {
-            // Показываем окошко о победе
+            // Показываем окно о верной сборке
             _correctSwitchingDialog = DialogManager.ShowDialog<CorrectSwitchingResultDialog>();
             _correctSwitchingDialog.Init(signal.GeneralSwitchingResult);
-        } else { 
-            // Показываем окошко о неверной сборке
+        } else {
+            // Показываем окно о неверной сборке
             _incorrectSwitchingDialog = DialogManager.ShowDialog<IncorrectSwitchingResultDialog>();
             _incorrectSwitchingDialog.Init(signal.GeneralSwitchingResult);
         }
@@ -261,10 +283,9 @@ public class TrainingModeController : IService, IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void TaskResumeSwitching(TaskResumeSignal signal) {
-        // Включаем секундомер
-        // Включаем указатель
-        // Показываем РК
-        _eventBus.Invoke(new TrainingModeStartSignal());
+        if (_demonstrationDialog != null) _demonstrationDialog.Hide();
+        _eventBus.Invoke(new TrainingModeStartSignal()); // Включаем секундомер, Включаем указатель, Показываем РК
+        _trainingSwitchingDialog.gameObject.SetActive(true);
     }
 
     public void Dispose() {

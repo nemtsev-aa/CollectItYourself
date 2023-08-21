@@ -101,9 +101,7 @@ public class WagoClipsDragElement : MonoBehaviour, IBeginDragHandler, IDragHandl
 
         if (raycastResults.Count > 0) {
             foreach (var go in raycastResults) {
-                Debug.Log(go.gameObject.name);
                 if (go.gameObject.GetComponent<WagoClipsDragPanel>() != null) {
-                    Debug.Log("Не покинул зону создания");
                     return false;
                 }
             }
