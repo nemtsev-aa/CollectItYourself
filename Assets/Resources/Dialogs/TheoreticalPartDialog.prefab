@@ -1572,9 +1572,8 @@ MonoBehaviour:
   _mainMenuButton: {fileID: 8856085045623684975}
   _returnButton: {fileID: 1453072017536741590}
   _nextButton: {fileID: 522777885453218367}
-  _descriptionPlayer: {fileID: 0}
+  _descriptionPlayer: {fileID: 191512725004135237}
   _descriptionText: {fileID: 4590226122003816645}
-  _goldCountView: {fileID: 1786830831798278855}
 --- !u!1 &4351744225415324863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2955,13 +2954,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8586592822083311299, guid: 084b78a67d19fd344a46f40a1a71d260,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 084b78a67d19fd344a46f40a1a71d260, type: 3}
+--- !u!114 &191512725004135237 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4123713206572119132, guid: 084b78a67d19fd344a46f40a1a71d260,
+    type: 3}
+  m_PrefabInstance: {fileID: 4292560049081409305}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78dacf7e9ac90b41a38b6a4b2a829a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1728863369307702818 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3200956027591891259, guid: 084b78a67d19fd344a46f40a1a71d260,
@@ -3232,18 +3238,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c540dc07730d5d14b9ad2c8a80954b14, type: 3}
---- !u!114 &1786830831798278855 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7615234110755434114, guid: c540dc07730d5d14b9ad2c8a80954b14,
-    type: 3}
-  m_PrefabInstance: {fileID: 8170275464557802565}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2d11c060d2a17f428a9d988e3184864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5259064822156459950 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4150442714618252267, guid: c540dc07730d5d14b9ad2c8a80954b14,

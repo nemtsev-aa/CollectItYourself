@@ -1,6 +1,5 @@
 using CustomEventBus;
 using CustomEventBus.Signals;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UI;
@@ -12,10 +11,8 @@ public class LearningModeMenuDialog : Dialog {
 
     [Header("Navigations")]
     [SerializeField] private Button _mainMenuButton;
-    [SerializeField] private Button _returnButton;
 
     [Header("Buttons")]
-    [SerializeField] private List<Description> _descriptions;
     [SerializeField] private DescriptionButton _descriptionButtonPrefab;
     [SerializeField] private Transform _buttonsParent;
     [SerializeField] private List<DescriptionButton> _buttons;
@@ -28,18 +25,29 @@ public class LearningModeMenuDialog : Dialog {
     [Header("View")]
     [SerializeField] private GoldCountView _goldCountView;
 
-    private Description _currentDescription;
-    private ServicesLoader_LearningMode _services;
+    private LearningModeDescriptionSOLoader _learningModeDescriptionSOLoader;
+    private IEnumerable<LearningModeDescription> _descriptions;
+    
+    private LearningModeDescription _currentDescription;
+    private EventBus _eventBus;
+    private GoldController _goldController;
 
-    public void Init(ServicesLoader_LearningMode services) {
-        _services = services;
+    public void Init(LearningModeManager learningModeManager) {
+        _eventBus = ServiceLocator.Current.Get<EventBus>();
+        _goldController = ServiceLocator.Current.Get<GoldController>();
+
+        _learningModeDescriptionSOLoader = ServiceLocator.Current.Get<LearningModeDescriptionSOLoader>();
+        _descriptions = _learningModeDescriptionSOLoader.Descriptions;
+
+        _goldCountView.Init(_eventBus, _goldController);
 
         _mainMenuButton.onClick.AddListener(ShowMainMenu);
-        _returnButton.onClick.AddListener(ReturnToModeMenu);
+        _startButton.onClick.AddListener(StartMode);
+
+        CreateDescriptionButtons();
     }
 
-    public override void Awake() {
-        base.Awake();
+    private void CreateDescriptionButtons() {
         foreach (LearningModeDescription item in _descriptions) {
             DescriptionButton newButton = Instantiate(_descriptionButtonPrefab, _buttonsParent);
             newButton.Init(item);
@@ -47,9 +55,7 @@ public class LearningModeMenuDialog : Dialog {
 
             _buttons.Add(newButton);
         }
-
         _buttons[0].Activate();
-        _startButton.onClick.AddListener(StartMode);
     }
 
     private void ShowDescription(Description description, DescriptionButton button) {
@@ -57,22 +63,18 @@ public class LearningModeMenuDialog : Dialog {
             if (item != button) item.Deactivate();
         }
 
-        _currentDescription = description;
+        _currentDescription = description as LearningModeDescription;
         _descriptionText.text = description.Text;
         _descriptionImage.sprite = description.Icon;
     }
 
     private void StartMode() {
-        LearningModeDescription description = (LearningModeDescription)_currentDescription;
-        _services.SetLearningModeType(description.CurrentType);
-    }
-
-    private void ReturnToModeMenu() {
-        this.Hide();
+        //Hide();
+        _eventBus.Invoke(new ChapterSelectSignal(_currentDescription));
     }
 
     private void ShowMainMenu() {
-        ServiceLocator.Current.Get<EventBus>().Invoke(new ApplicationStateChangedSignal(ApplicationState.StartMenu));
+        _eventBus.Invoke(new ApplicationStateChangedSignal(ApplicationState.StartMenu));
     }
 }
 

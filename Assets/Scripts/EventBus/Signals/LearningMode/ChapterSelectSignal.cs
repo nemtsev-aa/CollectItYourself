@@ -4,8 +4,8 @@ namespace CustomEventBus.Signals {
     /// </summary>
     public class ChapterSelectSignal {
 
-        public readonly LearningModeDescription ChapterDescription;
-        public ChapterSelectSignal(LearningModeDescription chapterDescription) {
+        public readonly Description ChapterDescription;
+        public ChapterSelectSignal(Description chapterDescription) {
             ChapterDescription = chapterDescription;
         }
     }

@@ -41,9 +41,7 @@ public class ApplicationController : MonoBehaviour, IService {
         switch (_currentApplicationState) {
             case ApplicationState.StartMenu:
                 _eventBus.Invoke(new StartMenuStateSignal());
-                if (SceneManager.GetActiveScene().buildIndex != 1) {
-                    SceneManager.LoadScene("MainMenu");
-                }
+                if (SceneManager.GetActiveScene().buildIndex != 1) SceneManager.LoadScene("MainMenu");
                 break;
             case ApplicationState.LearningMode:
                 _eventBus.Invoke(new LearningModeStateSignal());

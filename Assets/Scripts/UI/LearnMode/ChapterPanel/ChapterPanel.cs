@@ -16,11 +16,11 @@ public class ChapterPanel : MonoBehaviour {
     [SerializeField] private Button _playButton;
 
     private int _currentExpAmount;
-    private LearningProgressManager _learningProgressManager;
+    private LearningModeManager _learningProgressManager;
     private EventBus _eventBus;
 
    [ContextMenu("Init")]
-    public void Init(LearningProgressManager learningProgressManager) {
+    public void Init(LearningModeManager learningProgressManager) {
         _learningProgressManager = learningProgressManager;
         _eventBus = ServiceLocator.Current.Get<EventBus>();
 

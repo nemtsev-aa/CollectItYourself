@@ -171,6 +171,54 @@ MonoBehaviour:
   _currentMode: 0
   _timeView: {fileID: 0}
   _timeValue: 0
+--- !u!1 &66835194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66835195}
+  - component: {fileID: 66835196}
+  m_Layer: 0
+  m_Name: TrainingModeDescriptionSOLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &66835195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66835194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1029915499}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &66835196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66835194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d30a761b9db484da522befc4ba5de3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _descriptions:
+  - {fileID: 11400000, guid: 6a73af7104ab3d745af5bf3aa9d2614e, type: 2}
+  - {fileID: 11400000, guid: b6f9be9efbd219f4395c973089f3d3f2, type: 2}
+  - {fileID: 11400000, guid: 6b4f3a27e09d7da429099009dcbabe69, type: 2}
 --- !u!1 &187238501
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +444,7 @@ Transform:
   - {fileID: 360085788}
   - {fileID: 1645304232}
   - {fileID: 1068874818}
+  - {fileID: 66835195}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -422,6 +471,7 @@ MonoBehaviour:
   _timeManager: {fileID: 25655974}
   _progressView: {fileID: 0}
   _scriptableObjectTaskLoader: {fileID: 1068874819}
+  _trainingModeDescriptionSOLoader: {fileID: 66835196}
 --- !u!1 &1041882511
 GameObject:
   m_ObjectHideFlags: 0

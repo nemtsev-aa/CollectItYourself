@@ -2393,6 +2393,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936565357}
   m_CullTransparentMesh: 1
+--- !u!1 &941605536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 941605537}
+  - component: {fileID: 941605538}
+  m_Layer: 0
+  m_Name: ScriptableObjectDescriptionLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &941605537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941605536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1523334034}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &941605538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941605536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8e8761565e54e46a703fc399f25d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _descriptions:
+  - {fileID: 11400000, guid: 0703de375e9c1ca49913c98d5e507fdb, type: 2}
+  - {fileID: 11400000, guid: 936b2d6b736e905409cf4b04e257202c, type: 2}
+  - {fileID: 11400000, guid: 289b6ae4612d73542b9572d8803b1edd, type: 2}
+  - {fileID: 11400000, guid: ddac0f5173366e24a9e920b2b16e00e9, type: 2}
 --- !u!1 &1041882511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,6 +2849,7 @@ Transform:
   - {fileID: 76751099}
   - {fileID: 360085788}
   - {fileID: 1645304232}
+  - {fileID: 941605537}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2816,6 +2866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guiHolder: {fileID: 6611579768212229886}
+  _learningModeDescriptionSOLoader: {fileID: 941605538}
 --- !u!1 &1645304231
 GameObject:
   m_ObjectHideFlags: 0

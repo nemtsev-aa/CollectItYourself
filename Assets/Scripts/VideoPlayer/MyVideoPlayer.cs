@@ -28,14 +28,15 @@ public class MyVideoPlayer : MonoBehaviour {
     private VideoPlayer _videoPlayer;
     private RectTransform _pbValueRt;
 
-    private void Start () {
+    public void Init (VideoClip videoClip) {
         newKnobY = _knob.transform.localPosition.y;
         _videoPlayer = GetComponent<VideoPlayer>();
         _videoPlayer.frame = (long)100;
+        _videoPlayer.clip = videoClip;
 
-        _pauseButton.gameObject.SetActive(true);
+        _pauseButton.gameObject.SetActive(false);
         _pauseButton.onClick.AddListener(BtnPlayVideo);
-        _playButton.gameObject.SetActive(false);
+        _playButton.gameObject.SetActive(true);
         _playButton.onClick.AddListener(BtnPlayVideo);
 
         _pbValueRt = _pbValue.GetComponent<RectTransform>();
@@ -106,7 +107,6 @@ public class MyVideoPlayer : MonoBehaviour {
     }
 
     private void BtnPlayVideo() {
-        Debug.Log("BtnPlayVideo");
         if (_videoIsPlaying) VideoStop();
         else VideoPlay();
     }

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using CustomEventBus;
+using CustomEventBus.Signals;
 using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TheoreticalPartDialog : Dialog {
-    public GoldCountView GoldCountView => _goldCountView;
-
     [Header("Navigations")]
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private Button _returnButton;
@@ -17,9 +15,33 @@ public class TheoreticalPartDialog : Dialog {
     [SerializeField] private MyVideoPlayer _descriptionPlayer;
     [SerializeField] private TextMeshProUGUI _descriptionText;
 
-    [Header("View")]
-    [SerializeField] private GoldCountView _goldCountView;
+    private LearningModeManager _learningModeManager;
+    private LearningModeDescription _currentDescription;
+    private EventBus _eventBus;
 
-    private Description _currentDescription;
-    private ServicesLoader_ExamMode _services;
+    public void Init(Description chapterDescription, LearningModeManager learningModeManager) {
+        _eventBus = ServiceLocator.Current.Get<EventBus>();
+
+        _learningModeManager = learningModeManager;
+        _currentDescription = chapterDescription as LearningModeDescription;
+
+        _descriptionPlayer.Init(_currentDescription.VideoClip);
+        _descriptionText.text = _currentDescription.Text;
+
+        _mainMenuButton.onClick.AddListener(ShowMainMenu);
+        _returnButton.onClick.AddListener(ReturnToModeMenu);
+        _nextButton.onClick.AddListener(GoToPlacticalPart);
+    }
+
+    private void ReturnToModeMenu() {
+        _learningModeManager.ReturnToLearningModeMenu();
+    }
+
+    private void GoToPlacticalPart() {
+        _learningModeManager.ShowPlacticalPart();
+    }
+
+    private void ShowMainMenu() {
+        _eventBus.Invoke(new ApplicationStateChangedSignal(ApplicationState.StartMenu));
+    }
 }

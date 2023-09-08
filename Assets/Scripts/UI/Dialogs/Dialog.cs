@@ -5,7 +5,6 @@ using UnityEngine.UI;
 namespace UI {
     public class Dialog : MonoBehaviour {
         [SerializeField] private Button _outsideClickArea;
-        
 
         public virtual void Awake() {
             if (_outsideClickArea != null) {

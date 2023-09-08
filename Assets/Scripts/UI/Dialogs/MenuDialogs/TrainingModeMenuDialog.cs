@@ -15,10 +15,8 @@ namespace UI.Dialogs {
 
         [Header("Navigations")]
         [SerializeField] private Button _mainMenuButton;
-        [SerializeField] private Button _returnButton;
 
         [Header("Buttons")]
-        [SerializeField] private List<Description> _descriptions;
         [SerializeField] private DescriptionButton _trainingModeDescriptionButtonPrefab;
         [SerializeField] private Transform _buttonsParent;
         [SerializeField] private List<DescriptionButton> _buttons;
@@ -33,16 +31,21 @@ namespace UI.Dialogs {
         
         private Description _currentDescription;
         private ServicesLoader_TrainingMode _services;
+        private TrainingModeDescriptionSOLoader _trainingModeDescriptionSOLoader;
+        private IEnumerable<TrainingModeDescription> _descriptions;
 
         public void Init(ServicesLoader_TrainingMode services) {
             _services = services;
+            _trainingModeDescriptionSOLoader = ServiceLocator.Current.Get<TrainingModeDescriptionSOLoader>();
+            _descriptions = _trainingModeDescriptionSOLoader.Descriptions;
 
             _mainMenuButton.onClick.AddListener(ShowMainMenu);
-            _returnButton.onClick.AddListener(ReturnToModeMenu);
+            _startButton.onClick.AddListener(StartMode);
+
+            CreateDescriptionButtons();
         }
 
-        public override void Awake() {
-            base.Awake();
+        private void CreateDescriptionButtons() {
             foreach (Description item in _descriptions) {
                 DescriptionButton newButton = Instantiate(_trainingModeDescriptionButtonPrefab, _buttonsParent);
                 newButton.Init(item);
@@ -52,7 +55,6 @@ namespace UI.Dialogs {
             }
 
             _buttons[0].Activate();
-            _startButton.onClick.AddListener(StartMode);
         }
 
         private void ShowDescription(Description description, DescriptionButton button) {
@@ -68,10 +70,6 @@ namespace UI.Dialogs {
         private void StartMode() {
             TrainingModeDescription description = (TrainingModeDescription)_currentDescription;
             _services.SetTrainingModeType(description.CurrentType);
-        }
-
-        private void ReturnToModeMenu() {
-            this.Hide();
         }
 
         private void ShowMainMenu() {

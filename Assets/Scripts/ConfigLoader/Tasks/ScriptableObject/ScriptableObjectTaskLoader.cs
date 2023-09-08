@@ -3,8 +3,7 @@ using CustomEventBus;
 using CustomEventBus.Signals;
 using UnityEngine;
 
-public class ScriptableObjectTaskLoader : MonoBehaviour, ITaskLoader
-{
+public class ScriptableObjectTaskLoader : MonoBehaviour, ITaskLoader {
     [SerializeField] private TasksConfig _tasksConfig;
 
     public IEnumerable<TaskData> GetTasks() {

@@ -28,7 +28,9 @@ public class ServicesLoader_TrainingMode : ServicesLoader {
     [SerializeField] private TrainingProgressView _progressView;                            // Виджет прогресса
 
     [SerializeField] private ScriptableObjectTaskLoader _scriptableObjectTaskLoader;
-
+    [SerializeField] private TrainingModeDescriptionSOLoader _trainingModeDescriptionSOLoader;
+    
+    private ServiceLocator _serviceLocator;
     private GoldController _goldController;                                                 // Менеджер золота
     private GoldCountView _goldView;                                                        // Виджет золота
     private AttemptsLog _attemptsLog;                                                       // Журнал попыток
@@ -36,14 +38,16 @@ public class ServicesLoader_TrainingMode : ServicesLoader {
     private ConfigDataLoader _configDataLoader;
     private TrainingModeMenuDialog _trainingModeMenuDialog;
     private TrainingModeType _currentTrainingModeType;
-
+    
     private void Start() {
-        _eventBus = ServiceLocator.Current.Get<EventBus>();
-        _savesManager = ServiceLocator.Current.Get<SavesManager>();
-        _goldController = ServiceLocator.Current.Get<GoldController>();
+        _serviceLocator = ServiceLocator.Current;
 
-        ServiceLocator.Current.RegisterWithReplacement(_guiHolder);
+        _eventBus = _serviceLocator.Get<EventBus>();
+        _savesManager = _serviceLocator.Get<SavesManager>();
+        _goldController = _serviceLocator.Get<GoldController>();
 
+        _serviceLocator.RegisterWithReplacement(_guiHolder);
+        _serviceLocator.Register(_trainingModeDescriptionSOLoader);
         ShowTrainingModeMenu();
     }
 
@@ -113,8 +117,7 @@ public class ServicesLoader_TrainingMode : ServicesLoader {
         Debug.Log("InitMode_TroubleFinding complite");
     }
 
-    public override void RegisterServices() {
- 
+    public override void RegisterServices() {        
         switch (_currentTrainingModeType) {
             case TrainingModeType.RepeatAfterCoach:
                 RegisterServices_RepeatAfterCoach();
@@ -127,9 +130,7 @@ public class ServicesLoader_TrainingMode : ServicesLoader {
                 break;
             default:
                 break;
-        }
-
-        
+        } 
     }
 
     private void RegisterServices_RepeatAfterCoach() {
@@ -137,19 +138,19 @@ public class ServicesLoader_TrainingMode : ServicesLoader {
     }
 
     private void RegisterServices_BuildByVariants() {
-        
-        //ServiceLocator.Current.Register(_trainingModeController);
-        //ServiceLocator.Current.Register(_trainingModeProgressManager);
-        //ServiceLocator.Current.Register(_taskController);
-        //ServiceLocator.Current.Register(_taskLoader);
-        //ServiceLocator.Current.Register(_management);
-        //ServiceLocator.Current.Register(_switchBoxesManager);
-        //ServiceLocator.Current.Register(_progressView);
-        //ServiceLocator.Current.Register(_wireCreator);
-        //ServiceLocator.Current.Register(_wagoCreator);
-        //ServiceLocator.Current.Register(_pointer);
-        //ServiceLocator.Current.Register(_timeManager);
-        //ServiceLocator.Current.Register(_attemptsLog);
+
+        //_serviceLocator.Register(_trainingModeController);
+        //_serviceLocator.Register(_trainingModeProgressManager);
+        //_serviceLocator.Register(_taskController);
+        //_serviceLocator.Register(_taskLoader);
+        //_serviceLocator.Register(_management);
+        //_serviceLocator.Register(_switchBoxesManager);
+        //_serviceLocator.Register(_progressView);
+        //_serviceLocator.Register(_wireCreator);
+        //_serviceLocator.Register(_wagoCreator);
+        //_serviceLocator.Register(_pointer);
+        //_serviceLocator.Register(_timeManager);
+        //_serviceLocator.Register(_attemptsLog);
 
         Debug.Log("RegisterServices_BuildByVariants complite");
     }
