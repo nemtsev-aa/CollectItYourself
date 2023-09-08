@@ -43,7 +43,7 @@ public class TrainingDemonstrationDialog : Dialog {
     }
 
     private void PauseDemonstration() {
-        _eventBus.Invoke(new TaskPauseSignal());
+        _eventBus.Invoke(new PauseStateSignal());
     }
 
     private void FinishSwitching() {

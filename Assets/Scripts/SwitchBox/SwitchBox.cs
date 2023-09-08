@@ -25,7 +25,7 @@ public class SwitchBox : MonoBehaviour {
     public Transform WiresTransform;
     public List<Wire> Wires = new List<Wire>();
 
-    private Stopwatch _stopwatch;
+    private TimeManager _stopwatch;
     private List<WagoContact> _freeWagoContacts = new List<WagoContact>();
 
     public event Action<SingleSwitchingResult> SingleIncorrectChecked;
@@ -35,7 +35,7 @@ public class SwitchBox : MonoBehaviour {
     private EventBus _eventBus;
 
     public void Init() {
-        _stopwatch = ServiceLocator.Current.Get<Stopwatch>();
+        _stopwatch = ServiceLocator.Current.Get<TimeManager>();
         _eventBus = ServiceLocator.Current.Get<EventBus>();
     }
 

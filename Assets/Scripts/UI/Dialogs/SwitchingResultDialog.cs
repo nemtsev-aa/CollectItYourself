@@ -19,9 +19,10 @@ public class SwitchingResultDialog : Dialog {
     [SerializeField] private Button _goToMenuButton;
     
     private EventBus _eventBus;
-
+    private GoldController _goldController;
     public virtual void Init(GeneralSwitchingResult result) {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
+        _goldController = ServiceLocator.Current.Get<GoldController>(); 
 
         _nextTaskButton.onClick.AddListener(NextTask);
         _goToMenuButton.onClick.AddListener(GoToMenu);
@@ -30,7 +31,8 @@ public class SwitchingResultDialog : Dialog {
         _resultsView.UploadResultToGeneralPanel();
         _resultsView.UploadResultsToSinglePanel();
 
-        _goldCountView.Init();
+        _goldCountView.Init(_eventBus, _goldController);
+        _goldCountView.ShowGoldCount();
         _progressView.Init();
     }
 

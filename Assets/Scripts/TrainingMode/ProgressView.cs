@@ -9,9 +9,11 @@ public class ProgressView : MonoBehaviour, IService {
     [SerializeField] private Image _valueImage;
 
     protected EventBus _eventBus;
-    
+    protected ProgressManager _progressManager;
+
     public virtual void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
+        _progressManager = ServiceLocator.Current.Get<ProgressManager>();
     }
 
     public virtual void ShowProgress(int currentValue, int maxValue) {

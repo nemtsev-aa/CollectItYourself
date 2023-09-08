@@ -1,10 +1,8 @@
 using CustomEventBus;
 using CustomEventBus.Signals;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UI.Dialogs;
 using UnityEngine;
+
 /// <summary>
 /// Отвечает за логику модуля "Обучение":
 /// Переключает главы 
@@ -19,7 +17,7 @@ public class LearningProgressManager : IService, CustomEventBus.IDisposable {
     private EventBus _eventBus;
 
     [ContextMenu("Initialization")]
-    public void Initialization() {
+    public void Init() {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
         _eventBus.Subscribe<ChapterSelectSignal>(SetChapter);
         _eventBus.Subscribe<ChapterFinishedSignal>(ChapterFinished);
@@ -30,7 +28,7 @@ public class LearningProgressManager : IService, CustomEventBus.IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void SetChapter(ChapterSelectSignal signal) {
-        _eventBus.Invoke(new ChapterSelectSignal(signal.ChapterData));
+        _eventBus.Invoke(new ChapterSelectSignal(signal.ChapterDescription));
     }
 
     /// <summary>
@@ -38,13 +36,13 @@ public class LearningProgressManager : IService, CustomEventBus.IDisposable {
     /// </summary>
     /// <param name="signal"></param>
     private void ChapterFinished(ChapterFinishedSignal signal) {
-        var chapterData = signal.ChapterData;
+        var chapterData = signal.ChapterDescription;
 
         StopGame();
 
         // Показываем виджкт очков обучения
-        ChapterComplite(signal.ChapterData);
-        ChaptersMenuDialog captersMenuDialog = DialogManager.ShowDialog<ChaptersMenuDialog>();
+        ChapterComplite(signal.ChapterDescription);
+        LearningModeMenuDialog captersMenuDialog = DialogManager.ShowDialog<LearningModeMenuDialog>();
     }
 
     /// <summary>
@@ -58,7 +56,7 @@ public class LearningProgressManager : IService, CustomEventBus.IDisposable {
     /// Глава завершена
     /// </summary>
     /// <param name="chapterData"></param>
-    private void ChapterComplite(ChapterData chapterData) {
+    private void ChapterComplite(LearningModeDescription chapterData) {
         CurrentExpValue += chapterData.ExpAmountToComplete;
         int _currentProgress = (CurrentExpValue / _fullExpAmount) * 100;
         _eventBus.Invoke(new LearningProgressChangedSignal(_currentProgress));

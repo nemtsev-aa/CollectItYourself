@@ -86,7 +86,7 @@ public class Contact : SelectableObject {
     public List<Companent> GetConnectionCompanents() {
         List<Companent> companents = new List<Companent>();
         if (ConnectionWire != null) {
-            WagoClip wagoClip = ConnectionWire.GetParentWagoClip();
+            WagoClip wagoClip = ConnectionWire.ParentWagoClip;
             foreach (WagoContact iWagoContact in wagoClip.WagoContacts) {
                 if (iWagoContact.ConnectionStatus == true) {
                     companents.Add(iWagoContact.GetConnectionCompanent());

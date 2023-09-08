@@ -8,7 +8,7 @@ public class ActionState : GameState
     [SerializeField] private ActiveWindow _activeWindow;
 
     [SerializeField] private Management _management;
-    [SerializeField] private Stopwatch _stopwatch;
+    [SerializeField] private TimeManager _stopwatch;
     [SerializeField] private PrincipalSchemaView _principalSchemaView;
     [SerializeField] private SwitchBoxsSelectorView _switchBoxsSelectorView;
 

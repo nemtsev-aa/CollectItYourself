@@ -11,7 +11,7 @@ public class SavesManager : MonoBehaviour, IService, CustomEventBus.IDisposable 
     [SerializeField] private SaveType _currentSaveType = SaveType.Binary;
 
     private Dictionary<SaveType, IStorageService> _saveServices = new Dictionary<SaveType, IStorageService>();
-    
+
     public void Init() {
         if (_savePath == "") _savePath = Application.persistentDataPath;
         //_savePath = Application.dataPath;

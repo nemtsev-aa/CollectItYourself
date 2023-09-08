@@ -974,7 +974,7 @@ MonoBehaviour:
       type: 3}
   - WagoType: 1
     Sprite: {fileID: 1259741742, guid: 1d54bc6e4719cdc4cab099335b430b0e, type: 3}
-    Prefab: {fileID: 4381766052469806653, guid: 9d2b7ea4cdb48dd41a01ae148866ace9,
+    Prefab: {fileID: 4381766052469806653, guid: 1ef52b847725c354593b200078889eb8,
       type: 3}
   - WagoType: 2
     Sprite: {fileID: 648846233, guid: 1d54bc6e4719cdc4cab099335b430b0e, type: 3}

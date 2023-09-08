@@ -18,6 +18,14 @@ public class Wire : SelectableObject {
     public Contact StartContact;
     public WagoContact EndContact;
 
+    public WagoClip ParentWagoClip {
+        get {
+            WagoClip wagoClip = EndContact.ParentWagoClip;
+            return wagoClip;
+        }
+    }
+
+    #region Managment
     public override void Start() {
         base.Start();
         ObjectView.Init(this);
@@ -52,6 +60,8 @@ public class Wire : SelectableObject {
     public override void OnMouseDrag() {
         base.OnMouseDrag();
     }
+    #endregion
+
 
     [ContextMenu("GenerateMeshCollider")]
     public void GenerateMeshCollider() {
@@ -114,10 +124,5 @@ public class Wire : SelectableObject {
                 ElectricFieldMovingView.SetDirection(DirectionType.Positive);
             }
         } 
-    }
-
-    public WagoClip GetParentWagoClip() {
-        WagoClip wagoClip = EndContact.ParentWagoClip;
-        return wagoClip;
-    }
+    } 
 }

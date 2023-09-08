@@ -1,28 +1,50 @@
 ﻿using CustomEventBus;
 using CustomEventBus.Signals;
+using System;
 using UnityEngine;
 
 /// <summary>
 /// Система отвечающая за золото:
 /// Начисление, трата, изменение золота
 /// </summary>
-public class GoldController : IService, IDisposable
-{
+public class GoldController : IService, CustomEventBus.IDisposable {
+    private string key = StringConstants.GENERAL_SAVES;
+    
     private int _gold;
     public int Gold => _gold;
-
     private EventBus _eventBus;
+    private SavesManager _savesManager;
 
-    public void Init() {
-        //PlayerPrefs.SetInt(StringConstants.GOLD, 100);
-        _gold = PlayerPrefs.GetInt(StringConstants.GOLD);
-        
+    public void Init() {      
         _eventBus = ServiceLocator.Current.Get<EventBus>();
-
         _eventBus.Subscribe<AddGoldSignal>(OnAddGold);
         _eventBus.Subscribe<SpendGoldSignal>(SpendGold);
         _eventBus.Subscribe<GoldChangedSignal>(GoldChanged);
         _eventBus.Subscribe<TaskFinishedSignal>(TaskFinished);
+
+        _savesManager = ServiceLocator.Current.Get<SavesManager>();
+        GetGoldValueFromSaveFile();
+    }
+
+    private void GetGoldValueFromSaveFile() {
+        GeneralIndicators generalSaves = new GeneralIndicators();
+        _savesManager.CurrentService.Load<GeneralIndicators>(key, loadResult => {        // Получаем сохранённые данные
+            if (loadResult != null) {
+                _gold = loadResult.Gold;
+            } else {
+                _gold = generalSaves.Gold;
+            }
+        });
+    }
+
+    private void SetGoldValueToSaveFile() {
+        GeneralIndicators generalSaves = new GeneralIndicators() {
+            UserName = "@user",
+            LastVisitDate = DateTime.Now,
+            Gold = _gold
+        };
+
+        _savesManager.CurrentService.Save(key, generalSaves);                            // Сохраняем данные
     }
 
     private void OnAddGold(AddGoldSignal signal) {
@@ -46,7 +68,8 @@ public class GoldController : IService, IDisposable
     }
 
     private void GoldChanged(GoldChangedSignal signal) {
-        PlayerPrefs.SetInt(StringConstants.GOLD, signal.Gold);
+        _gold = signal.Gold;
+        SetGoldValueToSaveFile();
     }
 
     private void TaskFinished(TaskFinishedSignal signal) {

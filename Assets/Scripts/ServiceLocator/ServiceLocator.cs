@@ -23,11 +23,12 @@ public class ServiceLocator {
         string key = typeof(T).Name;
         if (!_services.ContainsKey(key)) {
             Debug.LogError($"{key} not registered with {GetType().Name}");
-            throw new InvalidOperationException();
+            return default(T);
+            //throw new InvalidOperationException();
         }
 
         return (T)_services[key];
-    }
+     }
 
     /// <summary>
     /// –егистрирует сервис в текущем сервис локаторе
@@ -37,14 +38,22 @@ public class ServiceLocator {
     public void Register<T>(T service) where T : IService {
         string key = typeof(T).Name;
         if (_services.ContainsKey(key)) {
-            Debug.LogError(
-                $"ѕредприн€та попытка зарегистрировать службу типа {key}, котора€ уже зарегистрирована в {GetType().Name}.");
+            Debug.LogError($"ѕредприн€та попытка зарегистрировать службу типа {key}, котора€ уже зарегистрирована в {GetType().Name}.");
             return;
         }
 
         _services.Add(key, service);
     }
-
+    /// <summary>
+    /// –егистрирует сервис в текущем сервис локаторе с заменой
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="service"></param>
+    public void RegisterWithReplacement<T>(T service) where T : IService {
+        string key = typeof(T).Name;
+        if (_services.ContainsKey(key)) _services.Remove(key);
+        _services.Add(key, service);
+    }
     /// <summary>
     /// ”бирает сервис из текущего сервис локатора
     /// </summary>

@@ -17,7 +17,7 @@ public class PrincipalSchemaView : MonoBehaviour, IDisposable {
     
     private EventBus _eventBus;
 
-    public void Init(Stopwatch stopwatch, EventBus eventBus) {
+    public void Init(TimeManager stopwatch, EventBus eventBus) {
         _eventBus = eventBus;
         _eventBus.Subscribe<ActiveSwitchBoxChangedSignal>(UpdateView);
         _timeView.Init(stopwatch);

@@ -102,7 +102,10 @@ public class TaskData : ScriptableObject {
         }
         return connectionsCount;
     }
-
+    /// <summary>
+    /// Количество подключений в отдельной РК
+    /// </summary>
+    /// <returns></returns>
     public int GetConnectionsCountInSwitchBox(int index = 0) {
         int connectionsCount = 0;
         foreach (var iAnswerData in Answers[index].AnswerDataList) {

@@ -22,7 +22,7 @@ namespace UI.Dialogs {
 
         private EventBus _eventBus;
 
-        public void Init(SwitchBoxesManager switchBoxManager, Stopwatch stopwatch, WagoCreator wagoCreator, EventBus eventBus) {
+        public void Init(SwitchBoxesManager switchBoxManager, TimeManager stopwatch, WagoCreator wagoCreator, EventBus eventBus) {
             _eventBus = eventBus;
             _principalSchemaView.Init(stopwatch, _eventBus);
             _wagoClipsDragPanel.Init(wagoCreator);
@@ -31,7 +31,7 @@ namespace UI.Dialogs {
         }
 
         private void PauseSwitching() {
-            _eventBus.Invoke(new TaskPauseSignal());
+            _eventBus.Invoke(new PauseStateSignal());
         }
 
         private void CheckSwitching() {

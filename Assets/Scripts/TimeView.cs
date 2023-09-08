@@ -7,9 +7,9 @@ public class TimeView : MonoBehaviour {
     [SerializeField] private BacklitButton _stopButton;
     [SerializeField] private TextMeshProUGUI _timeText;
 
-    private Stopwatch _stopwatch;
+    private TimeManager _stopwatch;
 
-    public void Init(Stopwatch stopwatch) {
+    public void Init(TimeManager stopwatch) {
         _stopwatch = stopwatch;
         _startButton.Button.onClick.AddListener(StartTimer);
         _pauseButton.Button.onClick.AddListener(PauseTimer);

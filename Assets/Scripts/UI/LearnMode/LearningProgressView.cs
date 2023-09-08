@@ -1,4 +1,6 @@
-using CustomEventBus.Signals;
+/// <summary>
+/// Отображает прогресс в модуле "Обучение"
+/// </summary>
 public class LearningProgressView : ProgressView {
     //public override void Init() {
     //    base.Init();

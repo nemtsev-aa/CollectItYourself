@@ -45,10 +45,10 @@ public class ScoreController : IService, IDisposable
     //    }
     //}
 
-    public int GetMaxScore(int levelID)
-    {
-        return PlayerPrefs.GetInt(StringConstants.MAX_LEVEL_SCORE + levelID, 0);
-    }
+    //public int GetMaxScore(int levelID)
+    //{
+    //    //return PlayerPrefs.GetInt(StringConstants.MAX_LEVEL_SCORE + levelID, 0);
+    //}
 
     public void Dispose()
     {

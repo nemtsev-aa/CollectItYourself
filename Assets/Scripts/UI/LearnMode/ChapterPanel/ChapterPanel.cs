@@ -1,15 +1,12 @@
 using CustomEventBus;
 using CustomEventBus.Signals;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChapterPanel : MonoBehaviour {
 
-    public ChapterData ChapterData;
+    public LearningModeDescription ChapterDescription;
     [SerializeField] private TextMeshProUGUI _chepterTitle;
     [SerializeField] private Image _chepterIcon;
     [SerializeField] private Image _progressValueImage;
@@ -22,18 +19,18 @@ public class ChapterPanel : MonoBehaviour {
     private LearningProgressManager _learningProgressManager;
     private EventBus _eventBus;
 
-   [ContextMenu("Initialization")]
-    public void Initialization(LearningProgressManager learningProgressManager) {
+   [ContextMenu("Init")]
+    public void Init(LearningProgressManager learningProgressManager) {
         _learningProgressManager = learningProgressManager;
         _eventBus = ServiceLocator.Current.Get<EventBus>();
 
-        _chepterTitle.text = ChapterData.ChepterTitle;
-        _chepterIcon.sprite = ChapterData.ChepterIcon;
-        _chepterDescription.text = ChapterData.ChepterDescription;
-        _expAmount.text = ChapterData.ExpAmountToComplete.ToString();
+        _chepterTitle.text = ChapterDescription.Name;
+        _chepterIcon.sprite = ChapterDescription.Icon;
+        _chepterDescription.text = ChapterDescription.Text;
+        _expAmount.text = ChapterDescription.ExpAmountToComplete.ToString();
 
-        _progressValueText.text = ChapterData.ProgressValue.ToString() + " %";
-        _progressValueImage.fillAmount = ChapterData.ProgressValue / 100;
+        _progressValueText.text = ChapterDescription.ProgressValue.ToString() + " %";
+        _progressValueImage.fillAmount = ChapterDescription.ProgressValue / 100;
 
         _playButton.onClick.AddListener(PlayChapter);
         _eventBus.Subscribe<ChapterStartedSignal>(StartChapter, -1);
@@ -41,18 +38,18 @@ public class ChapterPanel : MonoBehaviour {
 
     public void AddExperience(int expAmount) {
         _currentExpAmount += expAmount;
-        if (_currentExpAmount >= ChapterData.ExpAmountToComplete) {
-            _progressValueText.text = "100 %";
+        if (_currentExpAmount >= ChapterDescription.ExpAmountToComplete) {
+            _progressValueText.text = "100%";
             _progressValueImage.fillAmount = 1;
             
         } else {
-            _progressValueText.text = ChapterData.ProgressValue.ToString() + " %";
-            _progressValueImage.fillAmount = ChapterData.ProgressValue / 100;
+            _progressValueText.text = ChapterDescription.ProgressValue.ToString() + " %";
+            _progressValueImage.fillAmount = ChapterDescription.ProgressValue / 100;
         }
     }
 
     private void PlayChapter() {
-        StartChapter(new ChapterStartedSignal(ChapterData));
+        StartChapter(new ChapterStartedSignal(ChapterDescription));
     }
 
     /// <summary>

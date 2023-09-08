@@ -10,21 +10,27 @@ public class DialogManager {
     // ѕри создании новых окон добавл€ть их сюда
     private static readonly Dictionary<Type, string> PrefabsDictionary = new Dictionary<Type, string>() {
             {typeof(MainMenuDialog),"MenuDialog/MainMenuDialog"},
-            {typeof(SelectLearningChapterDialog),"MenuDialog/SelectLearningChapterDialog"},
-            {typeof(SelectTrainingTaskDialog),"MenuDialog/SelectTrainingTaskDialog"},
-            //{typeof(SelectExamTaskDialog),"MenuDialog/SelectExamTaskDialog"},
             {typeof(PauseDialog),"MenuDialog/PauseDialog"},
             {typeof(SettingsDialog),"MenuDialog/SettingsDialog"},
 
+            {typeof(LearningModeMenuDialog),"MenuDialog/LearningMode/LearningModeMenuDialog"},
+            
+            {typeof(TrainingModeMenuDialog),"MenuDialog/TrainingMode/TrainingModeMenuDialog"},
+            {typeof(SelectTrainingTaskDialog),"MenuDialog/TrainingMode/SelectTrainingTaskDialog"},
+
+            {typeof(ExamModeMenuDialog),"MenuDialog/ExamMode/ExamModeMenuDialog"},
+            {typeof(SelectExamTaskDialog),"MenuDialog/ExamMode/SelectExamTaskDialog"},
+
             {typeof(CountdownDialog), "CountdownDialog"},
-            {typeof(TrainingSwitchingDialog),"TrainingSwitchingDialog"},
-            {typeof(TrainingDemonstrationDialog), "TrainingDemonstrationDialog"},
             {typeof(CorrectSwitchingResultDialog),"CorrectSwitchingResultDialog"},
             {typeof(IncorrectSwitchingResultDialog),"IncorrectSwitchingResultDialog"},
             {typeof(LoadingDialog),"LoadingDialog"},
             {typeof(TaskDescriptionDialog),"TaskDescriptionDialog"},
             {typeof(TaskUnlockedDialog),"TaskUnlockedDialog"},
-           
+            {typeof(TheoreticalPartDialog),"TheoreticalPartDialog"},
+            {typeof(TrainingDemonstrationDialog), "TrainingDemonstrationDialog"},
+            {typeof(TrainingSwitchingDialog),"TrainingSwitchingDialog"},
+            
             //{typeof(MenuDialog),"MenuDialogs/MenuDialog"},
             //{typeof(ScoreTableDialog),"MenuDialogs/ScoreTableDialog"},
             //{typeof(CustomizeShipDialog),"MenuDialogs/CustomizeShipDialog"},

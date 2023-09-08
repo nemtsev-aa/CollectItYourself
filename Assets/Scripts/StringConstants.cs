@@ -1,12 +1,12 @@
 public static class StringConstants {
-    //Player prefs values
-    public static readonly string MAX_LEVEL_SCORE = "level_score_max_";
-    public static readonly string GOLD = "Gold";
-    public static readonly string CURRENT_TASK = "currentLevel_";
-    public static readonly string SELECTED_SHIP = "selectedShip_";
-    public static readonly string SHIP_PURCHASED = "ship_purchased_";
+    //Saves values
+    public static readonly string GENERAL_SAVES = "generalIndicators_save";
+    public static readonly string ATTEMPT_LOG_SAVE = "attemptLog_save";
 
     //Scene names
-    public static readonly string MENU_SCENE_NAME = "MenuScene";
-    public static readonly string MAIN_SCENE_NAME = "MainScene";
+    public static readonly string ENTRYPOINT_SCENE_NAME = "EntryPointBootstrap";
+    public static readonly string MAINMENU_SCENE_NAME = "MainMenu";
+    public static readonly string LEARNING_SCENE_NAME = "Learning";
+    public static readonly string TRAINING_SCENE_NAME = "Training";
+    public static readonly string EXAM_SCENE_NAME = "Exam";
 }
