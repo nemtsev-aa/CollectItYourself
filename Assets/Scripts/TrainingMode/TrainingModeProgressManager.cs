@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 /// <summary>
-/// Отображает прогресс в модуле "Тренировка"
+/// Менеджер прогресса в модуле "Тренировка"
 /// </summary>
 public class TrainingModeProgressManager : ProgressManager {
     private IEnumerable<TaskData> _taskList;
@@ -15,7 +15,7 @@ public class TrainingModeProgressManager : ProgressManager {
         _taskList = ServiceLocator.Current.Get<TaskController>().TasksConfig.Tasks;
     }
 
-    public override void TaskFinished(TaskFinishedSignal signal) {
+    public override void Finished(TaskFinishedSignal signal) {
         if (signal.GeneralSwitchingResult.CheckStatus && signal.GeneralSwitchingResult.TaskData.TaskStatus == TaskStatus.Unlock) {
             _currentExpValue += signal.GeneralSwitchingResult.TaskData.ExpValue;
         }
@@ -70,5 +70,4 @@ public class TrainingModeProgressManager : ProgressManager {
     public override void Dispose() {
         _eventBus.Unsubscribe<TaskListCreatedSignal>(ShowProgressValue);
     }
-
 }

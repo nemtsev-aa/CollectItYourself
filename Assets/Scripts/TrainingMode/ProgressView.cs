@@ -17,6 +17,7 @@ public class ProgressView : MonoBehaviour, IService {
     }
 
     public virtual void ShowProgress(int currentValue, int maxValue) {
+        
         float xScale = (float)currentValue / maxValue;
         xScale = Mathf.Clamp01(xScale);
 

@@ -18,20 +18,19 @@ public class ProgressManager : IService, IDisposable {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
 
         _eventBus.Subscribe<TaskListCreatedSignal>(ShowProgressValue);
-        _eventBus.Subscribe<TaskFinishedSignal>(TaskFinished);
+        _eventBus.Subscribe<TaskFinishedSignal>(Finished);
     }
 
     public virtual void ShowProgressValue(TaskListCreatedSignal signal) {
 
     }
 
-    public virtual void TaskFinished(TaskFinishedSignal signal) {
+    public virtual void Finished(TaskFinishedSignal signal) {
 
     }
 
     
     public virtual void Dispose() {
         _eventBus.Unsubscribe<TaskListCreatedSignal>(ShowProgressValue);
-
     }
 }

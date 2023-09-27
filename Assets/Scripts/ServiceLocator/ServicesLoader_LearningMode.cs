@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ServicesLoader_LearningMode : ServicesLoader {
     [SerializeField] private GUIHolder _guiHolder;                                                  // Контейнер для всплывающих окон
-    [SerializeField] private LearningModeDescriptionSOLoader _learningModeDescriptionSOLoader;
+    [SerializeField] private ChapterController _chapterController;
     private LearningModeManager _learningModeManager;                                               // Менеджер состояния приложения в модуле "Обучение"
     private ServiceLocator _serviceLocator;
 
@@ -25,7 +25,7 @@ public class ServicesLoader_LearningMode : ServicesLoader {
 
     public override void RegisterServices() {
         _serviceLocator.RegisterWithReplacement(_guiHolder);
-        _serviceLocator.Register(_learningModeDescriptionSOLoader);
+        _serviceLocator.Register(_chapterController);
     }
 
     public override void AddDisposables() {

@@ -16,29 +16,29 @@ public class TheoreticalPartDialog : Dialog {
     [SerializeField] private TextMeshProUGUI _descriptionText;
 
     private LearningModeManager _learningModeManager;
-    private LearningModeDescription _currentDescription;
+    private TheoreticalPartDescription _currentDescription;
     private EventBus _eventBus;
 
-    public void Init(Description chapterDescription, LearningModeManager learningModeManager) {
+    public void Init(TheoreticalPartDescription chapterDescription, LearningModeManager learningModeManager) {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
 
         _learningModeManager = learningModeManager;
-        _currentDescription = chapterDescription as LearningModeDescription;
+        _currentDescription = chapterDescription;
 
-        _descriptionPlayer.Init(_currentDescription.VideoClip);
-        _descriptionText.text = _currentDescription.Text;
+        _descriptionPlayer.Init(_currentDescription.TheoreticalVideoClip);
+        _descriptionText.text = "";
 
         _mainMenuButton.onClick.AddListener(ShowMainMenu);
         _returnButton.onClick.AddListener(ReturnToModeMenu);
-        _nextButton.onClick.AddListener(GoToPlacticalPart);
+        _nextButton.onClick.AddListener(NextStep);
+    }
+
+    private void NextStep() {
+        _eventBus.Invoke(new ChapterPartFinishSignal(_currentDescription));
     }
 
     private void ReturnToModeMenu() {
-        _learningModeManager.ReturnToLearningModeMenu();
-    }
-
-    private void GoToPlacticalPart() {
-        _learningModeManager.ShowPlacticalPart();
+        _learningModeManager.ReturnToLearningModeMenu(this);
     }
 
     private void ShowMainMenu() {

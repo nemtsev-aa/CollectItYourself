@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 [CreateAssetMenu(fileName = nameof(TheoreticalPartDescription), menuName = "LearningMode/" + nameof(TheoreticalPartDescription))]
 [System.Serializable]
-public class TheoreticalPartDescription : Description {
-
+public class TheoreticalPartDescription : ParagraphDescription {
+    public VideoClip TheoreticalVideoClip;
 }

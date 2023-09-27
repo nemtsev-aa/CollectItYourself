@@ -25,10 +25,10 @@ public class LearningModeMenuDialog : Dialog {
     [Header("View")]
     [SerializeField] private GoldCountView _goldCountView;
 
-    private LearningModeDescriptionSOLoader _learningModeDescriptionSOLoader;
-    private IEnumerable<LearningModeDescription> _descriptions;
+    private ChapterController _learningModeDescriptionSOLoader;
+    private IEnumerable<ChapterDescription> _descriptions;
     
-    private LearningModeDescription _currentDescription;
+    private ChapterDescription _currentDescription;
     private EventBus _eventBus;
     private GoldController _goldController;
 
@@ -36,8 +36,8 @@ public class LearningModeMenuDialog : Dialog {
         _eventBus = ServiceLocator.Current.Get<EventBus>();
         _goldController = ServiceLocator.Current.Get<GoldController>();
 
-        _learningModeDescriptionSOLoader = ServiceLocator.Current.Get<LearningModeDescriptionSOLoader>();
-        _descriptions = _learningModeDescriptionSOLoader.Descriptions;
+        _learningModeDescriptionSOLoader = ServiceLocator.Current.Get<ChapterController>();
+        _descriptions = _learningModeDescriptionSOLoader.Chapters;
 
         _goldCountView.Init(_eventBus, _goldController);
 
@@ -48,7 +48,7 @@ public class LearningModeMenuDialog : Dialog {
     }
 
     private void CreateDescriptionButtons() {
-        foreach (LearningModeDescription item in _descriptions) {
+        foreach (ChapterDescription item in _descriptions) {
             DescriptionButton newButton = Instantiate(_descriptionButtonPrefab, _buttonsParent);
             newButton.Init(item);
             newButton.OnActivate += ShowDescription;
@@ -63,7 +63,7 @@ public class LearningModeMenuDialog : Dialog {
             if (item != button) item.Deactivate();
         }
 
-        _currentDescription = description as LearningModeDescription;
+        _currentDescription = description as ChapterDescription;
         _descriptionText.text = description.Text;
         _descriptionImage.sprite = description.Icon;
     }

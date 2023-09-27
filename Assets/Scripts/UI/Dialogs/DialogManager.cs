@@ -14,7 +14,8 @@ public class DialogManager {
             {typeof(SettingsDialog),"MenuDialog/SettingsDialog"},
 
             {typeof(LearningModeMenuDialog),"MenuDialog/LearningMode/LearningModeMenuDialog"},
-            
+            {typeof(ChapterMenuDialog),"MenuDialog/LearningMode/ChapterMenuDialog"},
+        
             {typeof(TrainingModeMenuDialog),"MenuDialog/TrainingMode/TrainingModeMenuDialog"},
             {typeof(SelectTrainingTaskDialog),"MenuDialog/TrainingMode/SelectTrainingTaskDialog"},
 
@@ -30,6 +31,11 @@ public class DialogManager {
             {typeof(TheoreticalPartDialog),"TheoreticalPartDialog"},
             {typeof(TrainingDemonstrationDialog), "TrainingDemonstrationDialog"},
             {typeof(TrainingSwitchingDialog),"TrainingSwitchingDialog"},
+
+            {typeof(PracticalPartDialog),"PracticalPartDialog"},
+            {typeof(PracticalPartDescriptionDialog),"DescriptionWindowPopupDialog"},
+                   
+            
             
             //{typeof(MenuDialog),"MenuDialogs/MenuDialog"},
             //{typeof(ScoreTableDialog),"MenuDialogs/ScoreTableDialog"},

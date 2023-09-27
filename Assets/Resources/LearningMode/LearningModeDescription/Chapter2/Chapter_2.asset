@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca6d8afc6e54634580ddd44aded9e8c, type: 3}
+  m_Name: Chapter_2
+  m_EditorClassIdentifier: 
+  Name: "\u041C\u043E\u043D\u0442\u0430\u0436\u043D\u044B\u0435 \u0441\u0445\u0435\u043C\u044B"
+  Icon: {fileID: 21300000, guid: bd2da4f222fd8fe488d9823ca34a52c0, type: 3}
+  VideoClip: {fileID: 32900000, guid: 503cff9364345a342a8d4f151c3855b7, type: 3}
+  Text: "\u041D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435, \u0443\u0441\u043B\u043E\u0432\u043D\u044B\u0435
+    \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F"
+  Type: 1
+  _paragraphDescription:
+  - {fileID: 11400000, guid: c0bbeeb1bd81d1849856f815496503cb, type: 2}
+  - {fileID: 11400000, guid: e8986adaba371c94cad3e0bc79188d9f, type: 2}
+  - {fileID: 11400000, guid: 26a9f492218fc6c4d96489e92219b675, type: 2}
+  - {fileID: 11400000, guid: 3eeb1ec3f95888a43b57440506588c7d, type: 2}
